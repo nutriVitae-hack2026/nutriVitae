@@ -1,0 +1,13 @@
+@import './base.css';
+body {
+  font-family: "Italiana", serif;
+  background-color: #F1EDD2;
+
+  a {
+    text-decoration: none;
+    font-family: "Italiana", serif;
+  }
+}
+#app{
+    padding-left:150px;
+}
