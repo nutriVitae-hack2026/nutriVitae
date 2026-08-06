@@ -9,15 +9,15 @@ const profissionais = [
     foto: "/profissionais/marcos.png",
 
     formacoes: [
-      "Bacharelado em Nutrição",
-      "Pós-Graduação em Comportamento Alimentar",
-      "Graduação em Nutrição Clínica e Esportiva"
+      { tipo: "Graduação", nome: "Bacharelado em Nutrição" },
+      { tipo: "Pós-Graduação", nome: "Comportamento Alimentar" },
+      { tipo: "Graduação", nome: "Nutrição Clínica e Esportiva" }
     ],
 
     especializacoes: [
-      "Suplementação Esportiva",
-      "Nutrição Comportamental",
-      "Gastronomia Funcional"
+      { tipo: "Curso", nome: "Suplementação Esportiva" },
+      { tipo: "Especialização", nome: "Nutrição Comportamental" },
+      { tipo: "Curso", nome: "Gastronomia Funcional" }
     ]
   },
 
@@ -31,15 +31,15 @@ const profissionais = [
     foto: "/profissionais/ana.png",
 
     formacoes: [
-      "Bacharelado em Nutrição",
-      "Pós-Graduação em Obesidade e Emagrecimento",
-      "Pós-Graduação em Nutrição Esportiva e Obesidade"
+      { tipo: "Graduação", nome: "Bacharelado em Nutrição" },
+      { tipo: "Pós-Graduação", nome: "Obesidade e Emagrecimento" },
+      { tipo: "Pós-Graduação", nome: "Nutrição Esportiva e Obesidade" }
     ],
 
     especializacoes: [
-      "Academia da Obesidade",
-      "Internacional da Obesidade",
-      "Nutrição Materno-Infantil"
+      { tipo: "Curso", nome: "Academia da Obesidade" },
+      { tipo: "Curso", nome: "Internacional da Obesidade" },
+      { tipo: "Especialização", nome: "Nutrição Materno-Infantil" }
     ]
   },
 
@@ -53,15 +53,15 @@ const profissionais = [
     foto: "/profissionais/juliana.png",
 
     formacoes: [
-      "Bacharelado em Nutrição",
-      "Pós-Graduação em Nutrição Clínica",
-      "Especialização em Emagrecimento Saudável"
+      { tipo: "Graduação", nome: "Bacharelado em Nutrição" },
+      { tipo: "Pós-Graduação", nome: "Nutrição Clínica" },
+      { tipo: "Especialização", nome: "Emagrecimento Saudável" }
     ],
 
     especializacoes: [
-      "Saúde da Mulher",
-      "Nutrição Funcional",
-      "Educação Alimentar"
+      { tipo: "Área", nome: "Saúde da Mulher" },
+      { tipo: "Área", nome: "Nutrição Funcional" },
+      { tipo: "Área", nome: "Educação Alimentar" }
     ]
   },
 
@@ -75,15 +75,15 @@ const profissionais = [
     foto: "/profissionais/carlos.png",
 
     formacoes: [
-      "Bacharelado em Nutrição",
-      "Pós-Graduação em Nutrição Esportiva",
-      "Especialização em Performance"
+      { tipo: "Graduação", nome: "Bacharelado em Nutrição" },
+      { tipo: "Pós-Graduação", nome: "Nutrição Esportiva" },
+      { tipo: "Especialização", nome: "Performance" }
     ],
 
     especializacoes: [
-      "Hipertrofia",
-      "Nutrição para Atletas",
-      "Suplementação Esportiva"
+      { tipo: "Área", nome: "Hipertrofia" },
+      { tipo: "Área", nome: "Nutrição para Atletas" },
+      { tipo: "Curso", nome: "Suplementação Esportiva" }
     ]
   },
 
@@ -97,15 +97,15 @@ const profissionais = [
     foto: "/profissionais/fernanda.png",
 
     formacoes: [
-      "Bacharelado em Nutrição",
-      "Pós-Graduação em Nutrição Materno-Infantil",
-      "Especialização em Alimentação Infantil"
+      { tipo: "Graduação", nome: "Bacharelado em Nutrição" },
+      { tipo: "Pós-Graduação", nome: "Nutrição Materno-Infantil" },
+      { tipo: "Especialização", nome: "Alimentação Infantil" }
     ],
 
     especializacoes: [
-      "Gestantes",
-      "Primeira Infância",
-      "Introdução Alimentar"
+      { tipo: "Área", nome: "Gestantes" },
+      { tipo: "Área", nome: "Primeira Infância" },
+      { tipo: "Área", nome: "Introdução Alimentar" }
     ]
   },
 
@@ -119,15 +119,15 @@ const profissionais = [
     foto: "/profissionais/gabriel.png",
 
     formacoes: [
-      "Bacharelado em Nutrição",
-      "Pós-Graduação em Nutrição Clínica",
-      "Especialização em Nutrição Hospitalar"
+      { tipo: "Graduação", nome: "Bacharelado em Nutrição" },
+      { tipo: "Pós-Graduação", nome: "Nutrição Clínica" },
+      { tipo: "Especialização", nome: "Nutrição Hospitalar" }
     ],
 
     especializacoes: [
-      "Doenças Crônicas",
-      "Nutrição Enteral",
-      "Recuperação Nutricional"
+      { tipo: "Área", nome: "Doenças Crônicas" },
+      { tipo: "Área", nome: "Nutrição Enteral" },
+      { tipo: "Área", nome: "Recuperação Nutricional" }
     ]
   }
 ]
