@@ -22,7 +22,7 @@
             </RouterLink>
           </li>
           <li>
-            <routerLink to="#">
+            <routerLink to="/profissionais">
               <i class="mdi mdi-food-apple-outline"></i>
               Nutricionistas
             </routerLink>
@@ -214,7 +214,7 @@ div.linha {
 .menu-list li {
   margin: 15px 50px;
 
-  
+
 }
 & .user li{
     margin: 5px 70px;
