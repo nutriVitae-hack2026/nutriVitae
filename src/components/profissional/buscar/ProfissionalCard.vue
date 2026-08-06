@@ -10,8 +10,12 @@ defineProps({
 <template>
   <div class="profissional-card">
     <div class="perfil">
+      <RouterLink :to="`/profissional/${profissional.id}`">
+
+
       <img :src="profissional.foto" :alt="profissional.nome" class="profissional-image" />
       <button class="perfil-button">Ver Perfil</button>
+      </RouterLink>
     </div>
     <div class="dados">
       <div class="texto">
@@ -54,11 +58,14 @@ defineProps({
   display: flex;
   flex-direction: row;
 
-  & .perfil {
+  & .perfil{
     width: 20%;
-    display: flex;
+
+    & a{
+      display: flex;
     flex-direction: column;
     align-items: center;
+
 
 
     & img {
@@ -82,6 +89,7 @@ defineProps({
       box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
     }
   }
+}
 
   & .dados {
     width: 80%;
