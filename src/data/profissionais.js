@@ -6,7 +6,7 @@ const profissionais = [
     email: "marcosoliveira@gmail.com",
     telefone: "(21) 97634-3210",
     dataNascimento: "1988-11-27",
-    foto: "/profissionais/marcos.jpg",
+    foto: "/profissionais/marcos.png",
 
     formacoes: [
       "Bacharelado em Nutrição",
@@ -28,7 +28,7 @@ const profissionais = [
     email: "anabeatriz@gmail.com",
     telefone: "(11) 98763-4321",
     dataNascimento: "1995-05-15",
-    foto: "/profissionais/ana.jpg",
+    foto: "/profissionais/ana.png",
 
     formacoes: [
       "Bacharelado em Nutrição",
@@ -50,7 +50,7 @@ const profissionais = [
     email: "julianarocha@gmail.com",
     telefone: "(31) 98845-7612",
     dataNascimento: "1992-03-18",
-    foto: "/profissionais/juliana.jpg",
+    foto: "/profissionais/juliana.png",
 
     formacoes: [
       "Bacharelado em Nutrição",
@@ -72,7 +72,7 @@ const profissionais = [
     email: "carloshenrique@gmail.com",
     telefone: "(41) 99781-4532",
     dataNascimento: "1986-09-08",
-    foto: "/profissionais/carlos.jpg",
+    foto: "/profissionais/carlos.png",
 
     formacoes: [
       "Bacharelado em Nutrição",
@@ -94,7 +94,7 @@ const profissionais = [
     email: "fernandalima@gmail.com",
     telefone: "(51) 99123-6754",
     dataNascimento: "1993-12-04",
-    foto: "/profissionais/fernanda.jpg",
+    foto: "/profissionais/fernanda.png",
 
     formacoes: [
       "Bacharelado em Nutrição",
@@ -116,7 +116,7 @@ const profissionais = [
     email: "gabrielmendes@gmail.com",
     telefone: "(61) 99887-3344",
     dataNascimento: "1990-07-29",
-    foto: "/profissionais/gabriel.jpg",
+    foto: "/profissionais/gabriel.png",
 
     formacoes: [
       "Bacharelado em Nutrição",
