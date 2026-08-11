@@ -11,6 +11,10 @@ const buscaTermo = ref('')
         <div class="search-bar">
             <input type="text" v-model="buscaTermo" placeholder="Buscar pacientes ou profissionais..." />
         </div>
+
+        <div class="eduardo">
+
+        </div>
     </div>
 </template>
 
