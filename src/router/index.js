@@ -20,6 +20,16 @@ const router = createRouter({
       path: "/profissional/:id",
       name: "perfil-profissional",
       component: () => import('@/view/perfilProfissionalView.vue'),
+    },
+    {
+      path: "/profissional/:id/edit",
+      name: "edit-perfil-profissional",
+      component: () => import('@/components/profissional/edit/editProfissional.vue'),
+    },
+    {
+      path: "/profissional/:id/delete",
+      name: "delete-perfil-profissional",
+      component: () => import('@/components/profissional/delete/deleteProfissional.vue'),
     }
   ],
 })

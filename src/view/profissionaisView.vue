@@ -1,5 +1,5 @@
 <script setup>
-import BuscarProfissionais from "@/components/profissional/buscar/buscarProfissionais.vue"
+import BuscarProfissionais from "@/components/profissional/buscar/BuscarProfissionais.vue"
 
 </script>
 
