@@ -167,7 +167,7 @@ function agendar() {
 h1 {
   color: #73441b;
   text-align: center;
-  font-size: 2.2rem;
+  font-size: 3rem;
   margin-bottom: 24px;
 }
 
