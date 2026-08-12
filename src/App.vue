@@ -6,8 +6,7 @@ import cadastroCoponents from './components/suporte/cadastroCoponents.vue';
 
 <template>
   <Header />
-    <!-- <router-view /> -->
-     
+
     <cadastroCoponents/>
   <Footer />
 </template>
