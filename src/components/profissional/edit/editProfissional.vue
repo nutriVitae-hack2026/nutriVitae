@@ -28,14 +28,6 @@ function cancelar() {
     router.push(`/profissional/${profissional.id}`)
 }
 
-function removerFormacao(index) {
-    formacoes.value.splice(index, 1)
-}
-
-function removerEspecializacao(index) {
-    especializacoes.value.splice(index, 1)
-}
-
 function alterarFoto(event) {
     const arquivo = event.target.files[0]
     if (arquivo) profissional.foto = URL.createObjectURL(arquivo)
@@ -72,7 +64,7 @@ function alterarFoto(event) {
                 </div>
                 <div class="campo">
                     <label>Data de Nascimento:</label>
-                    <input v-model="dataNascimento" type="date" required>
+                    <input v-model="dataNascimento" type="date" required class="date">
                     <i class="mdi mdi-pencil"></i>
                 </div>
             </div>
@@ -81,47 +73,49 @@ function alterarFoto(event) {
                 <div class="lista">
                     <div class="lista-title">
                         <h2>Formação Acadêmica</h2>
-                        <RouterLink to="#">
-                            <button type="button">
-                                <i class="mdi mdi-plus"></i>
-                            </button>
-                        </RouterLink>
+                        <div>
+                            <RouterLink to="#">
+                                <button type="button">
+                                    <i class="mdi mdi-plus"></i>
+                                </button>
+                            </RouterLink>
+                            <RouterLink to="#">
+                                <button type="button">
+                                    <i class="mdi mdi-pencil"></i>
+                                </button>
+                            </RouterLink>
+                        </div>
                     </div>
-                    <div v-for="(formacao, index) in formacoes" :key="index" class="item">
-                        <select v-model="formacao.tipo">
-                            <option>Curso</option>
-                            <option>Graduação</option>
-                            <option>Pós-Graduação</option>
-                            <option>Mestrado</option>
-                            <option>Doutorado</option>
-                        </select>
-                        <input v-model="formacao.nome" type="text">
-                        <button type="button" @click="removerFormacao(index)">
-                            <i class="mdi mdi-delete-outline"></i>
-                        </button>
-                    </div>
+                    <ul>
+                        <li v-for="formacao in formacoes" :key="formacao.nome">
+                            <strong>{{ formacao.tipo }}:</strong>
+                            {{ formacao.nome }}
+                        </li>
+                    </ul>
                 </div>
 
                 <div class="lista">
                     <div class="lista-title">
                         <h2>Especializações</h2>
-                        <RouterLink to="#">
-                            <button type="button">
-                                <i class="mdi mdi-plus"></i>
-                            </button>
-                        </RouterLink>
+                        <div>
+                            <RouterLink to="#">
+                                <button type="button">
+                                    <i class="mdi mdi-plus"></i>
+                                </button>
+                            </RouterLink>
+                            <RouterLink to="#">
+                                <button type="button">
+                                    <i class="mdi mdi-pencil"></i>
+                                </button>
+                            </RouterLink>
+                        </div>
                     </div>
-                    <div v-for="(especializacao, index) in especializacoes" :key="index" class="item">
-                        <select v-model="especializacao.tipo">
-                            <option>Curso</option>
-                            <option>Especialização</option>
-                            <option>Certificação</option>
-                        </select>
-                        <input v-model="especializacao.nome" type="text">
-                        <button type="button" @click="removerEspecializacao(index)">
-                            <i class="mdi mdi-delete-outline"></i>
-                        </button>
-                    </div>
+                    <ul>
+                        <li v-for="especializacao in especializacoes" :key="especializacao.nome">
+                            <strong>{{ especializacao.tipo }}:</strong>
+                            {{ especializacao.nome }}
+                        </li>
+                    </ul>
                 </div>
             </div>
 
@@ -238,6 +232,16 @@ function alterarFoto(event) {
                 font-family: "Italiana", serif;
                 font-size: 25px;
                 font-weight: bold;
+                cursor: pointer;
+            }
+
+            & input::-webkit-calendar-picker-indicator {
+                cursor: pointer;
+                filter: invert(35%) sepia(30%) saturate(600%) hue-rotate(45deg);
+                width: 20px;
+                height: 20px;
+                padding: 5px;
+
             }
 
             & input:read-only {
@@ -248,7 +252,11 @@ function alterarFoto(event) {
             & i {
                 color: #536236;
                 font-size: 20px;
-
+                padding: 5px 10px;
+                margin: 10px;
+                border-radius: 50%;
+                box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+                cursor: pointer;
             }
         }
     }
@@ -271,66 +279,52 @@ function alterarFoto(event) {
             & .lista-title {
                 display: flex;
                 align-items: center;
-                justify-content: space-between;
+                justify-content: center;
+                gap: 70px;
 
                 & h2 {
                     color: #333F34;
+                    -webkit-text-stroke: 1px #333F34;
                     font-size: 30px;
                     margin: 5px 0 15px;
                 }
 
-                & button {
-                    width: 35px;
-                    height: 35px;
-                    padding: 0;
-                    margin: 0;
-                    border: none;
-                    border-radius: 50%;
-                    background: #D1BFA5;
-                    color: #333F34;
-                    cursor: pointer;
+                & div {
+                    display: flex;
+                    gap: 8px;
+
+                    & button {
+                        width: 35px;
+                        height: 35px;
+                        padding: 0;
+                        border: none;
+                        border-radius: 50%;
+                        background: #D1BFA5;
+                        color: #333F34;
+                        -webkit-text-stroke: 1px #333F34;
+                        cursor: pointer;
+                        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+                    }
                 }
             }
 
-            & .item {
+            & ul {
+                padding-left: 20px;
+                margin: 0;
+                list-style: none;
                 display: flex;
-                align-items: center;
-                gap: 8px;
-                margin: 10px 0;
+                flex-direction: column;
 
-                & select {
-                    width: 130px;
-                    padding: 7px;
-                    border: none;
-                    border-radius: 6px;
-                    background: #D1BFA5;
-                    color: #333F34;
-                    font-family: inherit;
-                    font-weight: bold;
-                }
+                & li {
+                    color: #536236;
+                    font-size: 25px;
+                    margin: 8px 0;
+                    -webkit-text-stroke: 1px #536236;
 
-                & input {
-                    flex: 1;
-                    min-width: 0;
-                    padding: 7px;
-                    border: none;
-                    border-radius: 6px;
-                    outline: none;
-                    background: #D1BFA5;
-                    color: #73441B;
-                    font-family: inherit;
-                    font-weight: bold;
-                }
-
-                & button {
-                    width: 35px;
-                    height: 35px;
-                    padding: 0;
-                    border: none;
-                    background: transparent;
-                    color: #73441B;
-                    cursor: pointer;
-                    font-size: 20px;
+                    & strong {
+                        color: #333F34;
+                        -webkit-text-stroke: 1px #333F34;
+                    }
                 }
             }
         }
@@ -343,12 +337,13 @@ function alterarFoto(event) {
         margin-top: 60px;
 
         & button {
-            width: 255px;
-            height: 45px;
-            border: none;
+            width: 20%;
+            height: 50px;
+            border:  1px #333F34 solid;
             border-radius: 15px;
             background: #9A9E70;
             color: #333F34;
+            -webkit-text-stroke: 1px #333F34;
             font-family: "Italiana", serif;
             font-size: 30px;
             cursor: pointer;
