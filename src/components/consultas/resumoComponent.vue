@@ -122,7 +122,8 @@ function formatarData(dataIso) {
 
     <!-- Ações de (Voltar/Editar e Excluir) -->
     <div class="actions-footer">
-      <button class="btn-icon" title="Voltar/Editar" @click="router.back()">✏️</button>
+      <button class="btn-icon" title="Editar" @click="router.push('/editar')">✏️</button>
+
       <button class="btn-icon" title="Limpar" @click="router.back()">🗑️</button>
 
       <button class="btn-buscar" @click="router.push('/buscar')">
@@ -157,20 +158,21 @@ function formatarData(dataIso) {
   position: relative;
   max-width: 850px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 0 0 20px 20px;
   min-height: 500px;
 }
 
 .header-banner {
   position: absolute;
   top: 0;
-  right: 0;
+  right: -20px;
   background-color: #73441b;
   color: #f2ebd9;
-  padding: 24px 50px 24px 40px;
-  border-bottom-left-radius: 100px;
+  padding: 24px 60px 24px 40px;
+border-radius: 0 0 0 120px;
   box-shadow: -4px 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
+  z-index: 10;
 }
 
 .header-banner h1 {

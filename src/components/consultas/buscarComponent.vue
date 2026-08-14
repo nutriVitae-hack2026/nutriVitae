@@ -89,8 +89,8 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #fcf8f5; /* Tom bege do fundo */
-  border: 1.5px solid #c8a287; /* Borda em tom marrom/terroso */
+  background-color: #F1EDD2; 
+  border: 1.5px solid #73441B; 
   border-radius: 16px;
   padding: 16px;
   gap: 12px;
@@ -101,7 +101,7 @@ h1 {
   align-items: center;
   gap: 10px;
   background-color: #F1EDD2;
-  border: 1px solid #73441B;
+  border: 1.5px solid #73441B;
   border-radius: 12px;
   padding: 8px 14px;
   flex: 1; /* Ocupa espaço proporcional */

@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import agendamento from '../components/consultas/agendamentoComponent.vue'
-
+import resumo from '../components/consultas/resumoComponent.vue'
+import buscar from '../components/consultas/buscarComponent.vue'
+import editar from '../components/consultas/editarComponent.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,12 +15,17 @@ const router = createRouter({
          {
             path: '/resumo',
             name: 'resumoComponent',
-            component: () => import('../components/consultas/resumoComponent.vue')
+            component: resumo
         },
         {
             path: '/buscar',
             name: 'buscarComponent',
-            component: () => import('../components/consultas/buscarComponent.vue')
+            component: buscar
+        },
+          {
+            path: '/editar',
+            name: 'editarComponent',
+            component: editar
         },
     ]
 })
