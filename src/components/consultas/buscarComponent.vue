@@ -8,7 +8,7 @@ const buscaTermo = ref('')
   <div class="container">
     <h1>Buscar Perfil do Profissional</h1>
     <div class="search-bar">
-      <input type="text" v-model="buscaTermo" placeholder="Buscar pacientes ou profissionais..." />
+      <input type="text" v-model="buscaTermo" placeholder="Pacientes" />
     </div>
 
     <div class="card-list">
@@ -25,13 +25,34 @@ const buscaTermo = ref('')
           <span class="name"> Gabriel Lima da Costa </span>
         </div>
         <!-- Bloco de Informações -->
-         <div class="info-block">
+        <div class="info-block">
           <p>📅<strong>Data:</strong> 12/10/2026</p>
-          <p>🕒<strong>Horário:</strong> 14:00 - 15:00</p>
+          <p>🕒<strong>Horário:</strong> 14h30 /02h30 pm</p>
           <p>📍<strong>Tipo de agendamento:</strong> Online (EAD)</p>
+        </div>
       </div>
+
+      <!-- CARD 2 -->
+      <div class="appointment-card">
+        <!-- Bloco Profissional -->
+        <div class="profile-chip">
+          <img src="/public/usuarios/carolina-user.png" alt="Dr. Alexandre" class="avatar" />
+          <span class="name"> Dr. Alexandre Xavier </span>
+        </div>
+        <!-- Bloco Paciente -->
+        <div class="profile-chip">
+          <img src="/public/usuarios/gabriel-user(1).png" alt="Amanda da sousa" class="avatar" />
+          <span class="name"> Amanda da sousa Lima </span>
+        </div>
+        <!-- Bloco de Informações -->
+        <div class="info-block">
+          <p>📅<strong>Data:</strong> 25/09/2026</p>
+          <p>🕒<strong>Horário:</strong>08h00 /08h00 am</p>
+          <p>📍<strong>Tipo de agendamento:</strong> Online (EAD)</p>
+        </div>
+      </div>
+
     </div>
-  </div>
   </div>
 </template>
 
@@ -79,8 +100,8 @@ h1 {
   display: flex;
   align-items: center;
   gap: 10px;
-  background-color: #ffffff;
-  border: 1px solid #dcdcdc;
+  background-color: #F1EDD2;
+  border: 1px solid #73441B;
   border-radius: 12px;
   padding: 8px 14px;
   flex: 1; /* Ocupa espaço proporcional */
@@ -96,16 +117,15 @@ h1 {
 .name {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #333;
+  color: #333F34;
 }
 
 /* Detalhes da consulta */
 .info-block {
   flex: 1;
   font-size: 0.85rem;
-  color: #4a4a4a;
+  color: #536236;
   line-height: 1.4;
-  border-left: 1px solid #e0e0e0;
   padding-left: 12px;
 }
 
