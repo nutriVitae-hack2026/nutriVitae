@@ -158,14 +158,14 @@ function formatarData(dataIso) {
   position: relative;
   max-width: 850px;
   margin: 0 auto;
-  padding: 0 0 20px 20px;
+  padding: 20px;
   min-height: 500px;
 }
 
 .header-banner {
-  position: absolute;
+  position: fixed;
   top: 0;
-  right: -20px;
+  right: 0;
   background-color: #73441b;
   color: #f2ebd9;
   padding: 24px 60px 24px 40px;

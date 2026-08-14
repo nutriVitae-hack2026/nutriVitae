@@ -3,6 +3,10 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+const editandoData = ref(false)
+const editandoHorario = ref(false)
+const editandoTipo = ref(false)
+
 const mostrarModalSenha = ref(false)
 const senha = ref('')
 
@@ -35,6 +39,12 @@ onMounted(() => {
   }
 })
 
+function formatarData(dataIso) {
+  if (!dataIso) return ''
+  const [ano, mes, dia] = dataIso.split('-')
+  return `${dia}/${mes}/${ano}`
+}
+
 function salvarAlteracoes() {
   mostrarModalSenha.value = true
 }
@@ -44,7 +54,11 @@ function meConfirmarEdicao() {
 
   localStorage.setItem('dadosAgendamento', JSON.stringify(agendamento.value))
   mostrarModalSenha.value = false
-  router.push('/resumo') // Volta para o resumo após salvar
+
+  editandoData.value = false
+  editandoHorario.value = false
+  editandoTipo.value = false
+  router.push('/resumo')
 }
 </script>
 
@@ -105,53 +119,74 @@ function meConfirmarEdicao() {
           <span class="icon">📅</span>
           <div>
             <strong>Data:</strong>
-            <input type="date" v-model="agendamento.consulta.data" class="edit-input" />
+            <input
+              v-if="editandoData"
+              type="date"
+              v-model="agendamento.consulta.data"
+              class="edit-input"
+              @blur="editandoData = false"
+            />
+            <span v-else class="value"
+              >{{ formatarData(agendamento.consulta.data || 'Selecionar  a Data') }}
+              <button class="btn-lapis" @click="editandoData = true" title="Editar Data">✏️</button>
+            </span>
           </div>
         </div>
 
         <div class="detail-item">
           <span class="icon">🕒</span>
           <div>
-            <strong>Horario:</strong>
-            <input type="text" v-model="agendamento.consulta.horario" class="edit-input" />
+            <strong>Horário:</strong>
+
+            <!-- Se estiver editando, exibe o input de texto/time -->
+            <input
+              v-if="editandoHorario"
+              type="text"
+              v-model="agendamento.consulta.horario"
+              class="edit-input"
+              @blur="editandoHorario = false"
+            />
+            <!-- Se não, exibe o texto do horário + botão de lápis -->
+            <span v-else class="value">
+              {{ agendamento.consulta.horario || '00:00' }}
+              <button class="btn-lapis" @click="editandoHorario = true" title="Editar Horário">
+                ✏️
+              </button>
+            </span>
           </div>
         </div>
 
-        <div class="detail-item full">
-          <strong>Tipo de agendamento:</strong>
-          <select v-model="agendamento.consulta.tipo" class="edit-select">
-            <option value="Presencial">Presencial</option>
-            <option value="Online (EAD)">Online (EAD)</option>
-          </select>
-        </div>
-      </div>
-    </div>
+       <div class="detail-item full">
+    <strong>Tipo de agendamento:</strong>
+    
+    <!-- Se estiver editando, exibe o select -->
+    <select 
+      v-if="editandoTipo" 
+      v-model="agendamento.consulta.tipo" 
+      class="edit-select"
+      @change="editandoTipo = false"
+      @blur="editandoTipo = false"
+    >
+      <option value="Presencial">Presencial</option>
+      <option value="Online (EAD)">Online (EAD)</option>
+    </select>
+    <!-- Se não, exibe o texto do tipo + botão de lápis -->
+    <span v-else class="value">
+      {{ agendamento.consulta.tipo }}
+      <button class="btn-lapis" @click="editandoTipo = true" title="Editar Tipo">✏️</button>
+    </span>
+  </div>
 
     <!-- Ações de (Voltar/Editar e Excluir) -->
     <button class="btn-confirmar" @click="salvarAlteracoes">Confirmar Alterações</button>
   </div>
-
-    <!-- Modal de Confirmação de Senha -->
-    <div v-if="mostrarModalSenha" class="modal-overlay">
-      <div class="modal-card">
-        <div class="modal-header">
-          <h3>Editar Agendamento</h3>
-          <button class="btn-close" @click="mostrarModalSenha = false">✏️</button>
-        </div>
-        <input 
-          type="password" 
-          placeholder="Digite sua senha para confirmar a edição:" 
-          v-model="senha"
-          class="modal-input" 
-        />
-        <button class="btn-confirmar" @click="meConfirmarEdicao">Confirmar</button>
-      </div>
-    </div>
+</div>
+</div>
 </template>
 
 <style scoped>
-
-.edit-input, .edit-select {
+.edit-input,
+.edit-select {
   border: 1px solid #73441b;
   border-radius: 8px;
   padding: 4px 8px;
@@ -177,8 +212,11 @@ function meConfirmarEdicao() {
 /* Modal */
 .modal-overlay {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0,0,0,0.4);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -191,7 +229,7 @@ function meConfirmarEdicao() {
   border-radius: 16px;
   width: 320px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .modal-header {
