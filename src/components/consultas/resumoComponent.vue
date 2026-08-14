@@ -124,11 +124,35 @@ function formatarData(dataIso) {
     <div class="actions-footer">
       <button class="btn-icon" title="Voltar/Editar" @click="router.back()">✏️</button>
       <button class="btn-icon" title="Limpar" @click="router.back()">🗑️</button>
+
+      <button class="btn-buscar" @click="router.push('/buscar')">
+    🔍 Buscar Profissionais
+  </button>
     </div>
   </div>
 </template>
 
 <style>
+
+.btn-buscar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #6B7C4F;
+  color: #F1EDD2;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.2);
+  transition: background 0.2s;
+}
+
+.btn-buscar:hover {
+  background-color: #536236;
+}
+
 .resumo-container {
   position: relative;
   max-width: 850px;
