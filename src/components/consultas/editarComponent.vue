@@ -40,7 +40,7 @@ onMounted(() => {
 })
 
 function formatarData(dataIso) {
-  if (!dataIso) return ''
+  if (!dataIso) return 'Selecionar a Data'
   const [ano, mes, dia] = dataIso.split('-')
   return `${dia}/${mes}/${ano}`
 }
@@ -58,6 +58,8 @@ function meConfirmarEdicao() {
   editandoData.value = false
   editandoHorario.value = false
   editandoTipo.value = false
+  senha.value = ''
+
   router.push('/resumo')
 }
 </script>
@@ -81,7 +83,6 @@ function meConfirmarEdicao() {
             <h2>
               {{ agendamento.profissional.nome || 'Nome Profissional' }}
             </h2>
-
             <p>
               <strong>Telefone:</strong>
               {{ agendamento.profissional.telefone }}
@@ -102,7 +103,6 @@ function meConfirmarEdicao() {
             <h2>
               {{ agendamento.usuario.nome || 'Nome Usuário' }}
             </h2>
-
             <p>
               <strong>Telefone:</strong>
               {{ agendamento.usuario.telefone }}
@@ -113,8 +113,9 @@ function meConfirmarEdicao() {
         </div>
       </div>
 
-      <!-- Coluna de Detalhes do Horário e Tipo de consuta -->
+      <!-- Coluna de Detalhes -->
       <div class="details-coluna">
+        <!-- Campo DATA -->
         <div class="detail-item">
           <span class="icon">📅</span>
           <div>
@@ -126,19 +127,18 @@ function meConfirmarEdicao() {
               class="edit-input"
               @blur="editandoData = false"
             />
-            <span v-else class="value"
-              >{{ formatarData(agendamento.consulta.data || 'Selecionar  a Data') }}
+            <span v-else class="value">
+              {{ formatarData(agendamento.consulta.data) }}
               <button class="btn-lapis" @click="editandoData = true" title="Editar Data">✏️</button>
             </span>
           </div>
         </div>
 
+        <!-- Campo HORÁRIO -->
         <div class="detail-item">
           <span class="icon">🕒</span>
           <div>
             <strong>Horário:</strong>
-
-            <!-- Se estiver editando, exibe o input de texto/time -->
             <input
               v-if="editandoHorario"
               type="text"
@@ -146,42 +146,60 @@ function meConfirmarEdicao() {
               class="edit-input"
               @blur="editandoHorario = false"
             />
-            <!-- Se não, exibe o texto do horário + botão de lápis -->
             <span v-else class="value">
               {{ agendamento.consulta.horario || '00:00' }}
-              <button class="btn-lapis" @click="editandoHorario = true" title="Editar Horário">
-                ✏️
-              </button>
+              <button class="btn-lapis" @click="editandoHorario = true" title="Editar Horário">✏️</button>
             </span>
           </div>
         </div>
 
-       <div class="detail-item full">
-    <strong>Tipo de agendamento:</strong>
-    
-    <!-- Se estiver editando, exibe o select -->
-    <select 
-      v-if="editandoTipo" 
-      v-model="agendamento.consulta.tipo" 
-      class="edit-select"
-      @change="editandoTipo = false"
-      @blur="editandoTipo = false"
-    >
-      <option value="Presencial">Presencial</option>
-      <option value="Online (EAD)">Online (EAD)</option>
-    </select>
-    <!-- Se não, exibe o texto do tipo + botão de lápis -->
-    <span v-else class="value">
-      {{ agendamento.consulta.tipo }}
-      <button class="btn-lapis" @click="editandoTipo = true" title="Editar Tipo">✏️</button>
-    </span>
-  </div>
+        <!-- Campo TIPO -->
+        <div class="detail-item full">
+          <strong>Tipo de agendamento:</strong>
+          <select 
+            v-if="editandoTipo" 
+            v-model="agendamento.consulta.tipo" 
+            class="edit-select"
+            @change="editandoTipo = false"
+            @blur="editandoTipo = false"
+          >
+            <option value="Presencial">Presencial</option>
+            <option value="Online (EAD)">Online (EAD)</option>
+          </select>
+          <span v-else class="value">
+            {{ agendamento.consulta.tipo }}
+            <button class="btn-lapis" @click="editandoTipo = true" title="Editar Tipo">✏️</button>
+          </span>
+        </div>
 
-    <!-- Ações de (Voltar/Editar e Excluir) -->
-    <button class="btn-confirmar" @click="salvarAlteracoes">Confirmar Alterações</button>
+        <!-- Botão para abrir o modal -->
+        <button class="btn-confirmar" @click="salvarAlteracoes">
+          Confirmar Alterações
+        </button>
+      </div>
+    </div>
+
+    <div v-if="mostrarModalSenha" class="modal-overlay" @click.self="mostrarModalSenha = false">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>Editar Agendamento</h3>
+          <button class="btn-fechar-modal" @click="mostrarModalSenha = false">✖</button>
+        </div>
+
+        <p class="modal-instruction">Digite sua senha para confirmar as alterações:</p>
+
+        <input
+          type="password"
+          placeholder="Sua senha"
+          v-model="senha"
+          class="modal-input"
+          @keyup.enter="meConfirmarEdicao"
+        />
+
+        <button class="btn-confirmar-modal" @click="meConfirmarEdicao">Confirmar</button>
+      </div>
+    </div>
   </div>
-</div>
-</div>
 </template>
 
 <style scoped>
@@ -210,46 +228,7 @@ function meConfirmarEdicao() {
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Modal */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-}
-
-.modal-card {
-  background-color: #9a9e70;
-  padding: 24px;
-  border-radius: 16px;
-  width: 320px;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.modal-input {
-  width: 100%;
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid #73441b;
-  background-color: #d1cbb0;
-  margin-bottom: 16px;
-  box-sizing: border-box;
-}
-
+/* Botão Lápis */
 .btn-lapis {
   background-color: #f1edd2;
   border: 1px solid #73441b;
@@ -269,5 +248,77 @@ function meConfirmarEdicao() {
 .btn-lapis:hover {
   transform: scale(1.1);
   background-color: #e2dcba;
+}
+
+/* Modal Styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-card {
+  background-color: #9a9e70;
+  padding: 24px;
+  border-radius: 16px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  color: #2b3323;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.btn-fechar-modal {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #2b3323;
+}
+
+.modal-instruction {
+  font-size: 0.9rem;
+  color: #2b3323;
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.modal-input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #73441b;
+  background-color: #d1cbb0;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.btn-confirmar-modal {
+  background-color: #f1edd2;
+  border: 1px solid #73441b;
+  color: #333f34;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 8px 20px;
+  cursor: pointer;
 }
 </style>
