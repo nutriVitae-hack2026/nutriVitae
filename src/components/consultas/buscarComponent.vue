@@ -47,7 +47,18 @@ const agendamentosFiltrados = computed(() => {
 
 <template>
   <div class="container">
-    <div 
+     <h1>Buscar Perfil do Profissional</h1>
+     <div class="search-bar">
+      <input 
+        type="text" 
+        v-model="buscaTermo" 
+        placeholder="Pesquisar paciente..." 
+      />
+      <span class="search-icon">🔍</span>
+    </div>
+
+    <div class="card-list">
+      <div 
         v-for="card in agendamentosFiltrados" 
         :key="card.id" 
         class="appointment-card"
@@ -77,7 +88,7 @@ const agendamentosFiltrados = computed(() => {
         Nenhum agendamento encontrado para "{{ buscaTermo }}".
       </p>
     </div>
-
+  </div>
 </template>
 
 <style scoped>
@@ -91,20 +102,45 @@ const agendamentosFiltrados = computed(() => {
 h1 {
   color: #73441b;
   text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 24px;
 }
 
+/* Container da Barra de Busca */
 .search-bar {
-  margin-bottom: 20px;
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto 24px auto;
 }
 
 .search-bar input {
   width: 100%;
-  padding: 12px;
-  border-radius: 12px;
-  border: 1px solid #9c8a6f;
-  background-color: #cbba9c;
+  padding: 12px 45px 12px 20px;
+  border-radius: 16px;
+  border: 1px solid #73441b;
+  background-color: #939a6d; /* Tom verde oliva claro do protótipo */
+  color: #2b3323;
+  font-size: 1.05rem;
+  font-weight: 500;
   outline: none;
-  font-size: 1rem;
+  box-sizing: border-box;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.search-bar input::placeholder {
+  color: #3b452e;
+  opacity: 0.8;
+}
+
+.search-icon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  pointer-events: none;
+  opacity: 0.7;
 }
 
 .card-list {
@@ -112,6 +148,7 @@ h1 {
   flex-direction: column;
   gap: 16px;
   max-width: 700px;
+  margin: 0 auto;
   font-family: sans-serif;
 }
 
@@ -125,6 +162,7 @@ h1 {
   border-radius: 16px;
   padding: 16px;
   gap: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Pills / Chips com foto e nome */
@@ -169,6 +207,6 @@ h1 {
   color: #73441b;
   text-align: center;
   font-weight: 500;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 </style>
