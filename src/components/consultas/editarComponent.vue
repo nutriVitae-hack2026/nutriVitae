@@ -185,6 +185,7 @@ function meConfirmarEdicao() {
 </template>
 
 <style scoped>
+
 .edit-input,
 .edit-select {
   border: 1px solid #73441b;
@@ -247,5 +248,26 @@ function meConfirmarEdicao() {
   background-color: #d1cbb0;
   margin-bottom: 16px;
   box-sizing: border-box;
+}
+
+.btn-lapis {
+  background-color: #f1edd2;
+  border: 1px solid #73441b;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-left: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.15);
+  transition: transform 0.1s ease;
+}
+
+.btn-lapis:hover {
+  transform: scale(1.1);
+  background-color: #e2dcba;
 }
 </style>
