@@ -38,16 +38,27 @@ function formatarData(dataIso) {
   const [ano, mes, dia] = dataIso.split('-')
   return `${dia}/${mes}/${ano}`
 }
+
+function extrairPrimeiroNome(nomeCompleto, ehProfissional = false) {
+  if (!nomeCompleto) return ''
+  const partes = nomeCompleto.trim().split(' ')
+  
+  if (ehProfissional && partes.length > 1 && partes[0].toLowerCase().startsWith('dr')) {
+    return `${partes[0]} ${partes[1]}`
+  }
+  
+  return partes[0]
+}
 </script>
 
 <template>
   <div class="resumo-container">
     <header class="header-banner">
       <h1>Agendamento</h1>
-      <p>
-        {{ agendamento.profissional.nome.split(' ')[0] }} &
-        {{ agendamento.usuario.nome.split(' ')[0] }}
-      </p>
+     <p>
+    {{ extrairPrimeiroNome(agendamento.profissional.nome, true) }} &
+    {{ extrairPrimeiroNome(agendamento.usuario.nome) }}
+  </p>
     </header>
 
     <div class="resumo-content">
@@ -124,7 +135,7 @@ function formatarData(dataIso) {
     <div class="actions-footer">
       <button class="btn-icon" title="Editar" @click="router.push('/editar')">✏️</button>
 
-      <button class="btn-icon" title="Limpar" @click="router.back()">🗑️</button>
+      <button class="btn-icon" title="Excluir" @click="router.push('/excluir')">🗑️</button>
 
       <button class="btn-buscar" @click="router.push('/buscar')">
     🔍 Buscar Profissionais

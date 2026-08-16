@@ -12,20 +12,18 @@ const agendamento = ref({
     nome: '',
     telefone: '',
     email: '',
-    foto: null, // <-- Guarda a URL da foto do usuário
+    foto: null,
   },
-
   profissional: {
     nome: '',
     telefone: '',
     email: '',
     foto: null,
   },
-
   consulta: {
     data: '',
     horario: '',
-    tipo: 'Presencial', //ou 'online (EAD)'
+    tipo: 'Presencial',
   },
 })
 
@@ -42,11 +40,11 @@ function formatarData(dataIso) {
   return `${dia}/${mes}/${ano}`
 }
 
-function calcelarExclusao() {
+function cancelarExclusao() {
   router.push('/resumo')
 }
 
-function abrirModalExclusão() {
+function abrirModalExclusao() {
   mostrarModalSenha.value = true
 }
 
@@ -54,9 +52,10 @@ function meConfirmarExclusao() {
   if (!senha.value) return alert('Digite sua senha para confirmar!')
 
   localStorage.removeItem('dadosAgendamento')
+  
   mostrarModalSenha.value = false
-
   senha.value = ''
+
   router.push('/buscar')
 }
 </script>
