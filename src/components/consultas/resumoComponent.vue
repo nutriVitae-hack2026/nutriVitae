@@ -49,16 +49,51 @@ function extrairPrimeiroNome(nomeCompleto, ehProfissional = false) {
   
   return partes[0]
 }
-</script>
 
+// Variáveis para controlar o Modal de Perfil
+const modalAberto = ref(false)
+const pessoaSelecionada = ref({
+  titulo: '',
+  nome: '',
+  telefone: '',
+  email: '',
+  foto: null
+})
+
+// Função para abrir o perfil recebendo o tipo ('profissional' ou 'paciente')
+function verPerfil(tipo) {
+  if (tipo === 'profissional') {
+    pessoaSelecionada.value = {
+      titulo: 'Perfil do Profissional',
+      nome: agendamento.value.profissional.nome || 'Não informado',
+      telefone: agendamento.value.profissional.telefone || 'Não informado',
+      email: agendamento.value.profissional.email || 'Não informado',
+      foto: agendamento.value.profissional.foto
+    }
+  } else {
+    pessoaSelecionada.value = {
+      titulo: 'Perfil do Paciente',
+      nome: agendamento.value.usuario.nome || 'Não informado',
+      telefone: agendamento.value.usuario.telefone || 'Não informado',
+      email: agendamento.value.usuario.email || 'Não informado',
+      foto: agendamento.value.usuario.foto
+    }
+  }
+  modalAberto.value = true
+}
+
+function fecharModal() {
+  modalAberto.value = false
+}
+</script>
 <template>
   <div class="resumo-container">
     <header class="header-banner">
       <h1>Agendamento</h1>
-     <p>
-    {{ extrairPrimeiroNome(agendamento.profissional.nome, true) }} &
-    {{ extrairPrimeiroNome(agendamento.usuario.nome) }}
-  </p>
+      <p>
+        {{ extrairPrimeiroNome(agendamento.profissional.nome, true) }} &
+        {{ extrairPrimeiroNome(agendamento.usuario.nome) }}
+      </p>
     </header>
 
     <div class="resumo-content">
@@ -79,12 +114,13 @@ function extrairPrimeiroNome(nomeCompleto, ehProfissional = false) {
               <strong>Telefone:</strong>
               {{ agendamento.profissional.telefone }}
             </p>
-            <button class="bnt-perfil">Ver Perfil</button>
+            <!-- Apenas 1 botão no Profissional -->
+            <button class="bnt-perfil" @click="verPerfil('profissional')">Ver Perfil</button>
           </div>
           <button class="bnt-chat">Conversar Com o Profissional</button>
         </div>
 
-        <!-- Card Usuário -->
+        <!-- Card Usuário / Paciente -->
         <div class="person-card">
           <img
             :src="agendamento.usuario.foto || 'https://via.placeholder.com/150'"
@@ -100,13 +136,14 @@ function extrairPrimeiroNome(nomeCompleto, ehProfissional = false) {
               <strong>Telefone:</strong>
               {{ agendamento.usuario.telefone }}
             </p>
-            <button class="bnt-perfil">Ver Perfil</button>
+            <!-- Adicionado evento @click para ver o perfil do paciente -->
+            <button class="bnt-perfil" @click="verPerfil('paciente')">Ver Perfil</button>
           </div>
           <button class="bnt-chat">Conversar Com o paciente</button>
         </div>
       </div>
 
-      <!-- Coluna de Detalhes do Horário e Tipo de consuta -->
+      <!-- Coluna de Detalhes do Horário e Tipo de consulta -->
       <div class="details-coluna">
         <div class="detail-item">
           <span class="icon">📅</span>
@@ -138,8 +175,34 @@ function extrairPrimeiroNome(nomeCompleto, ehProfissional = false) {
       <button class="btn-icon" title="Excluir" @click="router.push('/excluir')">🗑️</button>
 
       <button class="btn-buscar" @click="router.push('/buscar')">
-    🔍 Buscar Profissionais
-  </button>
+        🔍 Buscar Profissionais
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal de Perfil -->
+  <div v-if="modalAberto" class="modal-overlay" @click.self="fecharModal">
+    <div class="modal-card">
+      <button class="modal-close" @click="fecharModal">✕</button>
+
+      <!-- Foto no início -->
+      <div class="modal-header">
+        <img
+          :src="pessoaSelecionada.foto || 'https://via.placeholder.com/150'"
+          alt="Foto de Perfil"
+          class="modal-avatar"
+        />
+        <h2>{{ pessoaSelecionada.titulo }}</h2>
+      </div>
+
+      <!-- Informações detalhadas -->
+      <div class="modal-body">
+        <p><strong>Nome:</strong> {{ pessoaSelecionada.nome }}</p>
+        <p><strong>Telefone:</strong> {{ pessoaSelecionada.telefone }}</p>
+        <p><strong>E-mail:</strong> {{ pessoaSelecionada.email }}</p>
+      </div>
+
+      <button class="btn-fechar" @click="fecharModal">Fechar</button>
     </div>
   </div>
 </template>
@@ -303,5 +366,99 @@ border-radius: 0 0 0 120px;
   align-items: center;
   justify-content: center;
   font-size: 1.1rem;
+}
+
+/* Estilos do Modal de Perfil */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-card {
+  background-color: #cbba9c;
+  border: 2px solid #73441b;
+  border-radius: 20px;
+  padding: 24px;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #73441b;
+  cursor: pointer;
+}
+
+.modal-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.modal-avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #73441b;
+  margin-bottom: 12px;
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: #73441b;
+  font-size: 1.4rem;
+}
+
+.modal-body {
+  text-align: left;
+  background-color: #f1edd2;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  border: 1px solid #9c8a6f;
+}
+
+.modal-body p {
+  margin: 8px 0;
+  color: #333f34;
+  font-size: 1rem;
+}
+
+.modal-body strong {
+  color: #536236;
+}
+
+.btn-fechar {
+  background-color: #6b7c4f;
+  color: #f1edd2;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-fechar:hover {
+  background-color: #536236;
 }
 </style>
