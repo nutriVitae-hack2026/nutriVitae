@@ -114,7 +114,7 @@ function fecharModal() {
               <strong>Telefone:</strong>
               {{ agendamento.profissional.telefone }}
             </p>
-            <!-- Apenas 1 botão no Profissional -->
+
             <button class="bnt-perfil" @click="verPerfil('profissional')">Ver Perfil</button>
           </div>
           <button class="bnt-chat">Conversar Com o Profissional</button>
@@ -136,14 +136,14 @@ function fecharModal() {
               <strong>Telefone:</strong>
               {{ agendamento.usuario.telefone }}
             </p>
-            <!-- Adicionado evento @click para ver o perfil do paciente -->
+
             <button class="bnt-perfil" @click="verPerfil('paciente')">Ver Perfil</button>
           </div>
           <button class="bnt-chat">Conversar Com o paciente</button>
         </div>
       </div>
 
-      <!-- Coluna de Detalhes do Horário e Tipo de consulta -->
+ 
       <div class="details-coluna">
         <div class="detail-item">
           <span class="icon">📅</span>
@@ -175,17 +175,15 @@ function fecharModal() {
       <button class="btn-icon" title="Excluir" @click="router.push('/excluir')">🗑️</button>
 
       <button class="btn-buscar" @click="router.push('/buscar')">
-        🔍 Buscar Profissionais
+       Buscar Profissionais
       </button>
     </div>
   </div>
 
-  <!-- Modal de Perfil -->
   <div v-if="modalAberto" class="modal-overlay" @click.self="fecharModal">
     <div class="modal-card">
       <button class="modal-close" @click="fecharModal">✕</button>
 
-      <!-- Foto no início -->
       <div class="modal-header">
         <img
           :src="pessoaSelecionada.foto || 'https://via.placeholder.com/150'"
@@ -214,7 +212,7 @@ function fecharModal() {
   align-items: center;
   gap: 8px;
   background-color: #6B7C4F;
-  color: #F1EDD2;
+  color: #333F34;
   border: none;
   border-radius: 12px;
   padding: 10px 18px;
@@ -383,8 +381,8 @@ border-radius: 0 0 0 120px;
 }
 
 .modal-card {
-  background-color: #cbba9c;
-  border: 2px solid #73441b;
+  background-color: #F1EDD2;
+  border: 1.5px solid #73441b;
   border-radius: 20px;
   padding: 24px;
   width: 90%;
@@ -402,7 +400,7 @@ border-radius: 0 0 0 120px;
   border: none;
   font-size: 1.2rem;
   font-weight: bold;
-  color: #73441b;
+  color: #333F34;
   cursor: pointer;
 }
 
@@ -424,7 +422,7 @@ border-radius: 0 0 0 120px;
 
 .modal-header h2 {
   margin: 0;
-  color: #73441b;
+  color: #333F34;
   font-size: 1.4rem;
 }
 
@@ -434,21 +432,23 @@ border-radius: 0 0 0 120px;
   padding: 16px;
   border-radius: 12px;
   margin-bottom: 16px;
-  border: 1px solid #9c8a6f;
+  border: 1px solid #73441b;
 }
 
 .modal-body p {
   margin: 8px 0;
   color: #333f34;
   font-size: 1rem;
+  font-weight: bold;
 }
 
 .modal-body strong {
   color: #536236;
+  font-weight: bold;
 }
 
 .btn-fechar {
-  background-color: #6b7c4f;
+  background-color: #333F34;
   color: #f1edd2;
   border: none;
   border-radius: 10px;
