@@ -1,18 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import CadastroComponents from '@/components/suporte/cadastroComponents.vue'
-import buscarComponets from '@/components/suporte/buscarComponets.vue'
+import CadastroConsulta from '@/views/consulta/cadastroConsulta.vue'
+import BuscarConsulta from '@/views/consulta/buscarConsulta.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'CadastroComponents',
-    component: CadastroComponents,
+    name: 'CadastroConsulta',
+    component: CadastroConsulta,
   },
   {
-    // * ERRO: rota definida '/buscar-consulta' difere da rota usada '/buscarComponents' no componente
-    path: '/buscaComponents',
-    name: 'buscarComponents',
-    component: buscarComponets,
+    path: '/buscar-consulta',
+    name: 'BuscarConsulta',
+    component: BuscarConsulta
   },
 ]
 

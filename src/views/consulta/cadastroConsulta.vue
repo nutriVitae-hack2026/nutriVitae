@@ -29,7 +29,8 @@ function aoSelecionarFotoPoblema(event) {
   }
 }
 
-function buscarsuporte() {
+function buscarSuporte() {
+  console.log('cliquei para redirecionar')
   router.push('/buscar-consulta')
 }
 </script>
@@ -82,7 +83,7 @@ function buscarsuporte() {
     <button @click="confirmar" class="bnt-confirmar">Confirmar</button>
     <button @click="cancelar" class="bnt-cancelar">Cancelar</button>
     <!-- * ERRO: chama 'buscarsuporte()' que direciona para '/buscarComponents' (rota diferente) -->
-    <button @click="buscarsuporte()" class="bnt-cancelar">Pesquisa</button>
+    <button @click="buscarSuporte()" class="bnt-cancelar">Pesquisa</button>
   </div>
 </template>
 
