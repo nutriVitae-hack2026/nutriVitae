@@ -21,7 +21,7 @@ const agendamentos = ref([
     id: 2,
     profissional: {
       nome: 'Dr. Alexandre Xavier',
-      foto: '/public/usuarios/carolina-user.png',
+      foto: '/public/usuarios/alexandre-user.png',
     },
     paciente: {
       nome: 'Amanda da sousa Lima',
