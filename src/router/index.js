@@ -1,17 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import CadastroConsulta from '@/views/consulta/cadastroConsulta.vue'
-import BuscarConsulta from '@/views/consulta/buscarConsulta.vue'
+import CadastroSuporte from '@/views/Suporte/cadastroSuporte.vue'
+import BuscarSuporte from '@/views/Suporte/buscarSuporte.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'CadastroConsulta',
-    component: CadastroConsulta,
+    name: 'CadastroSuporte',
+    component: CadastroSuporte,
   },
   {
     path: '/buscar-consulta',
-    name: 'BuscarConsulta',
-    component: BuscarConsulta
+    name: 'BuscarSuporte',
+    component: BuscarSuporte
   },
 ]
 

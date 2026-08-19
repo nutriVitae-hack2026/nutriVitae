@@ -79,10 +79,8 @@ function buscarSuporte() {
       <input type="text" id="descrever" v-model="cadastro.usuario.descrever" />
     </div>
 
-    <!-- * ERRO: funções chamadas abaixo podem não existir ('confirmar'/'cancelar') -->
     <button @click="confirmar" class="bnt-confirmar">Confirmar</button>
     <button @click="cancelar" class="bnt-cancelar">Cancelar</button>
-    <!-- * ERRO: chama 'buscarsuporte()' que direciona para '/buscarComponents' (rota diferente) -->
     <button @click="buscarSuporte()" class="bnt-cancelar">Pesquisa</button>
   </div>
 </template>
