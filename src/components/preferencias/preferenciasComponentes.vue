@@ -11,7 +11,7 @@ const preferencias = ref({
     numero: '',
     rua: '',
     preferencias: '',
-    adicionar: '',
+    restricoes: '',
   },
 })
 
@@ -22,7 +22,7 @@ function limpar() {
     numero: '',
     rua: '',
     preferencias: '',
-    adicionar: '',
+    restricoes: '',
   }
 }
 
