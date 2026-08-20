@@ -21,11 +21,11 @@ const agendamentos = ref([
     id: 2,
     profissional: {
       nome: 'Dr. Alexandre Xavier',
-      foto: '/public/usuarios/carolina-user.png',
+      foto: '/public/usuarios/alexandre-user.png',
     },
     paciente: {
       nome: 'Amanda da sousa Lima',
-      foto: '/public/usuarios/gabriel-user(1).png',
+      foto: '/public/usuarios/amanda-user.png',
     },
     data: '25/09/2026',
     horario: '08h00 /08h00 am',
@@ -35,11 +35,11 @@ const agendamentos = ref([
     id: 3,
     profissional: {
       nome: 'Dra. Fabiana Oliveira',
-      foto: '/public/usuarios/carolina-user.png',
+      foto: '/public/usuarios/fabiana-user.png',
     },
     paciente: {
       nome: 'Carlos Eduardo da Silva',
-      foto: '/public/usuarios/gabriel-user(1).png',
+      foto: '/public/usuarios/eduardo-user.png',
     },
     data: '02/11/2026',
     horario: '16h30 /04h30 pm',
@@ -49,11 +49,11 @@ const agendamentos = ref([
     id: 4,
     profissional: {
       nome: 'Dr. Marcos Vinicius',
-      foto: '/public/usuarios/carolina-user.png',
+      foto: '/public/usuarios/marcos-user.png',
     },
     paciente: {
       nome: 'Bianca da Silva',
-      foto: '/public/usuarios/gabriel-user(1).png',
+      foto: '/public/usuarios/bianca-user.png',
     },
     data: '12/09/2026',
     horario: '10h00 /10h00 am',
