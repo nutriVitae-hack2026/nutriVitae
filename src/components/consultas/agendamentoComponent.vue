@@ -66,26 +66,28 @@ function validarFormulario() {
     !profissional.nome ||
     !profissional.telefone ||
     !profissional.email ||
-    !consulta.data||
+    !consulta.data ||
     !consulta.horario
   ) {
     alert("Preencha todos os campos.")
-    return false
+    return false 
   }
+
+  return true 
 }
- 
+
 function agendar() {
+  // Se validarFormulario() retornar false, o 'return' para aqui
   if (!validarFormulario()) return
- try {
-  localStorage.setItem('dadosAgendamento', JSON.stringify(agendamento.value))
-  
-  router.push('/resumo')
-    } catch (error) {
+
+  try {
+    localStorage.setItem('dadosAgendamento', JSON.stringify(agendamento.value))
+    router.push('/resumo')
+  } catch (error) {
     alert("Erro ao salvar o agendamento. Tente utilizar fotos menores.")
     console.error(error)
   }
 }
-
 </script>
 
 <template>
