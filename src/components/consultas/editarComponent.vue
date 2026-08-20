@@ -204,6 +204,25 @@ function meConfirmarEdicao() {
 
 <style scoped>
 
+ .header-banner {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #73441b;
+  color: #f2ebd9;
+  padding: 40px 90px 40px 70px;
+  border-radius: 0 0 0 160px;
+  box-shadow: -4px 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  z-index: 10;
+}
+
+.header-banner h1 {
+  color: #f1edd2;
+  font-size: 3.2rem; 
+  margin: 0;
+}
+
 .edit-input,
 .edit-select {
   border: 1px solid #73441b;

@@ -233,15 +233,14 @@ function fecharModal() {
   padding: 20px;
   min-height: 500px;
 }
-
 .header-banner {
   position: fixed;
   top: 0;
   right: 0;
   background-color: #73441b;
   color: #f2ebd9;
-  padding: 24px 60px 24px 40px;
-border-radius: 0 0 0 120px;
+  padding: 40px 90px 40px 70px;
+  border-radius: 0 0 0 160px;
   box-shadow: -4px 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
   z-index: 10;
@@ -249,7 +248,7 @@ border-radius: 0 0 0 120px;
 
 .header-banner h1 {
   color: #f1edd2;
-  font-size: 2.5rem;
+  font-size: 3.2rem; 
   margin: 0;
 }
 
@@ -274,24 +273,24 @@ border-radius: 0 0 0 120px;
 .person-card {
   border: 2px solid #73441b;
   border-radius: 24px;
-  padding: 14px;
+  padding: 18px 20px; 
   display: grid;
-  grid-template-columns: 80px 1fr;
-  gap: 12px;
+  grid-template-columns: 90px 1fr;
+  gap: 16px; 
   align-items: center;
 }
 
 .avatar {
-  width: 75px;
-  height: 75px;
+  width: 85px; 
+  height: 85px; 
   border-radius: 50%;
   object-fit: cover;
 }
 
 .info h2 {
-  margin: 0 0 4px 0;
+  margin: 0 0 6px 0;
   color: #333f34;
-  font-size: 1.2rem;
+  font-size: 1.3rem; 
   font-weight: bolder;
 }
 
@@ -332,6 +331,7 @@ border-radius: 0 0 0 120px;
   gap: 20px;
   padding-top: 50px;
   color: #536236;
+  font-weight: bold;
   font-size: 1.5rem;
 }
 
@@ -344,6 +344,7 @@ border-radius: 0 0 0 120px;
 .detail-item .value {
   color: #9a9e70;
   margin-left: 6px;
+  font-weight: bolder;
 }
 
 .actions-footer {

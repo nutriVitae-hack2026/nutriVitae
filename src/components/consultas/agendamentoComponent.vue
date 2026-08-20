@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref } from 'vue'                            
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -27,6 +27,12 @@ const agendamento = ref({
 })
 
 function converterParaBase64(arquivo, callback) {
+    // Limita o tamanho do arquivo a ~1MB para evitar estouro do localStorage
+  if (arquivo.size > 1024 * 1024) {
+    alert("Selecione uma imagem menor que 1MB.")
+    return
+  }
+
   const reader = new FileReader()
   reader.onloadend = () => callback(reader.result)
   reader.readAsDataURL(arquivo)
@@ -50,10 +56,34 @@ function aoSelecionarFotoProfissional(event) {
   }
 }
 
+function validarFormulario() {
+  const { usuario, profissional, consulta } = agendamento.value
+
+  if (
+    !usuario.nome ||
+    !usuario.telefone ||
+    !usuario.email ||
+    !profissional.nome ||
+    !profissional.telefone ||
+    !profissional.email ||
+    !consulta.data||
+    !consulta.horario
+  ) {
+    alert("Preencha todos os campos.")
+    return false
+  }
+}
+ 
 function agendar() {
+  if (!validarFormulario()) return
+ try {
   localStorage.setItem('dadosAgendamento', JSON.stringify(agendamento.value))
   
   router.push('/resumo')
+    } catch (error) {
+    alert("Erro ao salvar o agendamento. Tente utilizar fotos menores.")
+    console.error(error)
+  }
 }
 
 </script>
