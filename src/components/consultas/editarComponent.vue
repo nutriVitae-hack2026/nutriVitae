@@ -284,7 +284,7 @@ function meConfirmarEdicao() {
 }
 
 .modal-card {
-  background-color: #9a9e70;
+  background-color: #f1edd2;
   padding: 24px;
   border-radius: 16px;
   width: 320px;
@@ -297,7 +297,7 @@ function meConfirmarEdicao() {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
-  color: #2b3323;
+  color: #333f34;
 }
 
 .modal-header h3 {
@@ -310,12 +310,12 @@ function meConfirmarEdicao() {
   border: none;
   font-size: 1rem;
   cursor: pointer;
-  color: #2b3323;
+  color: #333f34;
 }
 
 .modal-instruction {
   font-size: 0.9rem;
-  color: #2b3323;
+  color: #333f34;
   font-weight: bolder;
   margin-bottom: 14px;
   text-align: left;
@@ -325,8 +325,7 @@ function meConfirmarEdicao() {
   width: 100%;
   padding: 8px 12px;
   border-radius: 8px;
-  border: 1px solid #73441b;
-  background-color: #2c129f;
+  background-color: #f1edd2;
   margin-bottom: 16px;
   box-sizing: border-box;
   outline: none;
@@ -334,7 +333,7 @@ function meConfirmarEdicao() {
 
 .btn-confirmar-modal {
   background-color: #f1edd2;
-  border: 1px solid #73441b;
+  border: 9px solid #e83e06;
   color: #333f34;
   font-weight: bold;
   border-radius: 8px;
