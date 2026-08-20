@@ -181,9 +181,9 @@ function meConfirmarEdicao() {
 
     <div v-if="mostrarModalSenha" class="modal-overlay" @click.self="mostrarModalSenha = false">
       <div class="modal-card">
+        <button class="btn-fechar-modal" @click="mostrarModalSenha = false">✖</button>
         <div class="modal-header">
           <h3>Editar Agendamento</h3>
-          <button class="btn-fechar-modal" @click="mostrarModalSenha = false">✖</button>
         </div>
 
         <p class="modal-instruction">Digite sua senha para confirmar as alterações:</p>
@@ -204,14 +204,14 @@ function meConfirmarEdicao() {
 
 <style scoped>
 
- .header-banner {
+.header-banner {
   position: fixed;
   top: 0;
   right: 0;
   background-color: #73441b;
   color: #f2ebd9;
-  padding: 40px 90px 40px 70px;
-  border-radius: 0 0 0 160px;
+  padding: 30px 70px 30px 50px;
+  border-radius: 0 0 0 130px;
   box-shadow: -4px 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
   z-index: 10;
@@ -284,12 +284,14 @@ function meConfirmarEdicao() {
 }
 
 .modal-card {
-  background-color: #f1edd2;
+  background-color: #F1EDD2;
+  border: 1px solid #73441b; 
   padding: 24px;
   border-radius: 16px;
   width: 320px;
   text-align: center;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  position: relative;
 }
 
 .modal-header {
@@ -303,6 +305,7 @@ function meConfirmarEdicao() {
 .modal-header h3 {
   margin: 0;
   font-size: 1.1rem;
+  font-weight: bold;
 }
 
 .btn-fechar-modal {
@@ -311,9 +314,13 @@ function meConfirmarEdicao() {
   font-size: 1rem;
   cursor: pointer;
   color: #333f34;
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  line-height: 1;
 }
 
-.modal-instruction {
+.modal-instruction { 
   font-size: 0.9rem;
   color: #333f34;
   font-weight: bolder;
@@ -325,16 +332,16 @@ function meConfirmarEdicao() {
   width: 100%;
   padding: 8px 12px;
   border-radius: 8px;
-  background-color: #f1edd2;
+  border: 1px solid #73441b; 
+  background-color: #F1EDD2;
   margin-bottom: 16px;
   box-sizing: border-box;
   outline: none;
 }
 
 .btn-confirmar-modal {
-  background-color: #f1edd2;
-  border: 9px solid #e83e06;
-  color: #333f34;
+  background-color: #333F34;
+  color: #F1EDD2;
   font-weight: bold;
   border-radius: 8px;
   padding: 8px 20px;
