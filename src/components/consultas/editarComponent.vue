@@ -316,6 +316,7 @@ function meConfirmarEdicao() {
 .modal-instruction {
   font-size: 0.9rem;
   color: #2b3323;
+  font-weight: bolder;
   margin-bottom: 14px;
   text-align: left;
 }
@@ -325,7 +326,7 @@ function meConfirmarEdicao() {
   padding: 8px 12px;
   border-radius: 8px;
   border: 1px solid #73441b;
-  background-color: #d1cbb0;
+  background-color: #2c129f;
   margin-bottom: 16px;
   box-sizing: border-box;
   outline: none;

@@ -239,8 +239,8 @@ function fecharModal() {
   right: 0;
   background-color: #73441b;
   color: #f2ebd9;
-  padding: 40px 90px 40px 70px;
-  border-radius: 0 0 0 160px;
+  padding: 30px 70px 30px 50px;
+  border-radius: 0 0 0 130px;
   box-shadow: -4px 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
   z-index: 10;
