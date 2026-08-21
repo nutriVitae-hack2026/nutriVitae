@@ -3,31 +3,51 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+const STORAGE_KEY = 'nutriVitae.preferencias'
 
-const preferencias = ref({
-  usuario: {
-    nome: '',
-    cep: '',
-    numero: '',
-    rua: '',
-    preferencias: '',
-    restricoes: '',
-  },
+const criarPreferenciasVazias = () => ({
+  nome: '',
+  cep: '',
+  numero: '',
+  rua: '',
+  preferencias: '',
+  restricoes: '',
+  adicionar: '',
 })
 
-function limpar() {
-  preferencias.value.usuario = {
-    nome: '',
-    cep: '',
-    numero: '',
-    rua: '',
-    preferencias: '',
-    restricoes: '',
+function carregarPreferencias() {
+  try {
+    const salvo = localStorage.getItem(STORAGE_KEY)
+    if (!salvo) return criarPreferenciasVazias()
+
+    const dados = JSON.parse(salvo)
+    return { ...criarPreferenciasVazias(), ...dados }
+  } catch (error) {
+    console.error('Erro ao carregar preferências:', error)
+    return criarPreferenciasVazias()
   }
 }
 
+const preferencias = ref(carregarPreferencias())
+
+function limpar() {
+  preferencias.value = criarPreferenciasVazias()
+  localStorage.removeItem(STORAGE_KEY)
+}
+
 function confirmar() {
-  console.log('Preferências confirmadas:', preferencias.value.usuario)
+  if (!preferencias.value.nome || !preferencias.value.cep || !preferencias.value.rua) {
+    alert('preencha todas as informações antes de confirmar.')
+    return
+  }
+
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(preferencias.value))
+    router.push('/perfil')
+  } catch (error) {
+    console.error('Erro ao salvar preferências:', error)
+    alert('Não foi possível salvar suas informações. Tente novamente.')
+  }
 }
 
 function redirecionar() {
@@ -39,41 +59,161 @@ function redirecionar() {
   <main class="container">
     <h1>Preferências do Usuario</h1>
 
-    <section class="formulario">
-      <div class="carregar">
+    <section class="grid-form">
+      <div class="input-card">
         <label for="nome">Nome:</label>
-        <input type="text" id="nome" v-model="preferencias.usuario.nome" />
+        <input type="text" id="nome" v-model="preferencias.nome" />
       </div>
 
-      <div class="cep">
+      <div class="input-card">
         <label for="cep">CEP:</label>
-        <input type="text" id="cep" v-model="preferencias.usuario.cep" />
+        <input type="text" id="cep" v-model="preferencias.cep" />
       </div>
 
-      <div class="numero">
+      <div class="input-card">
         <label for="numero">Número:</label>
-        <input type="text" id="numero" v-model="preferencias.usuario.numero" />
+        <input type="text" id="numero" v-model="preferencias.numero" />
       </div>
 
-      <div class="rua">
+      <div class="input-card">
         <label for="rua">Rua:</label>
-        <input type="text" id="rua" v-model="preferencias.usuario.rua" />
+        <input type="text" id="rua" v-model="preferencias.rua" />
       </div>
 
-      <div class="preferencias">
-        <label for="preferencias">Preferências:</label>
-        <input type="text" id="preferencias" v-model="preferencias.usuario.preferencias" />
+      <div class="input-card">
+        <label for="restricoes">Restrições:</label>
+        <input type="text" id="restricoes" v-model="preferencias.restricoes" />
       </div>
 
-      <div class="adicionar">
+      <div class="input-card">
         <label for="adicionar">Adicionar:</label>
-        <input type="text" id="adicionar" v-model="preferencias.usuario.adicionar" />
+        <input type="text" id="adicionar" v-model="preferencias.adicionar" />
+      </div>
+
+      <div class="comida">
+        <label for="preferencias">Preferências Gastronômicas:</label>
+        <input type="text" id="preferencias" v-model="preferencias.preferencias" />
       </div>
     </section>
-    <button @click="limpar" class="btn-limpar">limpar/Cancelar</button>
-    <button @click="confirmar" class="btn-salvar">confirmar</button>
-    <button @click="redirecionar" class="btn-buscar">buscar pofissionais</button>
+
+    <div class="botoes">
+      <button @click="limpar" class="btn-limpar">Limpar/Cancelar</button>
+      <button @click="confirmar" class="btn-salvar">Confirmar</button>
+
+    </div>
+      <button @click="redirecionar" class="btn-buscar">Buscar Profissionais</button>
+   
   </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  color: #73441b;
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 24px;
+}
+
+/* Grid layout de 2 colunas */
+.grid-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.comida {
+  display: flex;
+  align-items: center;
+  background-color: #cbba9c;
+  border: 1px solid #9c8a6f;
+  border-radius: 12px;
+  padding: 50px 10px;
+  box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.25);
+}
+
+.comida label {
+  color: #333F34;
+  font-weight: bold;
+  white-space: nowrap;
+  font-size: 1rem;
+
+}
+
+.comida input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #73441B;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.botoes {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.input-card {
+  display: flex;
+  align-items: center;
+  background-color: #cbba9c;
+  border: 1px solid #9c8a6f;
+  border-radius: 12px;
+  padding: 10px 16px;
+  box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.25);
+}
+.input-card label {
+  color: #333f34;
+  font-weight: bold;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+.input-card input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #333f34;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.btn-limpar {
+  display: flex;
+  align-items: center;
+  margin-top: 24px;
+  padding: 12px;
+  background-color: #9a9e70;
+  color: #333f34;
+  border: 1px solid #536236;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.btn-salvar {
+  display: flex;
+  align-items: center;
+  margin-top: 24px;
+  padding: 11px 38px;
+  background-color: #9a9e70;
+  color: #333f34;
+  border: 1px solid #536236;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+}
+</style>

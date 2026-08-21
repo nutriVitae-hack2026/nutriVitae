@@ -37,7 +37,7 @@
             </RouterLink>
           </li>
           <li>
-            <RouterLink to="#">
+            <RouterLink to="/perfil">
               <i class="mdi mdi-account-circle"></i>
               Meu Perfil
             </RouterLink>
