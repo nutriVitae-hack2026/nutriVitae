@@ -33,6 +33,26 @@ function buscarSuporte() {
   console.log('cliquei para redirecionar')
   router.push('/buscar-consulta')
 }
+
+function validarFormulario() {
+  const { usuario, profissional, consulta } = agendamento.value
+
+  if (
+    !usuario.nome ||
+    !usuario.telefone ||
+    !usuario.email ||
+    !profissional.nome ||
+    !profissional.telefone ||
+    !profissional.email ||
+    !consulta.data ||
+    !consulta.horario
+  ) {
+    alert("Preencha todos os campos.")
+    return false
+  }
+
+  return true
+}
 </script>
 
 <template>
