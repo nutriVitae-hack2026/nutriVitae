@@ -1,5 +1,4 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
   <header>
@@ -17,42 +16,38 @@
       <nav class="overlay">
         <ul class="menu-list">
           <li>
-            <RouterLink to="/">
-              <i class="mdi mdi-home-circle"></i> Home
+            <RouterLink to="/"> <i class="mdi mdi-home-circle"></i> Home </RouterLink>
+          </li>
+          <li>
+            <RouterLink to="#">
+              <i class="mdi mdi-food-apple-outline"></i>
+              Nutricionistas
             </RouterLink>
           </li>
           <li>
-            <routerLink to="#">
-              <i class="mdi mdi-food-apple-outline"></i>
-              Nutricionistas
-            </routerLink>
-          </li>
-          <li>
-            <routerLink to="#">
+            <RouterLink to="#">
               <i class="mdi mdi-calendar-multiselect-outline"></i>
               Agendamentos
-            </routerLink>
+            </RouterLink>
           </li>
           <li>
-            <routerLink to="#">
+            <RouterLink to="#">
               <i class="mdi mdi-forum-outline"></i>
               Conversas
-            </routerLink>
+            </RouterLink>
           </li>
-          <div class="user">
-            <li>
-              <routerLink to="#">
-                <i class="mdi mdi-account-circle"></i>
-                Meu Perfil
-              </routerLink>
-            </li>
-            <li>
-              <routerLink to="#">
-                <i class="mdi mdi-tag-heart"></i>
-                Receitas
-              </routerLink>
-            </li>
-          </div>
+          <li>
+            <RouterLink to="#">
+              <i class="mdi mdi-account-circle"></i>
+              Meu Perfil
+            </RouterLink>
+          </li>
+          <li>
+            <RouterLink to="#">
+              <i class="mdi mdi-tag-heart"></i>
+              Receitas
+            </RouterLink>
+          </li>
           <li>
             <RouterLink to="/equipe">
               <i class="mdi mdi-account-group"></i>
@@ -61,19 +56,16 @@
           </li>
         </ul>
         <div class="div">
-          <RouterLink to="#">
-            Suporte
-          </RouterLink>
+          <RouterLink to="#"> Suporte </RouterLink>
           <RouterLink to="/">
             <img src="/logo.png" alt="logo" class="logo" />
           </RouterLink>
         </div>
       </nav>
-
     </div>
     <h1 class="logo">
       <RouterLink to="/">
-        <img src="/logo.png" alt="logo">
+        <img src="/logo.png" alt="logo" />
       </RouterLink>
     </h1>
   </header>
@@ -112,7 +104,7 @@ header h1 img {
 header a {
   text-decoration: none;
   font-size: 35px;
-  color: #F1EDD2;
+  color: #f1edd2;
   transition: all 1s ease;
   display: flex;
   align-items: center;
@@ -148,13 +140,13 @@ header .div {
 }
 
 .menu-icon:hover .linha {
-  background: #9A9E70;
+  background: #9a9e70;
   scale: 1.5;
 }
 
 div.linha {
   height: 2px;
-  background: #F1EDD2;
+  background: #f1edd2;
   border-radius: 2px;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
   transition: all 1s ease;
@@ -171,7 +163,7 @@ div.linha {
   z-index: 900;
 }
 
-#menu-toggle:checked~.backdrop {
+#menu-toggle:checked ~ .backdrop {
   opacity: 1;
   pointer-events: auto;
 }
@@ -187,11 +179,11 @@ div.linha {
   transform: translateX(-200%);
   transition: 1.4s;
   padding: 40px 25px;
-  box-shadow: 5px 0 20px rgba(0, 0, 0, .3);
+  box-shadow: 5px 0 20px rgba(0, 0, 0, 0.3);
   z-index: 1000;
 }
 
-#menu-toggle:checked~.overlay {
+#menu-toggle:checked ~ .overlay {
   transform: translateX(0);
 }
 
@@ -200,8 +192,7 @@ div.linha {
   display: block;
   margin: 0 40px;
   height: 100px;
-      filter: drop-shadow(0 0 1px rgba(255, 255, 255, 1));
-
+  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 1));
 }
 
 .menu-list {
@@ -213,14 +204,12 @@ div.linha {
 
 .menu-list li {
   margin: 15px 50px;
-
-  
 }
-& .user li{
-    margin: 5px 70px;
-  }
+& .user li {
+  margin: 5px 70px;
+}
 .menu-list a:hover {
-  color: #9A9E70;
+  color: #9a9e70;
   scale: 1.1;
   text-shadow: 0 0 5px #101010;
 }

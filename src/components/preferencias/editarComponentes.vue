@@ -1,5 +1,7 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 const editar = ref({
   usuario: {
@@ -9,8 +11,25 @@ const editar = ref({
     rua: '',
     preferencias: '',
     numero: '',
+    adicionar: '',
   },
 })
+
+function limpar() {
+  editar.value.usuario = {
+    nome: '',
+    cep: '',
+    restricoes: '',
+    rua: '',
+    preferencias: '',
+    numero: '',
+    adicionar: '',
+  }
+}
+
+function confirmar() {
+  console.log('Usuário salvo:', editar.value.usuario)
+}
 </script>
 
 <template>
@@ -18,8 +37,8 @@ const editar = ref({
     <h1></h1>
 
     <section class="carregar">
-      <div class="formulario"
-       label for="nome">Nome:</label>
+      <div class="formulario">
+       <label for="nome">Nome:</label>
         <input type="text" id="nome" v-model="editar.usuario.nome" />
       </div>
 

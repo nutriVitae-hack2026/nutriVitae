@@ -1,11 +1,9 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router'
-import '@mdi/font/css/materialdesignicons.min.css'
-import './assets/main.css'
+import router from './router' // Importa a configuração do router/index.js
 
 const app = createApp(App)
 
-app.use(router)
+app.use(router) // OBRIGATÓRIO: ativa o roteador na aplicação
 
 app.mount('#app')

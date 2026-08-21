@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+
 const router = useRouter()
 
 const preferencias = ref({
@@ -10,18 +11,33 @@ const preferencias = ref({
     numero: '',
     rua: '',
     preferencias: '',
-    adicionar: '',
+    restricoes: '',
   },
 })
 
-function direcionarParaBuscar() {
+function limpar() {
+  preferencias.value.usuario = {
+    nome: '',
+    cep: '',
+    numero: '',
+    rua: '',
+    preferencias: '',
+    restricoes: '',
+  }
+}
+
+function confirmar() {
+  console.log('Preferências confirmadas:', preferencias.value.usuario)
+}
+
+function redirecionar() {
   router.push('/buscar')
 }
 </script>
-<label for="nome">Nome:</label>
+
 <template>
   <main class="container">
-    <h1>Atualizar cadastro</h1>
+    <h1>Preferências do Usuario</h1>
 
     <section class="formulario">
       <div class="carregar">
@@ -49,18 +65,15 @@ function direcionarParaBuscar() {
         <input type="text" id="preferencias" v-model="preferencias.usuario.preferencias" />
       </div>
 
-        <div class="adicionar">
-            <label for="adicionar">Adicionar:</label>
-            <input type="text" id="adicionar" v-model="preferencias.usuario.adicionar" />
-        </div>
-
-
+      <div class="adicionar">
+        <label for="adicionar">Adicionar:</label>
+        <input type="text" id="adicionar" v-model="preferencias.usuario.adicionar" />
+      </div>
     </section>
     <button @click="limpar" class="btn-limpar">limpar/Cancelar</button>
     <button @click="confirmar" class="btn-salvar">confirmar</button>
-    <button @click="direcionarParaBuscar" class="btn-buscar">buscar pofissionais</button>
+    <button @click="redirecionar" class="btn-buscar">buscar pofissionais</button>
   </main>
 </template>
 
 <style scoped></style>
-
