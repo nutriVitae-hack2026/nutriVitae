@@ -17,9 +17,9 @@ const editar = ref({
   <main class="container">
     <h1></h1>
 
-    <section class="formulario">
-      <div class="edição
-        <label for="nome">Nome:</label>
+    <section class="carregar">
+      <div class="formulario"
+       label for="nome">Nome:</label>
         <input type="text" id="nome" v-model="editar.usuario.nome" />
       </div>
 
