@@ -9,7 +9,7 @@ const routes = [
     component: CadastroSuporte,
   },
   {
-    path: '/buscar-consulta',
+    path: '/buscar-suporte',
     name: 'BuscarSuporte',
     component: BuscarSuporte
   },

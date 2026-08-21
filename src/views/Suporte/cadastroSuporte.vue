@@ -7,7 +7,7 @@ const cadastro = ref({
     nome: '',
     email: '',
     assunto: '',
-    categoria: 'mobilidade no site', //'Erro no upload de documento', 'Perfil do profissional não aparece nos resultados', 'Filtro não funciona', 'Resultados exibindo médicos inativos ou suspensos',  'Choque de horário',  'Falha no envio do link da teleconsulta'.
+    categoria: '', //'Mobilidade no site', 'Erro no upload de documento', 'Perfil do profissional não aparece nos resultados', 'Filtro não funciona', 'Resultados exibindo médicos inativos ou suspensos',  'Choque de horário',  'Falha no envio do link da teleconsulta'.
     descrever: '',
     anexar: '',
     foto: null,
@@ -20,7 +20,7 @@ function converterParaBase64(arquivo, callback) {
   reader.readAsDataURL(arquivo)
 }
 
-function aoSelecionarFotoPoblema(event) {
+function aoSelecionarFotoProblema(event) {
   const arquivo = event.target.files[0]
   if (arquivo) {
     converterParaBase64(arquivo, (base64) => {
@@ -30,29 +30,31 @@ function aoSelecionarFotoPoblema(event) {
 }
 
 function buscarSuporte() {
-  console.log('cliquei para redirecionar')
-  router.push('/buscar-consulta')
+  router.push('/buscar-suporte')
 }
 
 function validarFormulario() {
-  const { usuario, profissional, consulta } = agendamento.value
+  const { usuario } = cadastro.value
 
   if (
-    !usuario.nome ||
-    !usuario.telefone ||
-    !usuario.email ||
-    !profissional.nome ||
-    !profissional.telefone ||
-    !profissional.email ||
-    !consulta.data ||
-    !consulta.horario
+    !usuario.nome.trim() ||
+    !usuario.email.trim() ||
+    !usuario.assunto.trim() ||
+    !usuario.descrever.trim()
   ) {
-    alert("Preencha todos os campos.")
+    alert('Preencha nome, email, assunto e descrição.')
     return false
   }
-
-  return true
+ {
+  router.push('/buscar-suporte')
+ return true
 }
+}
+
+function cancelar() {
+  router.push('/')
+}
+
 </script>
 
 <template>
@@ -78,6 +80,7 @@ function validarFormulario() {
       <label for="categoria">Categoria:</label>
 
       <select id="categoria" v-model="cadastro.usuario.categoria">
+        <option value="" disabled>Categoria do problema</option>
         <option value="documentoErro">Erro no upload de documento</option>
         <option value="perfilErro">Perfil do profissional não aparece nos resultados</option>
         <option value="resultadoErro">Resultados do Médicos inativo ou suspenso</option>
@@ -90,8 +93,8 @@ function validarFormulario() {
     </div>
 
     <div class="anexar-imagem">
-      <label for="foto">Anexar imagem/arquivo:</label>
-      <input id="foto" type="file" accept="image/*" @change="aoSelecionarFotoPoblema" />
+      <label for="foto">Anexar imagem:</label>
+      <input id="foto" type="file" accept="image/*" @change="aoSelecionarFotoProblema" />
     </div>
 
     <div class="descrever-problema">
@@ -99,10 +102,11 @@ function validarFormulario() {
       <input type="text" id="descrever" v-model="cadastro.usuario.descrever" />
     </div>
 
-    <button @click="confirmar" class="bnt-confirmar">Confirmar</button>
+    <button type="button" @click="validarFormulario" class="bnt-confirmar">Confirmar</button>
     <button @click="cancelar" class="bnt-cancelar">Cancelar</button>
     <button @click="buscarSuporte()" class="bnt-cancelar">Pesquisa</button>
   </div>
+
 </template>
 
 <style scoped>
@@ -126,7 +130,7 @@ div.nome label {
 div.email label {
   color: #333f34;
   font-weight: bolder;
-  font-size: 20px;
+  font-size: 40px;
 }
 
 div.email {
@@ -136,7 +140,7 @@ div.email {
 div.assunto label {
   color: #333f34;
   font-weight: bolder;
-  font-size: 20px;
+  font-size: 40px;
 }
 
 div.assunto {
@@ -146,7 +150,7 @@ div.assunto {
 div.categoria label {
   color: #333f34;
   font-weight: bolder;
-  font-size: 20px;
+  font-size: 40px;
 }
 
 div.categoria {
@@ -179,5 +183,19 @@ div.categoria select option {
 
 .anexar-imagem input[type='file']::file-selector-button:hover {
   background-color: #6b7c4f;
+}
+
+.anexar-imagem label {
+  font-size: 40px;
+  padding: 10px 16px;
+  color: #333f34;
+  font-weight: bolder;
+}
+
+.descrever-problema label {
+  font-size: 40px;
+  padding: 10px 16px;
+  color: #333f34;
+  font-weight: bolder;
 }
 </style>
