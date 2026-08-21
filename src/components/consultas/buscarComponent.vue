@@ -136,6 +136,7 @@ const agendamentosFiltrados = computed(() => {
 </template>
 
 <style scoped>
+
 .container {
   max-width: 800px;
   margin: 0 auto;
@@ -145,7 +146,7 @@ const agendamentosFiltrados = computed(() => {
 h1 {
   color: #73441b;
   text-align: center;
-  font-size: 2.2rem;
+  font-size: 3.2rem;
   margin-bottom: 24px;
 }
 
@@ -161,18 +162,17 @@ h1 {
   width: 100%;
   padding: 12px 45px 12px 20px;
   border-radius: 16px;
-  border: 1px solid #73441b;
-  background-color: #939a6d; /* Tom verde oliva claro do protótipo */
-  color: #2b3323;
+  border: 1px solid #333f34;
+  background-color: #939a6d; 
+  color: #333f34;
   font-size: 1.05rem;
-  font-weight: 500;
   outline: none;
   box-sizing: border-box;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .search-bar input::placeholder {
-  color: #3b452e;
+  color: #333f34;
   opacity: 0.8;
 }
 
@@ -237,7 +237,8 @@ h1 {
 .info-block {
   flex: 1;
   font-size: 0.85rem;
-  color: #536236;
+  color: #9A9E70;
+  font-weight: bolder;
   line-height: 1.4;
   padding-left: 12px;
 }
@@ -247,7 +248,7 @@ h1 {
 }
 
 .no-results {
-  color: #73441b;
+  color: #333f34;
   text-align: center;
   font-weight: 500;
   margin-top: 15px;

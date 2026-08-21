@@ -172,15 +172,14 @@ function meConfirmarExclusao() {
 .btn-cancelar,
 .btn-excluir {
   flex: 1;
-  padding: 12px 16px;
+  padding: 5px 8px;
   border-radius: 12px;
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 0.9rem;
   cursor: pointer;
-  border: 1px solid #73441b;
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.2);
-  background-color: #9a9e70;
-  color: #333f34;
+  background-color: #333f34;
+  color: #f1edd2;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -207,7 +206,7 @@ function meConfirmarExclusao() {
 }
 
 .modal-card {
-  background-color: #9a9e70;
+  background-color: #f1edd2;
   padding: 24px;
   border-radius: 16px;
   width: 320px;
@@ -232,6 +231,7 @@ function meConfirmarExclusao() {
 .modal-header h3 {
   margin: 0;
   font-size: 1.2rem;
+  font-weight: bolder;
 }
 
 .btn-fechar-modal {
@@ -247,9 +247,10 @@ function meConfirmarExclusao() {
 
 .modal-instruction {
   font-size: 0.9rem;
-  color: #2b3323;
+  color: #333f34;
   margin-bottom: 14px;
   text-align: left;
+   font-weight: bolder;
 }
 
 .modal-input {
@@ -257,16 +258,15 @@ function meConfirmarExclusao() {
   padding: 8px 12px;
   border-radius: 8px;
   border: 1px solid #73441b;
-  background-color: #d1cbb0;
+  background-color: #f1edd2;
   margin-bottom: 16px;
   box-sizing: border-box;
   outline: none;
 }
 
 .btn-confirmar-modal {
-  background-color: #f1edd2;
-  border: 1px solid #73441b;
-  color: #333f34;
+  background-color: #333f34;
+  color: #f1edd2;
   font-weight: bold;
   border-radius: 8px;
   padding: 8px 20px;

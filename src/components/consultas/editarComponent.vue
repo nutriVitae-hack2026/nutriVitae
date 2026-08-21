@@ -204,7 +204,7 @@ function meConfirmarEdicao() {
 
 <style scoped>
 
-.header-banner {
+ .header-banner {
   position: fixed;
   top: 0;
   right: 0;
@@ -218,10 +218,11 @@ function meConfirmarEdicao() {
 }
 
 .header-banner h1 {
-  color: #f1edd2;
-  font-size: 3.2rem; 
+  color: #f2ebd9;
+  font-size: 3rem; 
   margin: 0;
 }
+
 
 .edit-input,
 .edit-select {
