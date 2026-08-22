@@ -65,6 +65,21 @@ function salvar() {
     console.error(error)
   }
 }
+
+function cancelar() {
+  agendamento.value.profissional = {
+    nome: '',
+    calorias: '',
+    foto: null,
+    data: '',
+    preparo: '',
+    ingredientes: '',
+  }
+
+  if (fotoInputRef.value) {
+    fotoInputRef.value.value = ''
+  }
+}
 </script>
 
 <template>
@@ -81,8 +96,8 @@ function salvar() {
         </div>
 
         <div class="input-card">
-          <label for="usr-tel">Calorias:</label>
-          <input id="usr-tel" type="text" v-model="agendamento.profissional.calorias" />
+          <label for="usr-calorias">Calorias:</label>
+          <input id="usr-calorias" type="text" v-model="agendamento.profissional.calorias" />
         </div>
 
         <div class="input-card">
@@ -93,17 +108,22 @@ function salvar() {
         <div class="input-card full-width">
           <label for="usr-foto">Foto do Prato</label>
           <input id="usr-foto" type="file" accept="image/*" @change="aoSelecionarFotoPrato" />
-        </div>
 
+        </div>
         <div class="input-grande">
           <label for="preparo">Modo de Preparo:</label>
-          <input id="preparo" type="text" v-model="agendamento.profissional.preparo" />
+          <textarea id="preparo" v-model="agendamento.profissional.preparo"></textarea>
         </div>
 
         <div class="input-grande">
           <label for="ingredientes">Ingredientes:</label>
-          <input id="ingredientes" type="text" v-model="agendamento.profissional.ingredientes" />
+          <textarea id="ingredientes" v-model="agendamento.profissional.ingredientes"></textarea>
         </div>
+      </div>
+
+      <div class="botao-container">
+        <button class="button" @click="salvar">Salvar</button>
+        <button class="button" @click="cancelar">Cancelar</button>
       </div>
     </section>
   </main>
@@ -136,19 +156,38 @@ h1 {
 
 .input-grande {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   background-color: #cbba9c;
   border: 1px solid #9c8a6f;
   border-radius: 12px;
-  padding: 10px 16px;
+  padding: 16px;
   box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.25);
-}  
+  min-height: 200px;
+  align-items: center;
+}
 
 .input-grande label {
-  color: #536236;
+  color: #333f34;
   font-weight: bold;
-  margin-right: 8px;
+  margin-bottom: 8px;
   white-space: nowrap;
+  font-size: 1.5rem;
+}
+
+/* Textarea ajustado para começar do topo e quebrar linhas */
+.input-grande textarea {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #333f34;
+  font-size: 1.1rem;
+  font-weight: bold;
+  font-family: inherit;
+  resize: none;
+  text-align: left; /* Garante que o texto comece do topo */
 }
 
 .input-card {
@@ -165,6 +204,7 @@ h1 {
   font-weight: bold;
   margin-right: 8px;
   white-space: nowrap;
+  font-size: 1.25rem;
 }
 .input-card input,
 .input-card select {
@@ -173,7 +213,7 @@ h1 {
   border: none;
   outline: none;
   color: #333f34;
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: bold;
 }
 .input-card select {
@@ -205,25 +245,62 @@ h1 {
   background-color: #6b7c4f;
 }
 
-.btn-agendar {
-  width: 100%;
-  margin-top: 24px;
-  padding: 12px;
+.botao-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 32px;
+  padding: 0 20px;
+}
+
+.button {
+  min-width: 160px;
+  padding: 10px 28px;
   background-color: #9a9e70;
   color: #333f34;
   border: 1px solid #536236;
-  border-radius: 12px;
-  font-size: 1.1rem;
+  border-radius: 20px;
+  font-size: 1.25rem;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.25);
+  transition:
+    background-color 0.2s,
+    transform 0.1s;
 }
 
+.button:hover {
+  background-color: #83875a;
+}
+
+.button:active {
+  transform: scale(0.98);
+}
 .resumo-container {
   position: relative;
   max-width: 850px;
   margin: 0 auto;
   padding: 20px;
   min-height: 500px;
+}
+
+/* Estilo da barra de rolagem */
+.input-grande textarea::-webkit-scrollbar {
+  width: 16px; /* Largura da barra */
+}
+
+.input-grande textarea::-webkit-scrollbar-track {
+  background-color: #333f34; /* Cor de fundo escura da barra */
+  border-radius: 10px;
+}
+
+.input-grande textarea::-webkit-scrollbar-thumb {
+  background-color: #9a9e70; /* Cor verde clara do indicador de rolagem */
+  border-radius: 10px;
+}
+
+/* Suporte para Firefox */
+.input-grande textarea {
+  scrollbar-width: auto;
+  scrollbar-color: #9a9e70 #333f34;
 }
 </style>
