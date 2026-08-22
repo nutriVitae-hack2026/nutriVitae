@@ -83,7 +83,7 @@ function cancelar() {
 </script>
 
 <template>
-  <main class="container">
+  <main class="resumo-container">
     <header class="header-banner">
       <h1>Bem-Vindo ao NutriVitae</h1>
     </header>
@@ -108,15 +108,15 @@ function cancelar() {
         <div class="input-card full-width">
           <label for="usr-foto">Foto do Prato</label>
           <input id="usr-foto" type="file" accept="image/*" @change="aoSelecionarFotoPrato" />
-
         </div>
+
         <div class="input-grande">
-          <label for="preparo">Modo de Preparo:</label>
+          <span class="label-titulo">Modo de Preparo:</span>
           <textarea id="preparo" v-model="agendamento.profissional.preparo"></textarea>
         </div>
 
         <div class="input-grande">
-          <label for="ingredientes">Ingredientes:</label>
+          <span class="label-titulo">Ingredientes:</span>
           <textarea id="ingredientes" v-model="agendamento.profissional.ingredientes"></textarea>
         </div>
       </div>
@@ -155,29 +155,31 @@ h1 {
 }
 
 .input-grande {
-  display: flex;
+display: flex;
   flex-direction: column;
   background-color: #cbba9c;
   border: 1px solid #9c8a6f;
   border-radius: 12px;
-  padding: 16px;
+  padding: 12px;
   box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.25);
-  min-height: 200px;
-  align-items: center;
+  height: 200px;
+  box-sizing: border-box;
 }
 
-.input-grande label {
+/* Título flutuando centralizado no topo */
+.label-titulo {
+display: block;
+  text-align: center;
   color: #333f34;
   font-weight: bold;
-  margin-bottom: 8px;
-  white-space: nowrap;
   font-size: 1.5rem;
+  margin-bottom: 8px;
+  flex-shrink: 0;
 }
 
-/* Textarea ajustado para começar do topo e quebrar linhas */
+/* Textarea ocupando 100% da caixa e com recuo superior para não cobrir o título */
 .input-grande textarea {
-  width: 100%;
-  height: 100%;
+width: 100%;
   flex: 1;
   background: transparent;
   border: none;
@@ -187,7 +189,9 @@ h1 {
   font-weight: bold;
   font-family: inherit;
   resize: none;
-  text-align: left; /* Garante que o texto comece do topo */
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 .input-card {
@@ -285,22 +289,16 @@ h1 {
 
 /* Estilo da barra de rolagem */
 .input-grande textarea::-webkit-scrollbar {
-  width: 16px; /* Largura da barra */
+  width: 12px;
 }
 
 .input-grande textarea::-webkit-scrollbar-track {
-  background-color: #333f34; /* Cor de fundo escura da barra */
+  background-color: #333F34;
   border-radius: 10px;
 }
 
 .input-grande textarea::-webkit-scrollbar-thumb {
-  background-color: #9a9e70; /* Cor verde clara do indicador de rolagem */
+  background-color: #536236;
   border-radius: 10px;
-}
-
-/* Suporte para Firefox */
-.input-grande textarea {
-  scrollbar-width: auto;
-  scrollbar-color: #9a9e70 #333f34;
 }
 </style>

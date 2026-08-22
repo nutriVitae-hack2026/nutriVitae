@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import cadastroComponents from '../components/pratos/cadastroComponents.vue'
+import buscarComponents from '../components/pratos/buscarComponents.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,6 +9,12 @@ const router = createRouter({
             path: '/',
             name: 'cadastroComponents',
             component: cadastroComponents
+        },
+  
+           {
+            path: '/buscar',
+            name: 'buscarComponents',
+            component: buscarComponents
         },
   ],
 })
