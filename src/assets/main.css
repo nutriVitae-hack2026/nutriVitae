@@ -33,3 +33,18 @@ a,
     padding: 0 2rem;
   }
 }
+
+:root {
+  --bg-main: #ECE3CA;
+  --dark-brown-header: #5C3214;
+  --input-bg: #C3B199;
+  --green-box: #8E996C;
+}
+
+body, html, #app {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-main);
+  margin: 0;
+  padding: 0;
+}

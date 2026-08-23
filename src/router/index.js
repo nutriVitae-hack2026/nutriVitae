@@ -1,23 +1,50 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import HomeView from '@/view/homeView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'Home',
       component: HomeView,
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
+      path: '/cadastro',
+      name: 'cadastro',
+      component: () => import('@/components/LoginUsuario/CadastroView.vue'),
+    },
+    {
+      path: '/perfil',
+      name: 'perfil',
+      component: () => import('@/components/LoginUsuario/PerfilView.vue'),
+    },
+    {
+      path: '/perfil/deletar',
+      name: 'deletar-perfil',
+      component: () => import('@/components/LoginUsuario/DeletarPerfilView.vue'),
+    },
+    {
+      path: '/profissionais',
+      name: 'profissionais',
+      component: () => import('@/view/profissionaisView.vue'),
+    },
+    {
+      path: '/profissional/:id',
+      name: 'perfil-profissional',
+      component: () => import('@/view/perfilProfissionalView.vue'),
+    },
+    {
+      path: '/profissional/:id/edit',
+      name: 'edit-perfil-profissional',
+      component: () => import('@/components/profissional/edit/editProfissional.vue'),
+    },
+    {
+      path: '/profissional/:id/delete',
+      name: 'delete-perfil-profissional',
+      component: () => import('@/components/profissional/delete/deleteProfissional.vue'),
     },
   ],
-})
+});
 
-export default router
+export default router;

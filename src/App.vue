@@ -1,17 +1,15 @@
-<template>
-  <LoginUsuario />
-</template>
-
 <script setup>
-import LoginUsuario from './LoginUsuario/index.vue';
+import Header from './components/headerComponent.vue'
+import Footer from './components/footerComponent.vue'
 </script>
 
-<style>
-html, body, #app {
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-}
+<template>
+   <Header />
+   <router-view />
+    <Footer />
+
+
+</template>
+
+<style scoped>
 </style>
