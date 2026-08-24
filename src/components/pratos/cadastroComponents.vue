@@ -80,6 +80,21 @@ function cancelar() {
     fotoInputRef.value.value = ''
   }
 }
+const salvarPrato = () => {
+  const novoPrato = {
+    nome: nomeDoPrato.value,
+    profissional: nomeDoNutricionista.value,
+    data: new Date().toLocaleDateString('pt-BR'),
+    calorias: calorias.value + ' Kcal',
+    foto: urlDaFoto.value,
+    modoPreparo: preparo.value,
+    ingredientes: listaIngredientes.value,
+  }
+
+  localStorage.setItem('dadosPrato', JSON.stringify(novoPrato))
+  router.push('/buscar-pratos') // Redireciona para esta tela
+}
+
 </script>
 
 <template>
@@ -137,7 +152,7 @@ function cancelar() {
 }
 
 h1 {
-  color: #73441b;
+  color: #73441B;
   text-align: center;
   font-size: 3rem;
   margin-bottom: 24px;
