@@ -44,6 +44,37 @@ const router = createRouter({
       name: 'delete-perfil-profissional',
       component: () => import('@/components/profissional/delete/deleteProfissional.vue'),
     },
+
+    {
+      path: '/consultas/:id/agendamento',
+      alias: '/agendamento',
+      name: 'agendamentoComponent',
+      component: () => import('@/components/consultas/agendamentoComponent.vue'),
+    },
+    {
+      path: '/consultas/:id/buscar',
+      alias: '/buscar',
+      name: 'buscarComponent',
+      component: () => import('@/components/consultas/buscarComponent.vue'),
+    },
+    {
+      path: '/consultas/:id/editar',
+      alias: '/editar',
+      name: 'editarComponent',
+      component: () => import('@/components/consultas/editarComponent.vue'),
+    },
+    {
+      path: '/consultas/:id/excluir',
+      alias: '/excluir',
+      name: 'excluirComponent',
+      component: () => import('@/components/consultas/excluirComponent.vue'),
+    },
+    {
+      path: '/consultas/:id/resumo',
+      alias: '/resumo',
+      name: 'resumoComponent',
+      component: () => import('@/components/consultas/resumoComponent.vue'),
+    }
   ],
 });
 

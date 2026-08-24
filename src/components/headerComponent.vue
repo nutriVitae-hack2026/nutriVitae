@@ -29,7 +29,7 @@ import { RouterLink } from 'vue-router';
             </RouterLink>
           </li>
           <li>
-            <RouterLink to="#">
+            <RouterLink to="/agendamento">
               <i class="mdi mdi-calendar-multiselect-outline"></i>
               Agendamentos
             </RouterLink>

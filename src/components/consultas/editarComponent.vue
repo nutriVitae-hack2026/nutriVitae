@@ -1,0 +1,351 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const editandoData = ref(false)
+const editandoHorario = ref(false)
+const editandoTipo = ref(false)
+
+const mostrarModalSenha = ref(false)
+const senha = ref('')
+
+const agendamento = ref({
+  usuario: {
+    nome: '',
+    telefone: '',
+    email: '',
+    foto: null, // <-- Guarda a URL da foto do usuário
+  },
+
+  profissional: {
+    nome: '',
+    telefone: '',
+    email: '',
+    foto: null,
+  },
+
+  consulta: {
+    data: '',
+    horario: '',
+    tipo: 'Presencial', //ou 'online (EAD)'
+  },
+})
+
+onMounted(() => {
+  const dadosSalvos = localStorage.getItem('dadosAgendamento')
+  if (dadosSalvos) {
+    agendamento.value = JSON.parse(dadosSalvos)
+  }
+})
+
+function formatarData(dataIso) {
+  if (!dataIso) return 'Selecionar a Data'
+  const [ano, mes, dia] = dataIso.split('-')
+  return `${dia}/${mes}/${ano}`
+}
+
+function salvarAlteracoes() {
+  mostrarModalSenha.value = true
+}
+
+function meConfirmarEdicao() {
+  if (!senha.value) return alert('Digite sua senha para confirmar!')
+
+  localStorage.setItem('dadosAgendamento', JSON.stringify(agendamento.value))
+  mostrarModalSenha.value = false
+
+  editandoData.value = false
+  editandoHorario.value = false
+  editandoTipo.value = false
+  senha.value = ''
+
+  router.push('/resumo')
+}
+</script>
+
+<template>
+  <div class="resumo-container">
+    <header class="header-banner">
+      <h1>Editar Agendamento</h1>
+    </header>
+
+    <div class="resumo-content">
+      <div class="cards-coluna">
+        <!-- Card Profissional -->
+        <div class="person-card">
+          <img
+            :src="agendamento.profissional.foto || 'https://via.placeholder.com/150'"
+            alt="Profissional"
+            class="avatar"
+          />
+          <div class="info">
+            <h2>
+              {{ agendamento.profissional.nome || 'Nome Profissional' }}
+            </h2>
+            <p>
+              <strong>Telefone:</strong>
+              {{ agendamento.profissional.telefone }}
+            </p>
+            <button class="bnt-perfil">Ver Perfil</button>
+          </div>
+          <button class="bnt-chat">Conversar Com o Profissional</button>
+        </div>
+
+        <!-- Card Usuário -->
+        <div class="person-card">
+          <img
+            :src="agendamento.usuario.foto || 'https://via.placeholder.com/150'"
+            alt="Usuário"
+            class="avatar"
+          />
+          <div class="info">
+            <h2>
+              {{ agendamento.usuario.nome || 'Nome Usuário' }}
+            </h2>
+            <p>
+              <strong>Telefone:</strong>
+              {{ agendamento.usuario.telefone }}
+            </p>
+            <button class="bnt-perfil">Ver Perfil</button>
+          </div>
+          <button class="bnt-chat">Conversar Com o paciente</button>
+        </div>
+      </div>
+
+      <!-- Coluna de Detalhes -->
+      <div class="details-coluna">
+        <!-- Campo DATA -->
+        <div class="detail-item">
+          <span class="icon">📅</span>
+          <div>
+            <strong>Data:</strong>
+            <input
+              v-if="editandoData"
+              type="date"
+              v-model="agendamento.consulta.data"
+              class="edit-input"
+              @blur="editandoData = false"
+            />
+            <span v-else class="value">
+              {{ formatarData(agendamento.consulta.data) }}
+              <button class="btn-lapis" @click="editandoData = true" title="Editar Data">✏️</button>
+            </span>
+          </div>
+        </div>
+
+        <!-- Campo HORÁRIO -->
+        <div class="detail-item">
+          <span class="icon">🕒</span>
+          <div>
+            <strong>Horário:</strong>
+            <input
+              v-if="editandoHorario"
+              type="text"
+              v-model="agendamento.consulta.horario"
+              class="edit-input"
+              @blur="editandoHorario = false"
+            />
+            <span v-else class="value">
+              {{ agendamento.consulta.horario || '00:00' }}
+              <button class="btn-lapis" @click="editandoHorario = true" title="Editar Horário">✏️</button>
+            </span>
+          </div>
+        </div>
+
+        <!-- Campo TIPO -->
+        <div class="detail-item full">
+          <strong>Tipo de agendamento:</strong>
+          <select 
+            v-if="editandoTipo" 
+            v-model="agendamento.consulta.tipo" 
+            class="edit-select"
+            @change="editandoTipo = false"
+            @blur="editandoTipo = false"
+          >
+            <option value="Presencial">Presencial</option>
+            <option value="Online (EAD)">Online (EAD)</option>
+          </select>
+          <span v-else class="value">
+            {{ agendamento.consulta.tipo }}
+            <button class="btn-lapis" @click="editandoTipo = true" title="Editar Tipo">✏️</button>
+          </span>
+        </div>
+
+        <!-- Botão para abrir o modal -->
+        <button class="btn-confirmar" @click="salvarAlteracoes">
+          Confirmar Alterações
+        </button>
+      </div>
+    </div>
+
+    <div v-if="mostrarModalSenha" class="modal-overlay" @click.self="mostrarModalSenha = false">
+      <div class="modal-card">
+        <button class="btn-fechar-modal" @click="mostrarModalSenha = false">✖</button>
+        <div class="modal-header">
+          <h3>Editar Agendamento</h3>
+        </div>
+
+        <p class="modal-instruction">Digite sua senha para confirmar as alterações:</p>
+
+        <input
+          type="password"
+          placeholder="Sua senha"
+          v-model="senha"
+          class="modal-input"
+          @keyup.enter="meConfirmarEdicao"
+        />
+
+        <button class="btn-confirmar-modal" @click="meConfirmarEdicao">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+
+ .header-banner {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #73441b;
+  color: #f2ebd9;
+  padding: 30px 70px 30px 50px;
+  border-radius: 0 0 0 130px;
+  box-shadow: -4px 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  z-index: 10;
+}
+
+.header-banner h1 {
+  color: #f2ebd9;
+  font-size: 3rem; 
+  margin: 0;
+}
+
+
+.edit-input,
+.edit-select {
+  border: 1px solid #73441b;
+  border-radius: 8px;
+  padding: 4px 8px;
+  background-color: #f1edd2;
+  color: #333f34;
+  font-weight: bold;
+  margin-left: 8px;
+}
+
+.btn-confirmar {
+  margin-top: 20px;
+  background-color: #9a9e70;
+  color: #333f34;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Botão Lápis */
+.btn-lapis {
+  background-color: #f1edd2;
+  border: 1px solid #73441b;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-left: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.15);
+  transition: transform 0.1s ease;
+}
+
+.btn-lapis:hover {
+  transform: scale(1.1);
+  background-color: #e2dcba;
+}
+
+/* Modal Styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-card {
+  background-color: #F1EDD2;
+  border: 1px solid #73441b; 
+  padding: 24px;
+  border-radius: 16px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  color: #333f34;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.btn-fechar-modal {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #333f34;
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  line-height: 1;
+}
+
+.modal-instruction { 
+  font-size: 0.9rem;
+  color: #333f34;
+  font-weight: bolder;
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.modal-input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #73441b; 
+  background-color: #F1EDD2;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.btn-confirmar-modal {
+  background-color: #333F34;
+  color: #F1EDD2;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 8px 20px;
+  cursor: pointer;
+}
+</style>
