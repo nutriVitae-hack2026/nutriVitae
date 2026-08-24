@@ -60,12 +60,12 @@ function cancelar() {
   <div class="principal container-formulario grade-formulario">
     <h1>Cadastro de Componentes</h1>
 
-    <div class="nome cartao-entrada ">
+    <div class="nome cartao-entrada">
       <label for="nome">Nome:</label>
       <input type="text" id="nome" v-model="cadastro.usuario.nome" />
     </div>
 
-    <div class="email cartao-entrada ">
+    <div class="email cartao-entrada">
       <label for="email">Email:</label>
       <input type="text" id="email" v-model="cadastro.usuario.email" />
     </div>
@@ -101,6 +101,16 @@ function cancelar() {
       <input type="text" id="descrever" v-model="cadastro.usuario.descrever" />
     </div>
 
+    <div class="input-grande">
+      <label for="foto">Modo de Preparo:</label>
+      <textarea id="descrever" v-model="agendamento.profissional.preparo"></textarea>
+    </div>
+
+    <div class="input-grande">
+      <label for="descrever">Ingredientes:</label>
+      <textarea id="descrever" v-model="agendamento.profissional.ingredientes"></textarea>
+    </div>
+
     <button type="button" @click="validarFormulario" class="bnt-confirmar">Confirmar</button>
     <button @click="cancelar" class="bnt-cancelar">Cancelar</button>
     <button @click="buscarSuporte()" class="bnt-cancelar">Pesquisa</button>
@@ -116,8 +126,6 @@ h1 {
   margin-bottom: 24px;
   font-weight: bold;
 }
-
-
 
 .grade-formulario {
   display: grid;
@@ -196,6 +204,42 @@ h1 {
   background-color: #6b7c4f;
 }
 
+.input-grande {
+  display: flex;
+  flex-direction: column;
+  background-color: #cbba9c;
+  border: 1px solid #9c8a6f;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.25);
+  min-height: 200px;
+  align-items: center;
+}
+
+.input-grande label {
+  color: #333f34;
+  font-weight: bold;
+  margin-bottom: 8px;
+  white-space: nowrap;
+  font-size: 1.5rem;
+}
+
+/* Textarea ajustado para começar do topo e quebrar linhas */
+.input-grande textarea {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #333f34;
+  font-size: 1.1rem;
+  font-weight: bold;
+  font-family: inherit;
+  resize: none;
+  text-align: left; /* Garante que o texto comece do topo */
+}
+
 .bnt-confirmar {
   width: 100%;
   margin-top: 24px;
@@ -223,7 +267,6 @@ h1 {
   cursor: pointer;
   box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
 }
-
 
 @media (max-width: 700px) {
   .grade-formulario {
