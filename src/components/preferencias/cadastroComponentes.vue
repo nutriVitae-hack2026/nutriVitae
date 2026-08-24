@@ -158,7 +158,7 @@ h1 {
 .botoes {
   display: flex;
   justify-content: center;
-  gap: 16px;
+  gap: 15px;
   margin-top: 24px;
 }
 

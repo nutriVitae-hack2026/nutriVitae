@@ -92,7 +92,7 @@ function confirmar() {
       </div>
     </section>
     <button @click="limpar" class="btn-limpar">limpar/Cancelar</button>
-    <button @click="confirmar" class="btn-salvar">confirmar</button>
+    <button @click="confirmar" class="btn-salvar">Confirmar</button>
     <button @click="router.push('/buscar')" class="btn-buscar">buscar pofissionais</button>
   </main>
 </template>
