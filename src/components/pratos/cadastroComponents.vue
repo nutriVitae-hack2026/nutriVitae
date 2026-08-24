@@ -4,6 +4,9 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
+// Ref para o input de arquivo (para resetar no botão cancelar)
+const fotoInputRef = ref(null)
+
 const agendamento = ref({
   profissional: {
     nome: '',
@@ -16,7 +19,6 @@ const agendamento = ref({
 })
 
 function converterParaBase64(arquivo, callback) {
-  // Limita o tamanho do arquivo a ~1MB para evitar estouro do localStorage
   if (arquivo.size > 1024 * 1024) {
     alert('Selecione uma imagem menor que 1MB.')
     return
@@ -54,11 +56,29 @@ function validarFormulario() {
 }
 
 function salvar() {
-  // Se validarFormulario() retornar false, o 'return' para aqui
   if (!validarFormulario()) return
 
   try {
-    localStorage.setItem('dadosAgendamento', JSON.stringify(agendamento.value))
+    const dados = agendamento.value.profissional
+
+    // Converte a string de ingredientes separada por quebras de linha em um Array
+    const listaIngredientes = dados.ingredientes
+      .split('\n')
+      .filter((item) => item.trim() !== '')
+
+    // Formata o objeto do prato com a estrutura esperada pela tela de busca
+    const novoPrato = {
+      nome: dados.nome,
+      profissional: 'Profissional Cadastrado', // Pode ajustar se houver um campo específico
+      data: dados.data,
+      calorias: dados.calorias.includes('Kcal') ? dados.calorias : `${dados.calorias} Kcal`,
+      foto: dados.foto,
+      modoPreparo: dados.preparo,
+      ingredientes: listaIngredientes,
+    }
+
+    // Salva na chave 'dadosPrato' que é lida pela tela de busca
+    localStorage.setItem('dadosPrato', JSON.stringify(novoPrato))
     router.push('/buscar')
   } catch (error) {
     alert('Erro ao salvar o agendamento. Tente utilizar fotos menores.')
@@ -80,21 +100,6 @@ function cancelar() {
     fotoInputRef.value.value = ''
   }
 }
-const salvarPrato = () => {
-  const novoPrato = {
-    nome: nomeDoPrato.value,
-    profissional: nomeDoNutricionista.value,
-    data: new Date().toLocaleDateString('pt-BR'),
-    calorias: calorias.value + ' Kcal',
-    foto: urlDaFoto.value,
-    modoPreparo: preparo.value,
-    ingredientes: listaIngredientes.value,
-  }
-
-  localStorage.setItem('dadosPrato', JSON.stringify(novoPrato))
-  router.push('/buscar-pratos') // Redireciona para esta tela
-}
-
 </script>
 
 <template>
@@ -106,8 +111,8 @@ const salvarPrato = () => {
     <section>
       <div class="grid-form">
         <div class="input-card full-width">
-          <label for="usr-email">Nome do Prato</label>
-          <input id="usr-email" type="email" v-model="agendamento.profissional.nome" />
+          <label for="usr-nome">Nome do Prato</label>
+          <input id="usr-nome" type="text" v-model="agendamento.profissional.nome" />
         </div>
 
         <div class="input-card">
@@ -116,13 +121,19 @@ const salvarPrato = () => {
         </div>
 
         <div class="input-card">
-          <label for="data">data de Criação:</label>
+          <label for="data">Data de Criação:</label>
           <input id="data" type="date" v-model="agendamento.profissional.data" />
         </div>
 
         <div class="input-card full-width">
           <label for="usr-foto">Foto do Prato</label>
-          <input id="usr-foto" type="file" accept="image/*" @change="aoSelecionarFotoPrato" />
+          <input 
+            ref="fotoInputRef" 
+            id="usr-foto" 
+            type="file" 
+            accept="image/*" 
+            @change="aoSelecionarFotoPrato" 
+          />
         </div>
 
         <div class="input-grande">
@@ -132,7 +143,11 @@ const salvarPrato = () => {
 
         <div class="input-grande">
           <span class="label-titulo">Ingredientes:</span>
-          <textarea id="ingredientes" v-model="agendamento.profissional.ingredientes"></textarea>
+          <textarea 
+            id="ingredientes" 
+            v-model="agendamento.profissional.ingredientes"
+            placeholder="Digite um ingrediente por linha"
+          ></textarea>
         </div>
       </div>
 
@@ -158,19 +173,18 @@ h1 {
   margin-bottom: 24px;
 }
 
-/* Grid layout de 2 colunas */
 .grid-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
-/* Faz o nome p/ select ocuparem a linha inteira */
+
 .full-width {
   grid-column: span 2;
 }
 
 .input-grande {
-display: flex;
+  display: flex;
   flex-direction: column;
   background-color: #cbba9c;
   border: 1px solid #9c8a6f;
@@ -181,9 +195,8 @@ display: flex;
   box-sizing: border-box;
 }
 
-/* Título flutuando centralizado no topo */
 .label-titulo {
-display: block;
+  display: block;
   text-align: center;
   color: #333f34;
   font-weight: bold;
@@ -192,9 +205,8 @@ display: block;
   flex-shrink: 0;
 }
 
-/* Textarea ocupando 100% da caixa e com recuo superior para não cobrir o título */
 .input-grande textarea {
-width: 100%;
+  width: 100%;
   flex: 1;
   background: transparent;
   border: none;
@@ -218,6 +230,7 @@ width: 100%;
   padding: 10px 16px;
   box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.25);
 }
+
 .input-card label {
   color: #536236;
   font-weight: bold;
@@ -225,6 +238,7 @@ width: 100%;
   white-space: nowrap;
   font-size: 1.25rem;
 }
+
 .input-card input,
 .input-card select {
   width: 100%;
@@ -235,20 +249,22 @@ width: 100%;
   font-size: 1.25rem;
   font-weight: bold;
 }
+
 .input-card select {
   cursor: pointer;
 }
+
 .input-card select option {
   background-color: #cbba9c;
   color: #4b5a32;
   padding: 10px;
 }
 
-/*imagem do usúrio e profissional*/
 .input-card input[type='file'] {
   font-size: 0.85rem;
   color: #333f34;
 }
+
 .input-card input[type='file']::file-selector-button {
   background-color: #9a9e70;
   color: #333f34;
@@ -260,6 +276,7 @@ width: 100%;
   margin-right: 10px;
   transition: background 0.2s;
 }
+
 .input-card input[type='file']::file-selector-button:hover {
   background-color: #6b7c4f;
 }
@@ -282,9 +299,7 @@ width: 100%;
   font-weight: bold;
   cursor: pointer;
   box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.25);
-  transition:
-    background-color 0.2s,
-    transform 0.1s;
+  transition: background-color 0.2s, transform 0.1s;
 }
 
 .button:hover {
@@ -294,6 +309,7 @@ width: 100%;
 .button:active {
   transform: scale(0.98);
 }
+
 .resumo-container {
   position: relative;
   max-width: 850px;
@@ -302,7 +318,6 @@ width: 100%;
   min-height: 500px;
 }
 
-/* Estilo da barra de rolagem */
 .input-grande textarea::-webkit-scrollbar {
   width: 12px;
 }
