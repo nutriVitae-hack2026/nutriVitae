@@ -45,38 +45,37 @@ function validarFormulario() {
     alert('Preencha nome, email, assunto e descrição.')
     return false
   }
- {
-  router.push('/buscar-suporte')
- return true
-}
+  {
+    router.push('/buscar-suporte')
+    return true
+  }
 }
 
 function cancelar() {
   router.push('/')
 }
-
 </script>
 
 <template>
-  <div class="principal">
+  <div class="principal container-formulario grade-formulario">
     <h1>Cadastro de Componentes</h1>
 
-    <div class="nome">
+    <div class="nome cartao-entrada ">
       <label for="nome">Nome:</label>
       <input type="text" id="nome" v-model="cadastro.usuario.nome" />
     </div>
 
-    <div class="email">
+    <div class="email cartao-entrada ">
       <label for="email">Email:</label>
       <input type="text" id="email" v-model="cadastro.usuario.email" />
     </div>
 
-    <div class="assunto">
+    <div class="assunto cartao-entrada">
       <label for="assunto">Assunto:</label>
       <input type="text" id="assunto" v-model="cadastro.usuario.assunto" />
     </div>
 
-    <div class="categoria">
+    <div class="categoria cartao-entrada">
       <label for="categoria">Categoria:</label>
 
       <select id="categoria" v-model="cadastro.usuario.categoria">
@@ -92,12 +91,12 @@ function cancelar() {
       </select>
     </div>
 
-    <div class="anexar-imagem">
+    <div class="anexar-imagem cartao-entrada">
       <label for="foto">Anexar imagem:</label>
       <input id="foto" type="file" accept="image/*" @change="aoSelecionarFotoProblema" />
     </div>
 
-    <div class="descrever-problema">
+    <div class="descrever-problema cartao-entrada">
       <label for="descrever">Descrever problema:</label>
       <input type="text" id="descrever" v-model="cadastro.usuario.descrever" />
     </div>
@@ -106,70 +105,82 @@ function cancelar() {
     <button @click="cancelar" class="bnt-cancelar">Cancelar</button>
     <button @click="buscarSuporte()" class="bnt-cancelar">Pesquisa</button>
   </div>
-
 </template>
 
 <style scoped>
 h1 {
+  grid-column: span 2;
   color: #73441b;
-  font-weight: bolder;
-  font-size: 60px;
   text-align: center;
+  font-size: 3rem;
+  margin-bottom: 24px;
+  font-weight: bold;
 }
 
-div.nome {
-  padding: 10px 16px;
+
+
+.grade-formulario {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
 
-div.nome label {
-  color: #333f34;
-  font-weight: bolder;
-  font-size: 40px;
+.container-formulario {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-div.email label {
-  color: #333f34;
-  font-weight: bolder;
-  font-size: 40px;
+.largura-total {
+  grid-column: span 2;
 }
 
-div.email {
-  padding: 10px 16px;
-}
-
-div.assunto label {
-  color: #333f34;
-  font-weight: bolder;
-  font-size: 40px;
-}
-
-div.assunto {
-  padding: 10px 16px;
-}
-
-div.categoria label {
-  color: #333f34;
-  font-weight: bolder;
-  font-size: 40px;
-}
-
-div.categoria {
-  padding: 10px 16px;
-}
-
-div.categoria select option {
-  color: #333f34;
+.cartao-entrada {
+  display: flex;
+  align-items: center;
   background-color: #cbba9c;
   border: 1px solid #9c8a6f;
-  border-color: #cbba9c;
+  border-radius: 12px;
+  padding: 10px 16px;
+  box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.25);
+  font-size: 23px;
+  font-weight: 900;
 }
 
-.anexar-imagem input[type='file'] {
+.cartao-entrada label {
+  color: #536236;
+  font-weight: 900;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+
+.cartao-entrada input,
+.cartao-entrada select {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #333f34;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.cartao-entrada select {
+  cursor: pointer;
+}
+
+.cartao-entrada select option {
+  background-color: #cbba9c;
+  color: #4b5a32;
+  padding: 10px;
+}
+
+.cartao-entrada input[type='file'] {
   font-size: 0.85rem;
   color: #333f34;
 }
 
-.anexar-imagem input[type='file']::file-selector-button {
+.cartao-entrada input[type='file']::file-selector-button {
   background-color: #9a9e70;
   color: #333f34;
   border: 1px solid #536236;
@@ -181,21 +192,57 @@ div.categoria select option {
   transition: background 0.2s;
 }
 
-.anexar-imagem input[type='file']::file-selector-button:hover {
+.cartao-entrada input[type='file']::file-selector-button:hover {
   background-color: #6b7c4f;
 }
 
-.anexar-imagem label {
-  font-size: 40px;
-  padding: 10px 16px;
+.bnt-confirmar {
+  width: 100%;
+  margin-top: 24px;
+  padding: 12px;
+  background-color: #9a9e70;
   color: #333f34;
-  font-weight: bolder;
+  border: 1px solid #536236;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.descrever-problema label {
-  font-size: 40px;
-  padding: 10px 16px;
+.bnt-cancelar {
+  width: 100%;
+  margin-top: 24px;
+  padding: 12px;
+  background-color: #9a9e70;
   color: #333f34;
-  font-weight: bolder;
+  border: 1px solid #536236;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+@media (max-width: 700px) {
+  .grade-formulario {
+    grid-template-columns: 1fr;
+  }
+
+  h1,
+  .largura-total {
+    grid-column: auto;
+  }
+
+  .cartao-entrada {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .cartao-entrada label {
+    margin-right: 0;
+  }
 }
 </style>
