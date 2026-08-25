@@ -39,7 +39,13 @@
               Conversas
             </routerLink>
           </li>
-          <div class="user">
+         <div class="user">
+            <li>
+              <RouterLink to="/academico">
+                <i class="mdi mdi-school-outline"></i>
+                Formação Acadêmica
+              </RouterLink>
+            </li>
             <li>
               <routerLink to="#">
                 <i class="mdi mdi-account-circle"></i>
