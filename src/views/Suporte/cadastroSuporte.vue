@@ -235,8 +235,8 @@ h1 {
   outline: none;
   padding: 10px;
   color: #333f34;
-  font-size: 0.9rem;
-  font: inherit;
+  font-size: 1rem;
+  font-weight: bold;
   resize: none;
 }
 

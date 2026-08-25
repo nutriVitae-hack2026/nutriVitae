@@ -1,0 +1,357 @@
+**Comandos para organizar informações**
+
+**HTML**
+
+```html
+<div>Conteúdo</div>
+```
+Cria um bloco. Normalmente fica um abaixo do outro.
+
+```html
+<p>Texto</p>
+```
+Cria um parágrafo.
+
+```html
+<span>Texto</span>
+```
+Mantém o conteúdo na mesma linha.
+
+```html
+<br />
+```
+Quebra a linha.
+
+```html
+<hr />
+```
+Cria uma linha separadora.
+
+```html
+<strong>Texto importante</strong>
+```
+Deixa o texto em negrito.
+
+```html
+<ul>
+  <li>Item 1</li>
+  <li>Item 2</li>
+</ul>
+```
+Cria uma lista com marcadores.
+
+```html
+<ol>
+  <li>Primeiro</li>
+  <li>Segundo</li>
+</ol>
+```
+Cria uma lista numerada.
+
+```html
+<section>Conteúdo</section>
+```
+Agrupa uma seção.
+
+```html
+<article>Suporte</article>
+```
+Representa um item independente, como cada suporte.
+
+**CSS: posição dos elementos**
+
+```css
+display: block;
+```
+
+Coloca os elementos um abaixo do outro.
+
+```css
+display: flex;
+```
+
+Organiza os elementos em linha.
+
+```css
+flex-direction: row;
+```
+
+Coloca lado a lado.
+
+```css
+flex-direction: column;
+```
+
+Coloca um abaixo do outro.
+
+```css
+flex-wrap: wrap;
+```
+
+Permite que os itens passem para a linha seguinte.
+
+```css
+justify-content: center;
+```
+
+Centraliza horizontalmente.
+
+```css
+justify-content: space-between;
+```
+
+Coloca espaço entre os elementos.
+
+```css
+justify-content: space-around;
+```
+
+Coloca espaço ao redor dos elementos.
+
+```css
+align-items: center;
+```
+
+Centraliza verticalmente.
+
+```css
+align-items: flex-start;
+```
+
+Alinha no início.
+
+```css
+align-items: flex-end;
+```
+
+Alinha no final.
+
+**CSS: colunas e linhas**
+
+```css
+display: grid;
+```
+
+Cria uma organização por linhas e colunas.
+
+```css
+grid-template-columns: 1fr 1fr;
+```
+
+Cria duas colunas iguais.
+
+```css
+grid-template-columns: repeat(3, 1fr);
+```
+
+Cria três colunas iguais.
+
+```css
+grid-template-columns: 2fr 1fr;
+```
+
+Cria uma coluna maior e outra menor.
+
+```css
+grid-template-rows: auto auto;
+```
+
+Define duas linhas.
+
+```css
+grid-column: span 2;
+```
+
+Faz o elemento ocupar duas colunas.
+
+```css
+grid-row: span 2;
+```
+
+Faz o elemento ocupar duas linhas.
+
+**CSS: separação**
+
+```css
+gap: 16px;
+```
+
+Cria espaço entre todos os elementos.
+
+```css
+column-gap: 20px;
+```
+
+Cria espaço apenas entre colunas.
+
+```css
+row-gap: 10px;
+```
+
+Cria espaço apenas entre linhas.
+
+```css
+margin: 20px;
+```
+
+Cria espaço externo.
+
+```css
+margin-top: 10px;
+margin-right: 10px;
+margin-bottom: 10px;
+margin-left: 10px;
+```
+
+Controla cada lado individualmente.
+
+```css
+padding: 16px;
+```
+
+Cria espaço interno.
+
+```css
+padding: 10px 20px;
+```
+
+`10px` em cima/baixo e `20px` nos lados.
+
+**CSS: linhas e bordas**
+
+```css
+border: 1px solid #000;
+```
+
+Cria uma borda em todos os lados.
+
+```css
+border-bottom: 1px solid #000;
+```
+
+Cria uma linha embaixo.
+
+```css
+border-top: 1px solid #000;
+```
+
+Cria uma linha em cima.
+
+```css
+border-radius: 8px;
+```
+
+Arredonda os cantos.
+
+```css
+box-shadow: 2px 4px 6px #999;
+```
+
+Adiciona sombra.
+
+**CSS: texto**
+
+```css
+text-align: left;
+```
+
+Alinha à esquerda.
+
+```css
+text-align: center;
+```
+
+Centraliza o texto.
+
+```css
+text-align: right;
+```
+
+Alinha à direita.
+
+```css
+font-weight: bold;
+```
+
+Deixa em negrito.
+
+```css
+font-size: 18px;
+```
+
+Altera o tamanho.
+
+```css
+color: #333;
+```
+
+Altera a cor do texto.
+
+```css
+white-space: nowrap;
+```
+
+Impede que o texto quebre.
+
+**Exemplo completo para os suportes**
+
+```html
+<article class="suporte">
+  <h2>Erro no cadastro</h2>
+
+  <div class="informacoes">
+    <p><strong>Nome:</strong> João</p>
+    <p><strong>Email:</strong> joao@email.com</p>
+    <p><strong>Data:</strong> 25/08/2026</p>
+    <p><strong>Prioridade:</strong> Alta</p>
+  </div>
+
+  <hr />
+
+  <p><strong>Descrição:</strong> Problema ao enviar o formulário.</p>
+
+  <button>Apagar</button>
+</article>
+```
+
+```css
+.informacoes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 20px;
+}
+
+.suporte {
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid #9c8a6f;
+  border-bottom: 4px solid #73441b;
+  border-radius: 8px;
+}
+
+.suporte p {
+  margin: 6px 0;
+}
+
+.suporte hr {
+  border: 0;
+  border-top: 1px solid #9c8a6f;
+  margin: 12px 0;
+}
+
+@media (max-width: 700px) {
+  .informacoes {
+    grid-template-columns: 1fr;
+  }
+}
+```
+
+A combinação mais útil para sua tela é:
+
+```css
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 8px 20px;
+```
+
+Ela deixa as informações lado a lado no computador e, com o `@media`, uma abaixo da outra no celular.

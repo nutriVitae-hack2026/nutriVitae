@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import CadastroSuporte from '@/views/Suporte/cadastroSuporte.vue'
 import BuscarSuporte from '@/views/Suporte/buscarSuporte.vue'
+import PerfilSuporte from '@/views/Suporte/perfilSuporte.vue'
 
 const routes = [
   {
@@ -13,6 +14,11 @@ const routes = [
     name: 'BuscarSuporte',
     component: BuscarSuporte
   },
+  {
+    path: '/perfilSuporte',
+    name: 'PerfilSuporte',
+    component: PerfilSuporte
+  }
 ]
 
 const router = createRouter({
