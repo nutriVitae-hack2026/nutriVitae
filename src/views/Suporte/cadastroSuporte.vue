@@ -29,6 +29,36 @@ function aoSelecionarFotoProblema(event) {
   }
 }
 
+function prioridadePorCategoria(categoria) {
+  const prioridades = {
+    documentoErro: 'dificil',
+    resultadoErro: 'dificil',
+    linkErro: 'dificil',
+    perfilErro: 'media',
+    horarioErro: 'media',
+    choqueHorario: 'media',
+    mobilidadeErro: 'baixa',
+    filtroErro: 'baixa',
+  }
+
+  return prioridades[categoria] || 'baixa'
+}
+
+function gerarIdSuporte(suportes) {
+  let id
+
+  do {
+    const quantidadeDigitos = (crypto.getRandomValues(new Uint32Array(1))[0] % 8) + 2
+    const menorValor = 10 ** (quantidadeDigitos - 1)
+    const intervalo = 10 ** quantidadeDigitos - menorValor
+    const valorAleatorio = crypto.getRandomValues(new Uint32Array(1))[0] % intervalo
+
+    id = String(menorValor + valorAleatorio)
+  } while (suportes.some((suporte) => String(suporte.id) === id))
+
+  return id
+}
+
 function validarFormulario() {
   const { usuario } = cadastro.value
 
@@ -44,11 +74,11 @@ function validarFormulario() {
 
   const suportes = JSON.parse(localStorage.getItem('suportes') || '[]')
   suportes.push({
-    id: Date.now(),
+    id: gerarIdSuporte(suportes),
     usuario: { ...usuario },
     data: new Date().toISOString().slice(0, 10),
-    chamada: 'em-andamento',
-    prioridade: 'baixa',
+    status: 'em-andamento',
+    prioridade: prioridadePorCategoria(usuario.categoria),
   })
   localStorage.setItem('suportes', JSON.stringify(suportes))
   router.push('/buscar-suporte')

@@ -4,8 +4,16 @@ import router from '@/router'
 
 const buscarTermo = ref('')
 const suportes = ref([])
-const filtros = ref({ data: '', chamada: '', prioridade: '' })
+const filtros = ref({ data: '', status: '', prioridade: '' })
 const imagemSelecionada = ref(null)
+
+function obterStatus(item) {
+  return item.status || item.chamada || 'em-andamento'
+}
+
+function textoStatus(status) {
+  return status === 'resolvido' ? 'Resolvido' : 'Em andamento'
+}
 
 function formatarData(data) {
   if (!data) return ''
@@ -17,7 +25,13 @@ const suportesFiltrados = computed(() => {
   const termo = buscarTermo.value.trim().toLowerCase()
 
   return suportes.value.filter((item) => {
-    const texto = [item.usuario?.nome, item.usuario?.email, item.assunto, item.usuario?.categoria]
+    const texto = [
+      item.id,
+      item.usuario?.nome,
+      item.usuario?.email,
+      item.assunto,
+      item.usuario?.categoria,
+    ]
       .filter(Boolean)
       .join(' ')
       .toLowerCase()
@@ -25,18 +39,28 @@ const suportesFiltrados = computed(() => {
     return (
       (!termo || texto.includes(termo)) &&
       (!filtros.value.data || item.data === filtros.value.data) &&
-      (!filtros.value.chamada || item.chamada === filtros.value.chamada) &&
+      (!filtros.value.status || obterStatus(item) === filtros.value.status) &&
       (!filtros.value.prioridade || item.prioridade === filtros.value.prioridade)
     )
   })
 })
 
 onMounted(() => {
-  suportes.value = JSON.parse(localStorage.getItem('suportes') || '[]')
+  suportes.value = JSON.parse(localStorage.getItem('suportes') || '[]').map((item) => ({
+    ...item,
+    status: obterStatus(item),
+  }))
 })
 
 function apagarSuporte(id) {
   suportes.value = suportes.value.filter((item) => item.id !== id)
+  localStorage.setItem('suportes', JSON.stringify(suportes.value))
+}
+
+function resolverSuporte(id) {
+  suportes.value = suportes.value.map((item) =>
+    item.id === id ? { ...item, status: 'resolvido' } : item,
+  )
   localStorage.setItem('suportes', JSON.stringify(suportes.value))
 }
 
@@ -46,7 +70,7 @@ function voltarSuporte() {
 
 function limparFiltros() {
   buscarTermo.value = ''
-  filtros.value = { data: '', chamada: '', prioridade: '' }
+  filtros.value = { data: '', status: '', prioridade: '' }
 }
 
 function abrirImagem(src, alt) {
@@ -70,10 +94,10 @@ function fecharImagem() {
     <div class="filtros">
       <div class="filtro">
         <label for="status">Status:</label>
-        <select id="status" v-model="filtros.chamada">
+        <select id="status" v-model="filtros.status">
           <option value="">Selecione o status</option>
           <option value="em-andamento">Em andamento</option>
-          <option value="revisado">Revisado</option>
+          <option value="resolvido">Resolvido</option>
         </select>
       </div>
 
@@ -97,12 +121,13 @@ function fecharImagem() {
       <article v-for="item in suportesFiltrados" :key="item.id" class="suporte">
         <div class="suporte-cabecalho">
           <div>
-            <h2>{{ item.assunto || 'Suporte sem assunto' }}</h2>
+            <h2>{{ item.assunto || 'Suporte' }} - Id:{{ item.id ? `${item.id}  ` : '' }}</h2>
             <div class="suporte-detalhes">
+              <p><strong>ID:</strong> {{ item.id }}</p>
               <p><strong>Nome:</strong> {{ item.usuario?.nome }}</p>
               <p><strong>Email:</strong> {{ item.usuario?.email }}</p>
               <p><strong>Data:</strong> {{ formatarData(item.data) }}</p>
-              <p><strong>Status:</strong> {{ item.chamada }}</p>
+              <p><strong>Status:</strong> {{ textoStatus(obterStatus(item)) }}</p>
               <p><strong>Prioridade:</strong> {{ item.prioridade }}</p>
               <p v-if="item.usuario?.categoria">
                 <strong>Categoria:</strong> {{ item.usuario.categoria }}
@@ -130,7 +155,17 @@ function fecharImagem() {
         <p v-if="item.usuario?.descrever" class="descricao">
           <strong>Descrição:</strong> {{ item.usuario.descrever }}
         </p>
-        <button type="button" class="botao-apagar" @click="apagarSuporte(item.id)">Apagar</button>
+        <div class="acoes-suporte">
+          <button
+            v-if="obterStatus(item) !== 'resolvido'"
+            type="button"
+            class="botao-resolver"
+            @click="resolverSuporte(item.id)"
+          >
+            Marcar como resolvido
+          </button>
+          <button type="button" class="botao-apagar" @click="apagarSuporte(item.id)">Apagar</button>
+        </div>
       </article>
     </div>
 
@@ -319,6 +354,18 @@ h1 {
   margin-top: 12px;
   padding: 8px 16px;
   font-size: 1rem;
+}
+.acoes-suporte {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.acoes-suporte button {
+  margin-top: 12px;
+}
+.botao-resolver {
+  background-color: #536236 !important;
+  color: #f1edd2 !important;
 }
 .suporte .botao-imagem {
   margin: 0;
