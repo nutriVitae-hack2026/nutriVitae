@@ -29,10 +29,6 @@ function aoSelecionarFotoProblema(event) {
   }
 }
 
-function buscarSuporte() {
-  router.push('/buscar-suporte')
-}
-
 function validarFormulario() {
   const { usuario } = cadastro.value
 
@@ -45,10 +41,18 @@ function validarFormulario() {
     alert('Preencha nome, email, assunto e descrição.')
     return false
   }
-  {
-    router.push('/buscar-suporte')
-    return true
-  }
+
+  const suportes = JSON.parse(localStorage.getItem('suportes') || '[]')
+  suportes.push({
+    id: Date.now(),
+    usuario: { ...usuario },
+    data: new Date().toISOString().slice(0, 10),
+    chamada: 'em-andamento',
+    prioridade: 'baixa',
+  })
+  localStorage.setItem('suportes', JSON.stringify(suportes))
+  router.push('/buscar-suporte')
+  return true
 }
 
 function cancelar() {
@@ -58,7 +62,7 @@ function cancelar() {
 
 <template>
   <div class="principal container-formulario grade-formulario">
-    <h1>Cadastro de Componentes</h1>
+    <h1>Cadastro de suporte</h1>
 
     <div class="nome cartao-entrada">
       <label for="nome">Nome:</label>
@@ -91,29 +95,18 @@ function cancelar() {
       </select>
     </div>
 
-    <div class="anexar-imagem cartao-entrada">
+    <div class="anexar-imagem painel-quadrado cartao-entrada">
       <label for="foto">Anexar imagem:</label>
       <input id="foto" type="file" accept="image/*" @change="aoSelecionarFotoProblema" />
     </div>
 
-    <div class="descrever-problema cartao-entrada">
+    <div class="descrever-problema painel-quadrado cartao-entrada">
       <label for="descrever">Descrever problema:</label>
-      <input type="text" id="descrever" v-model="cadastro.usuario.descrever" />
-    </div>
-
-    <div class="input-grande">
-      <label for="foto">Modo de Preparo:</label>
-      <textarea id="descrever" v-model="agendamento.profissional.preparo"></textarea>
-    </div>
-
-    <div class="input-grande">
-      <label for="descrever">Ingredientes:</label>
-      <textarea id="descrever" v-model="agendamento.profissional.ingredientes"></textarea>
+      <textarea id="descrever" v-model="cadastro.usuario.descrever"></textarea>
     </div>
 
     <button type="button" @click="validarFormulario" class="bnt-confirmar">Confirmar</button>
     <button @click="cancelar" class="bnt-cancelar">Cancelar</button>
-    <button @click="buscarSuporte()" class="bnt-cancelar">Pesquisa</button>
   </div>
 </template>
 
@@ -129,7 +122,7 @@ h1 {
 
 .grade-formulario {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0.5fr 0.5fr;
   gap: 16px;
 }
 
@@ -204,6 +197,49 @@ h1 {
   background-color: #6b7c4f;
 }
 
+.painel-quadrado {
+  width: 100%;
+  aspect-ratio: 1.9 / 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0;
+  align-self: start;
+  padding: 0;
+}
+
+.painel-quadrado label {
+  margin: 0;
+  padding: 10px 16px 0 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.painel-quadrado input[type='file'] {
+  width: auto;
+  max-width: 100%;
+  margin-top: 16px;
+  align-self: center;
+  padding: 0 16px 16px 16px;
+}
+
+.painel-quadrado textarea {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  margin-top: 0px;
+  margin-left: 30px;
+  margin-right: 16px;
+  margin-bottom: 16px;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 10px;
+  color: #333f34;
+  font-size: 0.9rem;
+  font: inherit;
+  resize: none;
+}
+
 .input-grande {
   display: flex;
   flex-direction: column;
@@ -224,7 +260,6 @@ h1 {
   font-size: 1.5rem;
 }
 
-/* Textarea ajustado para começar do topo e quebrar linhas */
 .input-grande textarea {
   width: 100%;
   height: 100%;
@@ -237,12 +272,12 @@ h1 {
   font-weight: bold;
   font-family: inherit;
   resize: none;
-  text-align: left; /* Garante que o texto comece do topo */
+  text-align: left;
 }
 
 .bnt-confirmar {
   width: 100%;
-  margin-top: 24px;
+  margin-top: 20px;
   padding: 12px;
   background-color: #9a9e70;
   color: #333f34;
