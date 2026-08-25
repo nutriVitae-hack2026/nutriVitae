@@ -79,7 +79,7 @@ function salvar() {
 
     // Salva na chave 'dadosPrato' que é lida pela tela de busca
     localStorage.setItem('dadosPrato', JSON.stringify(novoPrato))
-    router.push('/buscar')
+    router.push('/pratos/buscar')
   } catch (error) {
     alert('Erro ao salvar o agendamento. Tente utilizar fotos menores.')
     console.error(error)

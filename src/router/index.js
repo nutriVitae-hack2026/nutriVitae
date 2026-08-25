@@ -44,7 +44,6 @@ const router = createRouter({
       name: 'delete-perfil-profissional',
       component: () => import('@/components/profissional/delete/deleteProfissional.vue'),
     },
-
     {
       path: '/consultas/:id/agendamento',
       alias: '/agendamento',
@@ -75,8 +74,7 @@ const router = createRouter({
       name: 'resumoComponent',
       component: () => import('@/components/consultas/resumoComponent.vue'),
     },
-    
-{
+    {
       path: '/pratos/:id/cadastro',
       name: 'cadastro-prato',
       component: () => import('@/components/pratos/cadastroComponents.vue'),
@@ -87,9 +85,23 @@ const router = createRouter({
       component: () => import('@/components/pratos/cadastroComponents.vue'),
     },
     {
-      path: '/pratos/:id/buscar',
+      path: '/pratos/buscar',
       name: 'buscar-pratos',
       component: () => import('@/components/pratos/buscarComponents.vue'),
+    },
+    {
+      path: '/pratos/ver-prato',
+      name: 'ver-prato',
+      component: () => import('@/components/pratos/buscarComponents.vue'),
+    },
+    {
+      path: '/pratos/:id/buscar',
+      name: 'buscar-pratos-id',
+      component: () => import('@/components/pratos/buscarComponents.vue'),
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: '/',
     },
   ],
 });

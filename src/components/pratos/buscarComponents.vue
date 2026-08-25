@@ -12,7 +12,7 @@ const pratos = ref([
     profissional: 'Marcos Oliveira Santos',
     data: '23/01/26',
     calorias: '730 Kcal',
-    foto: '/public/pratos/arroz-frango.png',
+    foto: '/img/prato.png',
     modoPreparo:
       'Faça a mistura cremosa: Em uma panela pequena ou frigideira grande, coloque o frango desfiado, o milho e adicione o creme de leite (ou requeijão). Mexa em fogo baixo até esquentar e ficar bem homogêneo.',
     ingredientes: [
@@ -27,7 +27,7 @@ const pratos = ref([
     profissional: 'Marcos Oliveira Santos',
     data: '24/02/26',
     calorias: '360 Kcal',
-    foto: '/public/pratos/crepioca.png',
+    foto: '/img/prato (1).png',
     modoPreparo:
       'Prepare a massa: Em um recipiente, bata bem o ovo com a goma de tapioca, a água, o sal e o orégano até ficar uma mistura homogênea. Grelhe a crepioca: Aqueça uma frigideira antiaderente em fogo baixo.',
     ingredientes: [
@@ -49,7 +49,7 @@ onMounted(() => {
       profissional: dados.profissional || 'Profissional não informado',
       data: dados.data || new Date().toLocaleDateString('pt-BR'),
       calorias: dados.calorias || '0 Kcal',
-      foto: dados.foto || '/public/pratos/default.png',
+      foto: dados.foto || '/img/prato.png',
       modoPreparo: dados.modoPreparo || '',
       ingredientes: dados.ingredientes || [],
     }
@@ -71,7 +71,7 @@ const pratosFiltrados = computed(() => {
 function verPrato(prato) {
   // Salva o prato selecionado no localStorage para resgatar na página de visualização
   localStorage.setItem('pratoSelecionado', JSON.stringify(prato))
-  router.push('/ver-prato')
+  router.push('/pratos/ver-prato')
 }
 </script>
 
@@ -90,7 +90,8 @@ function verPrato(prato) {
       <div v-for="prato in pratosFiltrados" :key="prato.id" class="dish-card">
         <!-- Coluna Esquerda: Imagem e Botão -->
         <div class="left-col">
-          <img :src="prato.foto" :alt="prato.nome" class="dish-img" />
+          <img v-if="prato.foto" :src="prato.foto" :alt="prato.nome" class="dish-img" />
+          <div v-else class="dish-img placeholder">Sem imagem</div>
           <button class="btn-ver" @click="verPrato(prato)">Ver Prato</button>
         </div>
 
@@ -209,6 +210,17 @@ h1 {
   border-radius: 50%;
   object-fit: cover;
   border: 1px solid #8c5322;
+}
+.dish-img.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e7dcc2;
+  color: #73441b;
+  font-weight: 700;
+  font-size: 0.72rem;
+  text-align: center;
+  padding: 8px;
 }
 .btn-ver {
   background-color: #9a9e70;
