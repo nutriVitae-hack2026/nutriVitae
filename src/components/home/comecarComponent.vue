@@ -7,7 +7,7 @@
       Comece agora mesmo!
     </h2>
     <div class="users">
-      <RouterLink to="#">
+      <RouterLink to="/cadastro">
         <div class="user">
           <i class="mdi mdi-account-circle"></i>
           <p>
