@@ -10,6 +10,10 @@ const router = createRouter({
       component: HomeView,
     },
     {
+      path: '/home',
+      redirect: '/',
+    },
+    {
       path: '/cadastro',
       name: 'cadastro',
       component: () => import('@/components/LoginUsuario/CadastroView.vue'),

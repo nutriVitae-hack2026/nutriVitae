@@ -18,7 +18,7 @@ import { RouterLink } from 'vue-router';
       <nav class="overlay">
         <ul class="menu-list">
           <li>
-            <RouterLink to="/">
+            <RouterLink to="/bannerHomeComponent">
               <i class="mdi mdi-home-circle"></i> Home
             </RouterLink>
           </li>
