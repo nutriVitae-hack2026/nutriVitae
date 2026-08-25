@@ -9,7 +9,7 @@ const emit = defineEmits(['editar', 'excluir'])
 <template>
   <div class="card-box">
     <div class="academic-card">
-      <div class="card-header">{{ dados.nome || 'NOME DO PROFISSIONAL' }}</div>
+      <div class="card-header">{{ 'NUTRIÇÃO CLÍNICA' }}</div>
       
       <div class="card-body">
         <div class="diploma-frame">
@@ -81,7 +81,7 @@ const emit = defineEmits(['editar', 'excluir'])
   text-align: center; 
   font-weight: bold; 
   font-size: 1.2rem; 
-  color: #73441B; 
+  color: #333F34; 
   margin-bottom: 15px; 
   letter-spacing: 1px; 
   text-transform: uppercase; 
