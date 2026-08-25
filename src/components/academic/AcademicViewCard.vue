@@ -9,7 +9,6 @@ const emit = defineEmits(['editar', 'excluir'])
 <template>
   <div class="card-box">
     <div class="academic-card">
-      <!-- Nome do profissional no topo do card -->
       <div class="card-header">{{ dados.nome || 'NOME DO PROFISSIONAL' }}</div>
       
       <div class="card-body">
@@ -61,7 +60,6 @@ const emit = defineEmits(['editar', 'excluir'])
 </template>
 
 <style scoped>
-/* Removida qualquer sombra de texto global deste componente */
 * {
   text-shadow: none !important;
 }
