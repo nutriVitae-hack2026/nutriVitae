@@ -1,0 +1,264 @@
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const buscaTermo = ref('')
+
+const pratos = ref([
+  {
+    id: 1,
+    nome: 'Arroz de Frango Cremoso',
+    profissional: 'Marcos Oliveira Santos',
+    data: '23/01/26',
+    calorias: '730 Kcal',
+    foto: '/public/pratos/arroz-frango.png',
+    modoPreparo:
+      'Faça a mistura cremosa: Em uma panela pequena ou frigideira grande, coloque o frango desfiado, o milho e adicione o creme de leite (ou requeijão). Mexa em fogo baixo até esquentar e ficar bem homogêneo.',
+    ingredientes: [
+      '1 xícara (130g): de arroz branco cozido',
+      '1 colher de sopa: de azeite de oliva extra virgem',
+      '1 pedaço médio (100g): de mandioca ou batata-doce cozida e amassada (estilo purê)',
+    ],
+  },
+  {
+    id: 2,
+    nome: 'Crepioca de Frango',
+    profissional: 'Marcos Oliveira Santos',
+    data: '24/02/26',
+    calorias: '360 Kcal',
+    foto: '/public/pratos/crepioca.png',
+    modoPreparo:
+      'Prepare a massa: Em um recipiente, bata bem o ovo com a goma de tapioca, a água, o sal e o orégano até ficar uma mistura homogênea. Grelhe a crepioca: Aqueça uma frigideira antiaderente em fogo baixo.',
+    ingredientes: [
+      '1: ovo inteiro',
+      '1 colher de sopa: de goma de tapioca',
+      '1 colher de sopa: de água (para deixar a massa mais leve)',
+    ],
+  },
+])
+
+onMounted(() => {
+  const salvo = localStorage.getItem('dadosPrato')
+  if (salvo) {
+    const dados = JSON.parse(salvo)
+
+    const novoPrato = {
+      id: Date.now(),
+      nome: dados.nome || 'Prato sem nome',
+      profissional: dados.profissional || 'Profissional não informado',
+      data: dados.data || new Date().toLocaleDateString('pt-BR'),
+      calorias: dados.calorias || '0 Kcal',
+      foto: dados.foto || '/public/pratos/default.png',
+      modoPreparo: dados.modoPreparo || '',
+      ingredientes: dados.ingredientes || [],
+    }
+
+    pratos.value.unshift(novoPrato)
+  }
+})
+
+const pratosFiltrados = computed(() => {
+  const termo = buscaTermo.value.trim().toLowerCase()
+  if (!termo) return pratos.value
+
+  return pratos.value.filter(
+    (item) =>
+      item.nome.toLowerCase().includes(termo) || item.profissional.toLowerCase().includes(termo),
+  )
+})
+
+function verPrato(prato) {
+  // Salva o prato selecionado no localStorage para resgatar na página de visualização
+  localStorage.setItem('pratoSelecionado', JSON.stringify(prato))
+  router.push('/ver-prato')
+}
+</script>
+
+<template>
+  <div class="container">
+    <h1>Buscar Pratos Personalizados</h1>
+
+    <!-- Barra de busca -->
+    <div class="search-bar">
+      <input type="text" v-model="buscaTermo" placeholder="Pratos Personalizados..." />
+      <span class="search-icon">🔍</span>
+    </div>
+
+    <!-- Lista de Cards -->
+    <div class="card-list">
+      <div v-for="prato in pratosFiltrados" :key="prato.id" class="dish-card">
+        <!-- Coluna Esquerda: Imagem e Botão -->
+        <div class="left-col">
+          <img :src="prato.foto" :alt="prato.nome" class="dish-img" />
+          <button class="btn-ver" @click="verPrato(prato)">Ver Prato</button>
+        </div>
+
+        <!-- Coluna Central: Nomes e Modo de Preparo -->
+        <div class="center-col">
+          <p class="field">
+            <strong>Nome do Prato:</strong>
+            <span class="highlight">{{ prato.nome }}</span>
+          </p>
+          <p class="field">
+            <strong>Nome do Profissional:</strong>
+            <span class="highlight">{{ prato.profissional }}</span>
+          </p>
+
+          <div class="section-block">
+            <h3>Modo de Preparo</h3>
+            <p class="text-body">{{ prato.modoPreparo }}</p>
+          </div>
+        </div>
+
+        <!-- Coluna Direita: Data, Calorias e Ingredientes -->
+        <div class="right-col">
+          <p class="field">
+            <strong>Data de Criação:</strong>
+            <span class="highlight">{{ prato.data }}</span>
+          </p>
+          <p class="field">
+            <strong>Calorias:</strong>
+            <span class="highlight">{{ prato.calorias }}</span>
+          </p>
+
+          <div class="section-block">
+            <h3>Ingredientes</h3>
+            <ul>
+              <li v-for="(ing, idx) in prato.ingredientes" :key="idx">• {{ ing }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <p v-if="pratosFiltrados.length === 0" class="no-results">
+        Nenhum prato encontrado para "{{ buscaTermo }}".
+      </p>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+
+.container {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 20px;
+}
+h1 {
+  color: #73441b;
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 24px;
+}
+.search-bar {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto 28px auto;
+}
+.search-bar input {
+  width: 100%;
+  padding: 12px 45px 12px 20px;
+  border-radius: 20px;
+  border: 1px solid #5d6742;
+  background-color: #909867;
+  color: #2b3323;
+  font-size: 1rem;
+  outline: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+.search-bar input::placeholder {
+  color: #2b3323;
+  opacity: 0.8;
+}
+.search-icon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+}
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 850px;
+  margin: 0 auto;
+}
+.dish-card {
+  display: grid;
+  grid-template-columns: 140px 1fr 1fr;
+  gap: 16px;
+  background-color: #d6caaf;
+  border: 1px solid #8c5322;
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  color: #4a2e16;
+}
+.left-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.dish-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #8c5322;
+}
+.btn-ver {
+  background-color: #9a9e70;
+  color: #333f34;
+  border: 1.5px solid #536236;
+  border-radius: 12px;
+  padding: 6px 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.field {
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+  color: #333f34;
+  font-weight: bold;
+}
+.highlight {
+  color: #bf945a;
+  margin-left: 4px;
+  font-weight: bold;
+}
+.section-block h3 {
+  font-size: 1.1rem;
+  color: #333f34;
+  margin: 12px 0 6px 0;
+  text-align: center;
+  font-weight: bold;
+}
+.text-body {
+  font-size: 0.8rem;
+  line-height: 1.3;
+  font-weight: bold;
+  color: #536236;
+}
+.right-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.right-col li {
+  font-size: 0.8rem;
+  line-height: 1.3;
+  margin-bottom: 4px;
+  color: #536236;
+  font-weight: bold;
+}
+.no-results {
+  color: #536236;
+  text-align: center;
+  font-weight: 500;
+  margin-top: 15px;
+}
+</style>

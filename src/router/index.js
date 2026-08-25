@@ -74,7 +74,23 @@ const router = createRouter({
       alias: '/resumo',
       name: 'resumoComponent',
       component: () => import('@/components/consultas/resumoComponent.vue'),
-    }
+    },
+    
+{
+      path: '/pratos/:id/cadastro',
+      name: 'cadastro-prato',
+      component: () => import('@/components/pratos/cadastroComponents.vue'),
+    },
+    {
+      path: '/pratos/receitas',
+      name: 'receitas',
+      component: () => import('@/components/pratos/cadastroComponents.vue'),
+    },
+    {
+      path: '/pratos/:id/buscar',
+      name: 'buscar-pratos',
+      component: () => import('@/components/pratos/buscarComponents.vue'),
+    },
   ],
 });
 

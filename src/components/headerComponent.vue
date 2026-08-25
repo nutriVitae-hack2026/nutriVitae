@@ -48,7 +48,7 @@ import { RouterLink } from 'vue-router';
               </RouterLink>
             </li>
             <li>
-              <RouterLink to="#">
+              <RouterLink to="/pratos/receitas">
                 <i class="mdi mdi-tag-heart"></i>
                 Receitas
               </RouterLink>
