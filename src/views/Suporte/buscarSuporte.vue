@@ -121,16 +121,35 @@ function fecharImagem() {
       <article v-for="item in suportesFiltrados" :key="item.id" class="suporte">
         <div class="suporte-cabecalho">
           <div>
-            <h2>{{ item.assunto || 'Suporte' }} - Id:{{ item.id ? `${item.id}  ` : '' }}</h2>
+            <h2>
+              {{ item.assunto || 'Suporte' }} -
+              <span class="id-titulo">Id:{{ item.id }}</span>
+            </h2>
             <div class="suporte-detalhes">
-              <p><strong>ID:</strong> {{ item.id }}</p>
-              <p><strong>Nome:</strong> {{ item.usuario?.nome }}</p>
-              <p><strong>Email:</strong> {{ item.usuario?.email }}</p>
-              <p><strong>Data:</strong> {{ formatarData(item.data) }}</p>
-              <p><strong>Status:</strong> {{ textoStatus(obterStatus(item)) }}</p>
-              <p><strong>Prioridade:</strong> {{ item.prioridade }}</p>
+              <p>
+                <strong>ID:</strong> <span class="valor-suporte">{{ item.id }}</span>
+              </p>
+              <p>
+                <strong>Nome:</strong> <span class="valor-suporte">{{ item.usuario?.nome }}</span>
+              </p>
+              <p>
+                <strong>Email:</strong> <span class="valor-suporte">{{ item.usuario?.email }}</span>
+              </p>
+              <p>
+                <strong>Data:</strong>
+                <span class="valor-suporte">{{ formatarData(item.data) }}</span>
+              </p>
+              <p>
+                <strong>Status:</strong>
+                <span class="valor-suporte">{{ textoStatus(obterStatus(item)) }}</span>
+              </p>
+              <p>
+                <strong>Prioridade:</strong>
+                <span class="valor-suporte">{{ item.prioridade }}</span>
+              </p>
               <p v-if="item.usuario?.categoria">
-                <strong>Categoria:</strong> {{ item.usuario.categoria }}
+                <strong>Categoria:</strong>
+                <span class="valor-suporte">{{ item.usuario.categoria }}</span>
               </p>
             </div>
           </div>
@@ -153,7 +172,8 @@ function fecharImagem() {
           </button>
         </div>
         <p v-if="item.usuario?.descrever" class="descricao">
-          <strong>Descrição:</strong> {{ item.usuario.descrever }}
+          <strong>Descrição:</strong>
+          <span class="valor-suporte">{{ item.usuario.descrever }}</span>
         </p>
         <div class="acoes-suporte">
           <button
@@ -203,7 +223,7 @@ h1 {
   margin: 0 0 22px;
   color: #73441b;
   font-size: 3.8rem;
-  font-weight: 400;
+  font-weight: 700;
   text-align: center;
 }
 
@@ -226,6 +246,7 @@ h1 {
   color: #333f34;
   font-family: inherit;
   font-size: 1.35rem;
+  font-weight: 700;
 }
 
 .barra-buscar input::placeholder {
@@ -260,6 +281,7 @@ h1 {
 .filtro label {
   margin-right: 5px;
   color: #73441b;
+  font-weight: 700;
   white-space: nowrap;
 }
 .filtro select,
@@ -296,21 +318,26 @@ h1 {
   border: 1px solid #9c8a6f;
   border-radius: 12px;
   box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.25);
+  font-size: 1.1rem;
+  font-weight: 700;
 }
 .suporte-cabecalho {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 20px;
-  align-items: start;
+  gap: 200px;
+  align-items: center;
 }
 .suporte-detalhes {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 6px 20px;
+  gap: 0 20px;
+}
+.suporte-detalhes p {
+  margin: 2px 0;
 }
 .foto-suporte {
-  width: 96px;
-  height: 96px;
+  width: 180px;
+  height: 180px;
   object-fit: cover;
   border: 1px solid #73441b;
   border-radius: 6px;
@@ -326,13 +353,20 @@ h1 {
 .suporte h2 {
   margin: 0 0 12px;
   color: #73441b;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+.id-titulo {
+  color: #536236;
 }
 .suporte p {
   margin: 6px 0;
   color: #536236;
-  font-size: 1rem;
-  font-weight: bold;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.valor-suporte {
+  color: #73441b;
 }
 .descricao {
   padding-top: 12px;
@@ -347,13 +381,15 @@ h1 {
   border-radius: 8px;
   font-family: inherit;
   font-size: 1.35rem;
+  font-weight: 700;
   cursor: pointer;
   box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
 }
 .suporte button {
   margin-top: 12px;
   padding: 8px 16px;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 .acoes-suporte {
   display: flex;
@@ -416,6 +452,10 @@ h1 {
   }
   .botao-imagem {
     justify-self: start;
+  }
+  .foto-suporte {
+    width: 120px;
+    height: 120px;
   }
   .acoes {
     gap: 16px;

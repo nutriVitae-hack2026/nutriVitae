@@ -66,9 +66,9 @@ function validarFormulario() {
     !usuario.nome.trim() ||
     !usuario.email.trim() ||
     !usuario.assunto.trim() ||
-    !usuario.descrever.trim()
+    !usuario.categoria.trim()
   ) {
-    alert('Preencha nome, email, assunto e descrição.')
+    alert('Preencha nome, email, categoria.')
     return false
   }
 
@@ -116,7 +116,7 @@ function cancelar() {
         <option value="" disabled>Categoria do problema</option>
         <option value="documentoErro">Erro no upload de documento</option>
         <option value="perfilErro">Perfil do profissional não aparece nos resultados</option>
-        <option value="resultadoErro">Resultados do Médicos inativo ou suspenso</option>
+        <option value="resultadoErro">Resultado do Médico inativo</option>
         <option value="horarioErro">Choque de horário</option>
         <option value="mobilidadeErro">Mobilidade no site</option>
         <option value="filtroErro">Filtro não funciona</option>
