@@ -125,10 +125,11 @@ const confirmarExclusao = () => {
 
 <style scoped>
 .deletar-container {
-  width: calc(100% - 150px);
-  max-width: 680px;
-  margin: 30px auto 30px calc(150px + (100vw - 150px - 680px) / 2);
+   position: relative;
+  min-width: 800px;
+  margin: 30px auto;
   padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .header-deletar {
@@ -158,11 +159,12 @@ const confirmarExclusao = () => {
 .input-pill {
   background-color: #D1BFA5;
   border-radius: 8px;
-  padding: 8px 12px;
+  padding: 20px 12px;
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.15);
   color: #73441B;
-  font-size: 0.75rem;
+  font-size: 15px;
   width: 50%;
+   margin-bottom: 20px;
 }
 
 .label-text {

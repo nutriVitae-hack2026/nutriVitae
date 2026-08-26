@@ -101,14 +101,11 @@ const salvar = () => {
 
 <style scoped>
 .editar-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 680px;
+   position: relative;
+  min-width: 800px;
   margin: 30px auto;
   padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .profile-header {
@@ -135,18 +132,19 @@ const salvar = () => {
 .input-pill {
   background-color: #D1BFA5;
   border-radius: 8px;
-  padding: 8px 12px;
+  padding: 15px 12px;
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+   margin-bottom: 15px;
 }
 
 .label-text {
   color: #333F34;
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 15px;
 }
 
 .label-text-card {

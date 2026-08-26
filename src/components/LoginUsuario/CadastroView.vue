@@ -174,12 +174,13 @@ const submitCadastro = () => {
   position: relative;
   background-color: #d1bfa5;
   border-radius: 8px;
-  padding: 8px 12px;
+  padding: 20px 12px;
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+   margin-bottom: 10px;
 }
 
 .label-text {
