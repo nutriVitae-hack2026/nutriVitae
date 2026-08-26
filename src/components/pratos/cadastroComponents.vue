@@ -62,9 +62,7 @@ function salvar() {
     const dados = agendamento.value.profissional
 
     // Converte a string de ingredientes separada por quebras de linha em um Array
-    const listaIngredientes = dados.ingredientes
-      .split('\n')
-      .filter((item) => item.trim() !== '')
+    const listaIngredientes = dados.ingredientes.split('\n').filter((item) => item.trim() !== '')
 
     // Formata o objeto do prato com a estrutura esperada pela tela de busca
     const novoPrato = {
@@ -103,12 +101,13 @@ function cancelar() {
 </script>
 
 <template>
-  <main class="resumo-container">
+  <div class="resumo-container">
     <header class="header-banner">
       <h1>Bem-Vindo ao NutriVitae</h1>
     </header>
 
     <section>
+      <h1>Cadastro de Pratos</h1>
       <div class="grid-form">
         <div class="input-card full-width">
           <label for="usr-nome">Nome do Prato</label>
@@ -127,12 +126,12 @@ function cancelar() {
 
         <div class="input-card full-width">
           <label for="usr-foto">Foto do Prato</label>
-          <input 
-            ref="fotoInputRef" 
-            id="usr-foto" 
-            type="file" 
-            accept="image/*" 
-            @change="aoSelecionarFotoPrato" 
+          <input
+            ref="fotoInputRef"
+            id="usr-foto"
+            type="file"
+            accept="image/*"
+            @change="aoSelecionarFotoPrato"
           />
         </div>
 
@@ -143,11 +142,7 @@ function cancelar() {
 
         <div class="input-grande">
           <span class="label-titulo">Ingredientes:</span>
-          <textarea 
-            id="ingredientes" 
-            v-model="agendamento.profissional.ingredientes"
-            placeholder="Digite um ingrediente por linha"
-          ></textarea>
+          <textarea id="ingredientes" v-model="agendamento.profissional.ingredientes"></textarea>
         </div>
       </div>
 
@@ -156,21 +151,33 @@ function cancelar() {
         <button class="button" @click="cancelar">Cancelar</button>
       </div>
     </section>
-  </main>
+  </div>
 </template>
 
 <style scoped>
-.container {
-  max-width: 800px;
+
+.resumo-container {
+  position: relative;
+  max-width: 850px;
   margin: 0 auto;
   padding: 20px;
+  min-height: 500px;
 }
-
-h1 {
-  color: #73441B;
+.header-banner {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #73441b;
+  color: #f2ebd9;
+  padding: 30px 20px 30px 20px;
+  border-radius: 0 0 0 130px;
+  box-shadow: -4px 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
+  z-index: 10;
+}
+.header-banner h1 {
+  margin: 4px 0 0 0;
   font-size: 3rem;
-  margin-bottom: 24px;
 }
 
 .grid-form {
@@ -299,7 +306,9 @@ h1 {
   font-weight: bold;
   cursor: pointer;
   box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.25);
-  transition: background-color 0.2s, transform 0.1s;
+  transition:
+    background-color 0.2s,
+    transform 0.1s;
 }
 
 .button:hover {
@@ -323,7 +332,7 @@ h1 {
 }
 
 .input-grande textarea::-webkit-scrollbar-track {
-  background-color: #333F34;
+  background-color: #333f34;
   border-radius: 10px;
 }
 
