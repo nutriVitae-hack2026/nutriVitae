@@ -80,6 +80,12 @@ function abrirImagem(src, alt) {
 function fecharImagem() {
   imagemSelecionada.value = null
 }
+
+function fecharImagemComEsc(event) {
+  if (event.key === 'Escape') {
+    fecharImagem()
+  }
+}
 </script>
 
 <template>
@@ -106,14 +112,26 @@ function fecharImagem() {
         <input id="data" v-model="filtros.data" type="date" />
       </div>
 
-      <div class="filtro">
-        <label for="prioridade">Prioridade:</label>
-        <select id="prioridade" v-model="filtros.prioridade">
-          <option value="">Selecione a prioridade</option>
-          <option value="baixa">Baixa</option>
-          <option value="media">Média</option>
-          <option value="dificil">Difícil</option>
-        </select>
+      <div class="filtro-prioridade">
+        <div class="filtro">
+          <label for="prioridade">Prioridade:</label>
+          <select id="prioridade" v-model="filtros.prioridade">
+            <option value="">Selecione a prioridade</option>
+            <option value="baixa">Baixa</option>
+            <option value="media">Média</option>
+            <option value="dificil">Difícil</option>
+          </select>
+        </div>
+
+        <button
+          type="button"
+          class="botao-limpar-filtros"
+          aria-label="Limpar filtros"
+          title="Limpar filtros"
+          @click="limparFiltros"
+        >
+          <span class="mdi mdi-delete-outline" aria-hidden="true"></span>
+        </button>
       </div>
     </div>
 
@@ -191,11 +209,19 @@ function fecharImagem() {
 
     <div class="acoes">
       <button type="button" @click="voltarSuporte">Buscar</button>
-      <button type="button" @click="limparFiltros">Limpar filtros</button>
     </div>
   </main>
 
-  <div v-if="imagemSelecionada" class="visualizador" @click.self="fecharImagem">
+  <div
+    v-if="imagemSelecionada"
+    class="visualizador"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Imagem ampliada"
+    tabindex="0"
+    @click.self="fecharImagem"
+    @keydown="fecharImagemComEsc"
+  >
     <button
       type="button"
       class="fechar-visualizador"
@@ -216,10 +242,11 @@ function fecharImagem() {
   max-width: 1000px;
   margin: 0 auto;
   padding: 36px 28px 30px;
-  font-family: 'Italiana', serif;
+  font-family: 'Roboto', serif;
 }
 
 h1 {
+  font-family: 'Italiana', 'serif';
   margin: 0 0 22px;
   color: #73441b;
   font-size: 3.8rem;
@@ -276,6 +303,37 @@ h1 {
   border: 1px solid #9c8a6f;
   border-radius: 6px;
   box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.25);
+}
+
+.filtro-prioridade {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 8px;
+}
+
+.filtro-prioridade .filtro {
+  flex: 1;
+}
+
+.botao-limpar-filtros {
+  display: grid;
+  flex: 0 0 32px;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background-color: #536236;
+  color: #f1edd2;
+  border: 1px solid #333f34;
+  border-radius: 50%;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.botao-limpar-filtros:hover {
+  background-color: #6b7c4f;
 }
 
 .filtro label {
@@ -349,6 +407,48 @@ h1 {
   border: 0;
   box-shadow: none;
   cursor: zoom-in;
+}
+
+.visualizador {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background: rgba(27, 26, 23, 0.86);
+}
+
+.imagem-ampliada {
+  max-width: min(100%, 1100px);
+  max-height: calc(100vh - 64px);
+  object-fit: contain;
+  border: 2px solid #f1edd2;
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+}
+
+.fechar-visualizador {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  margin: 0;
+  padding: 0;
+  background: #f1edd2;
+  color: #333f34;
+  border: 1px solid #536236;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.fechar-visualizador:hover {
+  background: #cbba9c;
 }
 .suporte h2 {
   margin: 0 0 12px;
@@ -446,6 +546,9 @@ h1 {
   .filtro {
     min-height: 44px;
   }
+  .filtro-prioridade {
+    width: 100%;
+  }
   .suporte-cabecalho,
   .suporte-detalhes {
     grid-template-columns: 1fr;
@@ -456,6 +559,12 @@ h1 {
   .foto-suporte {
     width: 120px;
     height: 120px;
+  }
+  .visualizador {
+    padding: 68px 16px 24px;
+  }
+  .imagem-ampliada {
+    max-height: calc(100vh - 92px);
   }
   .acoes {
     gap: 16px;

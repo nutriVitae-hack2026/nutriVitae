@@ -114,14 +114,13 @@ function cancelar() {
 
       <select id="categoria" v-model="cadastro.usuario.categoria">
         <option value="" disabled>Categoria do problema</option>
-        <option value="documentoErro">Erro no upload de documento</option>
-        <option value="perfilErro">Perfil do profissional não aparece nos resultados</option>
+        <option value="documentoErro">Erro upload do documento</option>
         <option value="resultadoErro">Resultado do Médico inativo</option>
         <option value="horarioErro">Choque de horário</option>
         <option value="mobilidadeErro">Mobilidade no site</option>
         <option value="filtroErro">Filtro não funciona</option>
         <option value="choqueHorario">Choque de horário</option>
-        <option value="linkErro">Falha no envio do link da teleconsulta</option>
+        <option value="linkErro">Falha teleconsulta</option>
       </select>
     </div>
 
@@ -141,7 +140,13 @@ function cancelar() {
 </template>
 
 <style scoped>
+
+.principal{
+  font-family: 'Roboto', serif;
+}
+
 h1 {
+  font-family: 'Italiana', 'serif';
   grid-column: span 2;
   color: #73441b;
   text-align: center;
@@ -169,18 +174,19 @@ h1 {
 .cartao-entrada {
   display: flex;
   align-items: center;
-  background-color: #cbba9c;
+
   border: 1px solid #9c8a6f;
   border-radius: 12px;
   padding: 10px 16px;
-  box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.25);
-  font-size: 23px;
-  font-weight: 900;
+
+  font-size: 18px;
+
 }
 
 .cartao-entrada label {
   color: #536236;
   font-weight: 900;
+  font-family: 'Roboto', sans-serif;
   margin-right: 8px;
   white-space: nowrap;
 }
