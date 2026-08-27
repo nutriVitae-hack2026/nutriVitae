@@ -54,7 +54,6 @@
       </div>
     </form>
   </div>
-
 </template>
 
 <script setup>
@@ -81,6 +80,7 @@ const submitCadastro = () => {
   }
 
   const dadosUsuario = {
+    tipo: 'paciente', // <--- Adicionado para identificação automática do perfil
     nome: form.nome,
     cpf: form.cpf,
     peso: form.peso.includes('kg') ? form.peso : `${form.peso}kg`,
@@ -127,8 +127,8 @@ const submitCadastro = () => {
   padding: 20px;
   min-height: 160px;
 }
-.serif-Title  {
- position: fixed;
+.serif-Title {
+  position: fixed;
   top: 0;
   right: 0;
   background-color: #73441b;
@@ -140,7 +140,7 @@ const submitCadastro = () => {
   z-index: 10;
 }
 .welcome-badge h2 {
-   position: fixed;
+  position: fixed;
   color: #f1edd2;
   font-size: 50px;
   text-align: right;
@@ -180,7 +180,7 @@ const submitCadastro = () => {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-   margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .label-text {
@@ -244,3 +244,4 @@ const submitCadastro = () => {
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.18);
 }
 </style>
+

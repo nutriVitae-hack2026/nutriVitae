@@ -1,11 +1,10 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuth } from '@/composables/useAuth'
 
 const router = useRouter()
-
-// Identificação do perfil ativo no momento do acesso
-const tipoAcesso = ref('usuario') // 'profissional' ou 'usuario'
+const { usuarioLogado, isPaciente, isProfissional, carregarUsuario } = useAuth()
 
 // 1. Listas de Cadastrados no Sistema
 const listaProfissionais = ref([
@@ -67,6 +66,29 @@ const agendamento = ref({
   consulta: { data: '', horario: '', tipo: 'Presencial' }
 })
 
+// Carrega os dados do usuário autenticado assim que o componente entra na tela
+onMounted(() => {
+  carregarUsuario()
+
+  if (usuarioLogado.value) {
+    if (isPaciente.value) {
+      agendamento.value.usuario = {
+        nome: usuarioLogado.value.nome || '',
+        telefone: usuarioLogado.value.telefone || '',
+        email: usuarioLogado.value.email || '',
+        foto: usuarioLogado.value.foto || null
+      }
+    } else if (isProfissional.value) {
+      agendamento.value.profissional = {
+        nome: usuarioLogado.value.nome || '',
+        telefone: usuarioLogado.value.telefone || '',
+        email: usuarioLogado.value.email || '',
+        foto: usuarioLogado.value.foto || null
+      }
+    }
+  }
+})
+
 // Converte arquivo enviado para Base64
 function converterParaBase64(arquivo, callback) {
   if (arquivo.size > 1024 * 1024) {
@@ -96,30 +118,21 @@ function aoSelecionarFotoProfissional(event) {
   }
 }
 
-// Observa mudanças de seleção do Profissional
+// Observa mudanças de seleção do Profissional (quando o paciente seleciona alguém)
 watch(profissionalSelecionadoId, (novoId) => {
-  if (tipoAcesso.value === 'usuario') {
+  if (isPaciente.value) {
     const prof = listaProfissionais.value.find((p) => p.id === Number(novoId))
     if (prof) agendamento.value.profissional = { ...prof }
   }
 })
 
-// Observa mudanças de seleção do Paciente
+// Observa mudanças de seleção do Paciente (quando o profissional seleciona alguém)
 watch(pacienteSelecionadoId, (novoId) => {
-  if (tipoAcesso.value === 'profissional') {
+  if (isProfissional.value) {
     const pac = listaPacientes.value.find((p) => p.id === Number(novoId))
     if (pac) agendamento.value.usuario = { ...pac }
   }
 })
-
-// Limpa campos ao trocar o tipo de usuário que está acessando
-function alternarTipoAcesso(novoTipo) {
-  tipoAcesso.value = novoTipo
-  profissionalSelecionadoId.value = ''
-  pacienteSelecionadoId.value = ''
-  agendamento.value.usuario = { nome: '', telefone: '', email: '', foto: null }
-  agendamento.value.profissional = { nome: '', telefone: '', email: '', foto: null }
-}
 
 function validarFormulario() {
   const { usuario, profissional, consulta } = agendamento.value
@@ -158,30 +171,10 @@ function agendar() {
   <main class="container">
     <h1>Agendar Consulta</h1>
 
-    <!-- Alternador de Perfil do Acesso -->
-    <div class="role-selector">
-      <p>Você está acessando como:</p>
-      <div class="btn-group">
-        <button
-          :class="['btn-toggle', { active: tipoAcesso === 'usuario' }]"
-          @click="alternarTipoAcesso('usuario')"
-        >
-          👤 Sou Usuário / Paciente
-        </button>
-        <button
-          :class="['btn-toggle', { active: tipoAcesso === 'profissional' }]"
-          @click="alternarTipoAcesso('profissional')"
-        >
-          👨‍⚕️ Sou Profissional
-        </button>
-      </div>
-    </div>
-
     <!-- ======================================================== -->
-    <!-- MODO 1: SE QUEM ESTÁ ACESSANDO FOR O USUÁRIO / PACIENTE -->
+    <!-- MODO 1: PACIENTE LOGADO                                  -->
     <!-- ======================================================== -->
-    <template v-if="tipoAcesso === 'usuario'">
-      <!-- O usuário seleciona o Profissional que deseja -->
+    <template v-if="isPaciente">
       <section>
         <div class="divider">
           <span>Escolha o Profissional</span>
@@ -208,7 +201,6 @@ function agendar() {
         </div>
       </section>
 
-      <!-- O usuário preenche os dados dele -->
       <section>
         <div class="divider">
           <span>Seus Dados (Usuário)</span>
@@ -239,10 +231,9 @@ function agendar() {
     </template>
 
     <!-- ======================================================== -->
-    <!-- MODO 2: SE QUEM ESTÁ ACESSANDO FOR O PROFISSIONAL         -->
+    <!-- MODO 2: PROFISSIONAL LOGADO                              -->
     <!-- ======================================================== -->
-    <template v-else>
-      <!-- O profissional preenche/confirma os seus próprios dados -->
+    <template v-else-if="isProfissional">
       <section>
         <div class="divider">
           <span>Seus Dados (Profissional)</span>
@@ -271,7 +262,6 @@ function agendar() {
         </div>
       </section>
 
-      <!-- O profissional seleciona o Paciente que vai atender -->
       <section>
         <div class="divider">
           <span>Escolha o Paciente</span>
@@ -299,8 +289,17 @@ function agendar() {
       </section>
     </template>
 
-    <!-- SEÇÃO SOBRE A CONSULTA (Comum para ambos os modos) -->
-    <section>
+    <!-- ======================================================== -->
+    <!-- MODO 3: SEM LOGIN                                        -->
+    <!-- ======================================================== -->
+    <template v-else>
+      <div class="nao-logado">
+        <p>Você precisa estar logado para realizar um agendamento.</p>
+      </div>
+    </template>
+
+    <!-- SEÇÃO SOBRE A CONSULTA -->
+    <section v-if="isPaciente || isProfissional">
       <div class="divider">
         <span>Sobre a Consulta</span>
       </div>
@@ -324,9 +323,9 @@ function agendar() {
           </select>
         </div>
       </div>
-    </section>
 
-    <button @click="agendar" class="btn-agendar">Confirmar Agendamento</button>
+      <button @click="agendar" class="btn-agendar">Confirmar Agendamento</button>
+    </section>
   </main>
 </template>
 
@@ -344,38 +343,11 @@ h1 {
   margin-bottom: 16px;
 }
 
-/* Seletor de Perfil */
-.role-selector {
+.nao-logado {
   text-align: center;
-  margin-bottom: 24px;
-}
-
-.role-selector p {
-  color: #536236;
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-
-.btn-group {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-}
-
-.btn-toggle {
-  padding: 10px 18px;
-  border-radius: 12px;
-  border: 1px solid #73441b;
-  background-color: #f1edd2;
   color: #73441b;
   font-weight: bold;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btn-toggle.active {
-  background-color: #73441b;
-  color: #f1edd2;
+  padding: 40px 0;
 }
 
 /* Linha divisória */

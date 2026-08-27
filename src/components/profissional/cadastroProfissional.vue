@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const mostrarSenha = ref(false)
 const mostrarConfirmarSenha = ref(false)
@@ -13,14 +16,6 @@ const form = ref({
   senha: '',
   confirmarSenha: ''
 })
-
-function cadastrar() {
-  if (!validarFormulario()) return
-
-  console.log(form.value)
-
-  // axios.post('/profissionais', form.value)
-}
 
 function validarFormulario() {
   if (
@@ -43,6 +38,23 @@ function validarFormulario() {
 
   return true
 }
+
+function cadastrar() {
+  if (!validarFormulario()) return
+
+  const dadosProfissional = {
+    tipo: 'profissional', // Identificador mantido para a verificação automática
+    nome: form.value.nome,
+    email: form.value.email,
+    cpf: form.value.cpf,
+    telefone: form.value.telefone,
+    dataNascimento: form.value.dataNascimento,
+    senha: form.value.senha
+  }
+
+  localStorage.setItem('usuarioLogado', JSON.stringify(dadosProfissional))
+  router.push('/profissionais') // Redireciona após salvar
+}
 </script>
 
 <template>
@@ -55,7 +67,6 @@ function validarFormulario() {
       </div>
     </div>
     <form class="form" @submit.prevent="cadastrar">
-
       <input v-model="form.nome" type="text" placeholder="Nome" required />
 
       <input v-model="form.email" type="email" placeholder="Email" required />
@@ -66,27 +77,35 @@ function validarFormulario() {
 
       <input v-model="form.dataNascimento" type="date" required />
 
-        <div class="senha">
-          <div class="campoSenha">
-            <input v-model="form.senha" :type="mostrarSenha ? 'text' : 'password'" placeholder="Senha" required />
-
-            <i :class="mostrarSenha ? 'mdi mdi-eye-off' : 'mdi mdi-eye'" @click="mostrarSenha = !mostrarSenha"></i>
-          </div>
-
-          <div class="campoSenha">
-            <input v-model="form.confirmarSenha" :type="mostrarConfirmarSenha ? 'text' : 'password'"
-              placeholder="Confirme a senha" required />
-
-            <i :class="mostrarConfirmarSenha ? 'mdi mdi-eye-off' : 'mdi mdi-eye'"
-              @click="mostrarConfirmarSenha = !mostrarConfirmarSenha"></i>
-          </div>
+      <div class="senha">
+        <div class="campoSenha">
+          <input
+            v-model="form.senha"
+            :type="mostrarSenha ? 'text' : 'password'"
+            placeholder="Senha"
+            required
+          />
+          <i
+            :class="mostrarSenha ? 'mdi mdi-eye-off' : 'mdi mdi-eye'"
+            @click="mostrarSenha = !mostrarSenha"
+          ></i>
         </div>
 
+        <div class="campoSenha">
+          <input
+            v-model="form.confirmarSenha"
+            :type="mostrarConfirmarSenha ? 'text' : 'password'"
+            placeholder="Confirme a senha"
+            required
+          />
+          <i
+            :class="mostrarConfirmarSenha ? 'mdi mdi-eye-off' : 'mdi mdi-eye'"
+            @click="mostrarConfirmarSenha = !mostrarConfirmarSenha"
+          ></i>
+        </div>
+      </div>
 
-      <button type="submit">
-        Cadastrar
-      </button>
-
+      <button type="submit">Cadastrar</button>
     </form>
   </div>
 </template>
@@ -107,9 +126,8 @@ function validarFormulario() {
 
     & h1 {
       font-size: 4rem;
-      color: #73441B;
+      color: #73441b;
       width: 50%;
-
     }
 
     & .bemvindo {
@@ -118,7 +136,7 @@ function validarFormulario() {
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background-color: #73441B;
+      background-color: #73441b;
       border-radius: 0 0 0 300px;
       margin: 0 0 30px 0;
       box-shadow: 0 0 50px rgba(0, 0, 0, 0.75);
@@ -147,10 +165,10 @@ function validarFormulario() {
     & input {
       margin: 10px 0;
       padding: 10px;
-      border: 1px solid #73441B;
+      border: 1px solid #73441b;
       border-radius: 20px;
-      background-color: #D1BFA5;
-      font-family: "Italiana", serif;
+      background-color: #d1bfa5;
+      font-family: 'Italiana', serif;
       font-size: 30px;
       box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
       margin: 20px;
@@ -158,13 +176,12 @@ function validarFormulario() {
 
       &::placeholder {
         color: #536236;
-        font-family: "Italiana", serif;
+        font-family: 'Italiana', serif;
         font-weight: bold;
-
       }
     }
 
-    &  .senha {
+    & .senha {
       display: flex;
       width: 100%;
       justify-content: space-between;
@@ -174,11 +191,10 @@ function validarFormulario() {
         width: 45%;
         display: flex;
 
-
         & input {
           width: 100%;
           padding-right: 50px;
-          background-color: #9A9E70;
+          background-color: #9a9e70;
         }
 
         & i {
@@ -192,20 +208,19 @@ function validarFormulario() {
         }
       }
     }
-      & button {
-        margin: 20px;
-        padding: 10px;
-        border: 1px solid #73441B;
-        border-radius: 20px;
-        background-color: #536236;
-        font-family: "Italiana", serif;
-        font-size: 30px;
-        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
-        width: 40%;
-        cursor: pointer;
-        color: #9A9E70;
-      }
-
+    & button {
+      margin: 20px;
+      padding: 10px;
+      border: 1px solid #73441b;
+      border-radius: 20px;
+      background-color: #536236;
+      font-family: 'Italiana', serif;
+      font-size: 30px;
+      box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+      width: 40%;
+      cursor: pointer;
+      color: #9a9e70;
+    }
   }
-  }
-  </style>
+}
+</style>
