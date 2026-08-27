@@ -87,11 +87,11 @@ onMounted(() => {
 
 <style scoped>
 .perfil-container {
-  position: relative;
-  width: calc(100% - 150px);
-  max-width: 680px;
-  margin: 30px auto 30px calc(150px + (100vw - 150px - 680px) / 2);
+ position: relative;
+  min-width: 800px;
+  margin: 30px auto;
   padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .delete-icon-btn {

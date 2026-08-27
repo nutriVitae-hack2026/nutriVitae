@@ -1,9 +1,9 @@
 <template>
   <div class="cadastro-wrapper">
     <div class="header-banner">
-      <h1 class="serif-title main-heading">Cadastro de<br>usuário</h1>
+      <h1 class="serif-title main-heading">Cadastro de<br />usuário</h1>
       <div class="welcome-badge">
-        <h2 class="serif-title">Bem-vindo<br>Ao NutriVitae</h2>
+        <h2 class="serif-Title">Bem-vindo<br />Ao NutriVitae</h2>
       </div>
     </div>
 
@@ -11,7 +11,7 @@
       <div class="form-col">
         <div class="input-pill">
           <span class="label-text">Nome:</span>
-          <input type="text" v-model="form.nome" required />
+          <input type="text" v-model="form.nome" placeholder="nome" required />
         </div>
         <div class="input-pill">
           <span class="label-text">Cpf:</span>
@@ -21,16 +21,16 @@
           <span class="label-text">Peso:</span>
           <input type="text" v-model="form.peso" placeholder="00.000kg" required />
         </div>
-        <div class="input-pill">
+        <div class="input-pill date-field">
           <span class="label-text">Data de nascimento:</span>
-          <input type="text" v-model="form.dataNascimento" placeholder="DD/MM/AAAA" required />
+          <input type="date" v-model="form.dataNascimento" placeholder="DD/MM/AAAA" required />
         </div>
       </div>
 
       <div class="form-col right-col">
         <div class="input-pill">
-          <span class="label-text">E-mail:</span>
-          <input type="email" v-model="form.email" required />
+          <span class="label-text">Email:</span>
+          <input type="email" v-model="form.email" placeholder="email@exemplo.com" required />
         </div>
         <div class="input-pill">
           <span class="label-text">Telefone:</span>
@@ -39,11 +39,11 @@
       </div>
 
       <div class="footer-passwords">
-        <div class="input-pill btn-like">
+        <div class="input-pill btn-like password-field">
           <span class="label-text">Criar senha:</span>
           <input type="password" v-model="form.senha" required />
         </div>
-        <div class="input-pill btn-like">
+        <div class="input-pill btn-like password-field">
           <span class="label-text">Confirmar senha:</span>
           <input type="password" v-model="form.confirmarSenha" required />
         </div>
@@ -54,13 +54,14 @@
       </div>
     </form>
   </div>
+
 </template>
 
 <script setup>
-import { reactive } from 'vue';
-import { useRouter } from 'vue-router';
+import { reactive } from 'vue'
+import { useRouter } from 'vue-router'
 
-const router = useRouter();
+const router = useRouter()
 
 const form = reactive({
   nome: '',
@@ -70,13 +71,13 @@ const form = reactive({
   email: '',
   telefone: '',
   senha: '',
-  confirmarSenha: ''
-});
+  confirmarSenha: '',
+})
 
 const submitCadastro = () => {
   if (form.senha && form.senha !== form.confirmarSenha) {
-    alert('As senhas não coincidem!');
-    return;
+    alert('As senhas não coincidem!')
+    return
   }
 
   const dadosUsuario = {
@@ -88,21 +89,21 @@ const submitCadastro = () => {
     telefone: form.telefone,
     senha: form.senha,
     preferencias: { gosto: [], naoGosto: [] },
-    alergias: []
-  };
+    alergias: [],
+  }
 
-  localStorage.setItem('usuarioLogado', JSON.stringify(dadosUsuario));
-  router.push('/perfil');
-};
+  localStorage.setItem('usuarioLogado', JSON.stringify(dadosUsuario))
+  router.push('/perfil')
+}
 </script>
 
 <style scoped>
 .cadastro-wrapper {
   position: relative;
-  width: calc(100% - 150px);
-  max-width: 680px;
-  margin: 30px auto 30px calc(150px + (100vw - 150px - 680px) / 2);
+  min-width: 800px;
+  margin: 30px auto;
   padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .header-banner {
@@ -116,19 +117,32 @@ const submitCadastro = () => {
   font-size: 2rem;
   line-height: 1.1;
   font-weight: 500;
-  color: #73441B;
+  color: #73441b;
 }
 
 .welcome-badge {
-  background-color: #73441B;
-  padding: 14px 24px;
-  border-radius: 0 0 0 35px;
-  color: #F1EDD2;
+  position: relative;
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 160px;
 }
-
+.serif-Title  {
+ position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #73441b;
+  color: #f2ebd9;
+  padding: 30px 100px 30px 50px;
+  border-radius: 0 0 0 130px;
+  box-shadow: -4px 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  z-index: 10;
+}
 .welcome-badge h2 {
-  color: #F1EDD2;
-  font-size: 1.25rem;
+   position: fixed;
+  color: #f1edd2;
+  font-size: 50px;
   text-align: right;
   line-height: 1.1;
 }
@@ -157,18 +171,20 @@ const submitCadastro = () => {
 }
 
 .input-pill {
-  background-color: #D1BFA5;
+  position: relative;
+  background-color: #d1bfa5;
   border-radius: 8px;
-  padding: 8px 12px;
+  padding: 20px 12px;
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+   margin-bottom: 10px;
 }
 
 .label-text {
-  color: #333F34;
+  color: #333f34;
   font-weight: 600;
   font-size: 0.8rem;
 }
@@ -179,12 +195,34 @@ const submitCadastro = () => {
   outline: none;
   width: 100%;
   font-size: 0.8rem;
-  color: #333F34;
+  color: #333f34;
   margin-left: 8px;
 }
 
+.date-field,
+.password-field {
+  flex-wrap: nowrap;
+}
+
+.date-field .label-text,
+.password-field .label-text {
+  white-space: nowrap;
+}
+
+.input-pill input[type='date'] {
+  padding-right: 24px;
+  min-width: 0;
+}
+
+.input-pill input[type='date']::-webkit-calendar-picker-indicator {
+  margin-left: -18px;
+  cursor: pointer;
+  filter: brightness(0) saturate(100%) invert(28%) sepia(14%) saturate(17%) hue-rotate(34deg)
+    brightness(90%) contrast(90%);
+}
+
 .btn-like {
-  background-color: #9A9E70;
+  background-color: #9a9e70;
 }
 
 .action-bar {
@@ -195,8 +233,8 @@ const submitCadastro = () => {
 }
 
 .btn-pill {
-  background-color: #9A9E70;
-  color: #333F34;
+  background-color: #9a9e70;
+  color: #333f34;
   border: none;
   border-radius: 8px;
   padding: 10px 24px;

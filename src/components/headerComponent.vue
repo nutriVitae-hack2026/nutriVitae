@@ -43,7 +43,7 @@ import { RouterLink } from 'vue-router';
           </li>
           <div class="user">
             <li>
-              <RouterLink to="/cadastro">
+              <RouterLink to="/perfil">
                 <i class="mdi mdi-account-circle"></i>
                 Meu Perfil
               </RouterLink>
