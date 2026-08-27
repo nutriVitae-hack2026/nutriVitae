@@ -4,6 +4,7 @@ import { RouterLink } from 'vue-router';
 
 <template>
   <header>
+ 
     <div class="menu-hamburguer">
       <input type="checkbox" id="menu-toggle" />
       <label for="menu-toggle" class="menu-icon">
@@ -82,22 +83,22 @@ import { RouterLink } from 'vue-router';
 
 <style scoped>
 /*====================================
-        HEADER
+      HEADER (DESKTOP - PADRÃO)
 =====================================*/
 header {
   position: fixed;
   top: 0;
   left: 0;
-  width: 150px;
-  height: 100vh;
+  width: 100%;           
+  height: auto;       
   display: flex;
-  flex-direction: column;
+  flex-direction: row;    
   justify-content: space-between;
   align-items: center;
   background: #536236;
-  padding: 25px 50px;
+  padding: 15px 40px;   
   z-index: 1000;
-  box-shadow: 4px 0 50px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 header h1 {
@@ -105,123 +106,148 @@ header h1 {
 }
 
 header h1 img {
-  width: 150px;
+  width: 120px;
   height: auto;
   filter: drop-shadow(0 0 1px rgba(255, 255, 255, 1));
 }
 
+
 header a {
   text-decoration: none;
-  font-size: 35px;
+  font-size: 16px;         
   color: #F1EDD2;
-  transition: all 1s ease;
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 header .div {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
 }
 
-/*============ Menu hamburguer ===========*/
-.menu-hamburguer {
-  z-index: 1100;
-}
-
-#menu-toggle {
+/*============ Configurações do Hambúrguer e Mobile (Escondidos no Desktop) ===========*/
+#menu-toggle,
+.menu-icon,
+.backdrop {
   display: none;
 }
 
-.menu-icon {
-  width: 35px;
-  height: 30px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  z-index: 1200;
-  position: relative;
-  transition: all 0.5s ease;
-  margin: 0;
+div.linha {
+  width: 25px;
+  height: 3px;
+  margin: 4px 0;
+  background: #F1EDD2;
+  border-radius: 2px;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
 }
 
 .menu-icon:hover .linha {
   background: #9A9E70;
-  scale: 1.5;
 }
 
-div.linha {
-  height: 2px;
-  background: #F1EDD2;
-  border-radius: 2px;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-  transition: all 1s ease;
-}
-
-/*============ Overlay escuro fora do menu ===========*/
-.backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.8);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 1.4s ease;
-  z-index: 900;
-}
-
-#menu-toggle:checked~.backdrop {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/*============ Menu lateral ===========*/
+/*============ Overlay / Menu Interno (Desktop) ===========*/
 .overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 500px;
-  height: 100vh;
-  background: #536236;
-  transform: translateX(-200%);
-  transition: 1.4s;
-  padding: 40px 25px;
-  box-shadow: 5px 0 20px rgba(0, 0, 0, .3);
-  z-index: 1000;
+  position: static;
+  background-color: transparent;
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-#menu-toggle:checked~.overlay {
-  transform: translateX(0);
-}
-
-/*============ Menu interno ===========*/
 .overlay .logo {
-  display: block;
-  margin: 0 40px;
-  height: 100px;
-  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 1));
+  display: none; 
 }
 
 .menu-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.5rem;
   list-style: none;
   padding: 0;
-  margin: 20px;
-  margin-top: 50px;
+  margin: 0;
 }
 
-.menu-list li {
-  margin: 15px 50px;
-}
-
+.menu-list li,
 .user li {
-  margin: 5px 70px;
+  margin: 0; 
+}
+
+.user {
+  display: flex;
+  gap: 1.5rem;
 }
 
 .menu-list a:hover {
   color: #9A9E70;
-  scale: 1.1;
-  text-shadow: 0 0 5px #101010;
+  transform: scale(1.05);
+}
+
+
+/*====================================
+      ESTILO MOBILE (Até 768px)
+=====================================*/
+@media (max-width: 768px) {
+  .menu-icon {
+    display: block;
+    cursor: pointer;
+  }
+  
+  .overlay .logo {
+    display: block;
+    margin: 20px auto;
+    height: 60px;
+  }
+
+  /* Menu Drawer Transição */
+  .overlay {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 260px;
+    height: 100vh;
+    background-color: #536236;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px 20px;
+    transition: right 0.4s ease-in-out;
+    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+
+  #menu-toggle:checked ~ .overlay {
+    right: 0;
+  }
+
+  /* Backdrop Escuro */
+  #menu-toggle:checked ~ .backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 900;
+  }
+
+  .menu-list {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .user {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  header a {
+    font-size: 18px;
+  }
 }
 </style>

@@ -79,23 +79,23 @@
 
 <style scoped>
 
-footer{
-    background:#536236;
-    padding:55px 70px;
-    box-shadow:0 0 35px rgba(0,0,0,.45);
+footer {
+  background: #536236;
+  padding: 55px 70px;
+  box-shadow: 0 0 35px rgba(0, 0, 0, .45);
+  width: 100%;            
+  box-sizing: border-box;  
+  margin-left: 0;     
+}     
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1400px;
+  margin: 0 auto;          
+  width: 100%;
 }
-
-.footer-container{
-
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-
-    max-width:1400px;
-    margin:auto;
-}
-
-/*========================*/
 
 .col{
     display:flex;
