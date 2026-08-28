@@ -21,7 +21,7 @@
 
 <style scoped>
 .funcionabilidade {
-  background: #3006e9;
+  background: #d1bfa5;
   display: flex;
   justify-content: center;
   box-shadow: 0 0 75px rgba(0, 0, 0, 0.8);

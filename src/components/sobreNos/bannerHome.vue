@@ -1,3 +1,8 @@
+<script setup>
+import SiteObjetivo from './siteObjetivo.vue'
+import MembrosEquipe from './membrosEquipe.vue'
+</script>
+
 <template>
     <section class="banner">
         <h1>
@@ -5,7 +10,8 @@
         </h1>
 
     </section>
-
+  <SiteObjetivo />
+  <MembrosEquipe />
 
 </template>
 <style scoped>
