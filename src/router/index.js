@@ -13,6 +13,13 @@ const router = createRouter({
       path: '/home',
       redirect: '/',
     },
+
+    // --- AUTENTICAÇÃO E PERFIL DO USUÁRIO/PACIENTE ---
+    {
+      path: '/login',
+      name: 'login-usuario',
+      component: () => import('@/components/LoginUsuario/index.vue'),
+    },
     {
       path: '/cadastro',
       name: 'cadastro',
@@ -27,6 +34,13 @@ const router = createRouter({
       path: '/perfil/deletar',
       name: 'deletar-perfil',
       component: () => import('@/components/LoginUsuario/DeletarPerfilView.vue'),
+    },
+
+    // --- PROFISSIONAIS ---
+    {
+      path: '/cadastro-profissional',
+      name: 'cadastro-profissional',
+      component: () => import('@/components/profissional/cadastroProfissional.vue'), // Adicionado para o botão "Cadastrar nutricionista"
     },
     {
       path: '/profissionais',
@@ -47,6 +61,13 @@ const router = createRouter({
       path: '/profissional/:id/delete',
       name: 'delete-perfil-profissional',
       component: () => import('@/components/profissional/delete/deleteProfissional.vue'),
+    },
+
+    // --- CONSULTAS E AGENDAMENTOS ---
+    {
+      path: '/consultas',
+      name: 'consultas',
+      component: () => import('@/components/consultas/buscarComponent.vue'),
     },
     {
       path: '/consultas/:id/agendamento',
@@ -78,6 +99,8 @@ const router = createRouter({
       name: 'resumoComponent',
       component: () => import('@/components/consultas/resumoComponent.vue'),
     },
+
+    // --- PRATOS E RECEITAS ---
     {
       path: '/pratos/:id/cadastro',
       name: 'cadastro-prato',
@@ -103,6 +126,8 @@ const router = createRouter({
       name: 'buscar-pratos-id',
       component: () => import('@/components/pratos/buscarComponents.vue'),
     },
+
+    // --- REDIRECIONAMENTO PADRÃO ---
     {
       path: '/:pathMatch(.*)*',
       redirect: '/',

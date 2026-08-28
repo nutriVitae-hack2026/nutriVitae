@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <section class="comecar">
+  <section id="secao-escolha" class="comecar">
     <h2>
       Comece agora mesmo!
     </h2>
@@ -15,7 +15,8 @@
           </p>
         </div>
       </RouterLink>
-      <RouterLink to="#">
+      
+      <RouterLink to="/cadastro-profissional">
         <div class="user">
           <i class="mdi mdi-account-circle"></i>
           <p>
@@ -48,25 +49,34 @@
     width: 100%;
     gap: 50px;
     justify-content: center;
-      align-items: center;
-    & a{
+    align-items: center;
+
+    & a {
       width: 40%;
+      text-decoration: none;
 
-    & .user {
-      color: #73441B;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
-      border-radius: 100px;
+      & .user {
+        color: #73441B;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+        border-radius: 100px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
 
-      & i {
-        font-size: 100px;
+        &:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+        }
+
+        & i {
+          font-size: 100px;
+        }
+
+        & p {
+          font-size: 3rem;
+        }
       }
-      & p {
-        font-size: 3rem;
-      }
-    }
     }
   }
 }
