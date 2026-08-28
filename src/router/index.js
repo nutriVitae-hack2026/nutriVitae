@@ -5,7 +5,7 @@ import PerfilSuporte from '@/views/Suporte/perfilSuporte.vue'
 
 const routes = [
   {
-    path: '/',
+    path: '/CadastroSuporte',
     name: 'CadastroSuporte',
     component: CadastroSuporte,
   },
