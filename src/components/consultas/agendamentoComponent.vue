@@ -7,15 +7,15 @@ const router = useRouter()
 const { usuarioLogado, isPaciente, isProfissional, carregarUsuario } = useAuth()
 
 const listaProfissionais = ref([
-  { id: 1, nome: 'Dra. Carolina Paz Alencar', telefone: '(47) 99999-1111', email: 'carolina@email.com', foto: '/usuarios/carolina-user.png' },
-  { id: 2, nome: 'Dr. Alexandre Xavier', telefone: '(47) 99999-2222', email: 'alexandre@email.com', foto: '/usuarios/alexandre-user.png' },
-  { id: 3, nome: 'Dra. Fabiana Oliveira', telefone: '(47) 99999-3333', email: 'fabiana@email.com', foto: '/usuarios/fabiana-user.png' }
+  { id: 1, nome: 'Dra. Carolina Paz Alencar', telefone: '(47) 99999-1111', email: 'carolina@email.com', foto: '/profissionais/ana.png' },
+  { id: 2, nome: 'Dr. Alexandre Xavier', telefone: '(47) 99999-2222', email: 'alexandre@email.com', foto: '/profissionais/marcos.png' },
+  { id: 3, nome: 'Dra. Fabiana Oliveira', telefone: '(47) 99999-3333', email: 'fabiana@email.com', foto: '/profissionais/fernanda.png' }
 ])
 
 const listaPacientes = ref([
-  { id: 101, nome: 'Gabriel Lima da Costa', telefone: '(47) 98888-1111', email: 'gabriel@email.com', foto: '/usuarios/gabriel-user(1).png' },
-  { id: 102, nome: 'Amanda de Sousa Lima', telefone: '(47) 98888-2222', email: 'amanda@email.com', foto: '/usuarios/amanda-user.png' },
-  { id: 103, nome: 'Carlos Eduardo da Silva', telefone: '(47) 98888-3333', email: 'carlos@email.com', foto: '/usuarios/eduardo-user.png' }
+  { id: 101, nome: 'Gabriel Lima da Costa', telefone: '(47) 98888-1111', email: 'gabriel@email.com', foto: '/logo.png' },
+  { id: 102, nome: 'Amanda de Sousa Lima', telefone: '(47) 98888-2222', email: 'amanda@email.com', foto: '/logo.png' },
+  { id: 103, nome: 'Carlos Eduardo da Silva', telefone: '(47) 98888-3333', email: 'carlos@email.com', foto: '/logo.png' }
 ])
 
 const profissionalSelecionadoId = ref('')

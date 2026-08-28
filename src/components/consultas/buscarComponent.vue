@@ -7,11 +7,11 @@ const agendamentos = ref([
     id: 1,
     profissional: {
       nome: 'Dra. Carolina Paz Alencar',
-      foto: '/public/usuarios/carolina-user.png',
+      foto: '/profissionais/ana.png',
     },
     paciente: {
       nome: 'Gabriel Lima da Costa',
-      foto: '/public/usuarios/gabriel-user(1).png',
+      foto: '/logo.png',
     },
     data: '12/10/2026',
     horario: '14h30 /02h30 pm',
@@ -21,11 +21,11 @@ const agendamentos = ref([
     id: 2,
     profissional: {
       nome: 'Dr. Alexandre Xavier',
-      foto: '/public/usuarios/alexandre-user.png',
+      foto: '/profissionais/marcos.png',
     },
     paciente: {
       nome: 'Amanda da sousa Lima',
-      foto: '/public/usuarios/amanda-user.png',
+      foto: '/logo.png',
     },
     data: '25/09/2026',
     horario: '08h00 /08h00 am',
@@ -35,11 +35,11 @@ const agendamentos = ref([
     id: 3,
     profissional: {
       nome: 'Dra. Fabiana Oliveira',
-      foto: '/public/usuarios/fabiana-user.png',
+      foto: '/profissionais/fernanda.png',
     },
     paciente: {
       nome: 'Carlos Eduardo da Silva',
-      foto: '/public/usuarios/eduardo-user.png',
+      foto: '/logo.png',
     },
     data: '02/11/2026',
     horario: '16h30 /04h30 pm',
@@ -49,11 +49,11 @@ const agendamentos = ref([
     id: 4,
     profissional: {
       nome: 'Dr. Marcos Vinicius',
-      foto: '/public/usuarios/marcos-user.png',
+      foto: '/profissionais/gabriel.png',
     },
     paciente: {
       nome: 'Bianca da Silva',
-      foto: '/public/usuarios/bianca-user.png',
+      foto: '/logo.png',
     },
     data: '12/09/2026',
     horario: '10h00 /10h00 am',
@@ -70,11 +70,11 @@ onMounted(() => {
       id: Date.now(),
       profissional: {
         nome: dados.profissional.nome || 'Profissional não informado',
-        foto: dados.profissional.foto || '/public/usuarios/carolina-user.png',
+        foto: dados.profissional.foto || '/profissionais/ana.png',
       },
       paciente: {
         nome: dados.usuario.nome || 'Paciente não informado',
-        foto: dados.usuario.foto || '/public/usuarios/gabriel-user(1).png',
+        foto: dados.usuario.foto || '/logo.png',
       },
       data: dados.consulta.data,
       horario: dados.consulta.horario,
