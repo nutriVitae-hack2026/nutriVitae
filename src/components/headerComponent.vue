@@ -54,7 +54,13 @@
             </li>
           </div>
           <li>
-            <RouterLink to="/equipe">
+            <RouterLink to="/sobreNos">
+              <i class="mdi mdi-book-outline"></i>
+              Objetivo
+            </RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/membros">
               <i class="mdi mdi-account-group"></i>
               Sobre nós
             </RouterLink>
