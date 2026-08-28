@@ -63,7 +63,7 @@ import { RouterLink } from 'vue-router';
           </li>
         </ul>
         <div class="div">
-          <RouterLink to="#">
+          <RouterLink to="/CadastroSuporte">
             Suporte
           </RouterLink>
           <RouterLink to="/">

@@ -126,6 +126,21 @@ const router = createRouter({
       name: 'buscar-pratos-id',
       component: () => import('@/components/pratos/buscarComponents.vue'),
     },
+     {
+    path: '/CadastroSuporte',
+    name: 'CadastroSuporte',
+    component: () => import("@/components/Suporte/cadastroSuporte.vue")
+  },
+  {
+    path: '/buscar-suporte',
+    name: 'BuscarSuporte',
+    component: () => import("@/components/Suporte/buscarSuporte.vue")
+  },
+  {
+    path: '/perfilSuporte',
+    name: 'PerfilSuporte',
+    component: () => import("@/components/Suporte/perfilSuporte.vue")
+  },
 
     // --- REDIRECIONAMENTO PADRÃO ---
     {
