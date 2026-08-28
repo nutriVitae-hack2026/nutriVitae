@@ -157,9 +157,24 @@ const router = createRouter({
       component: () => import("@/components/preferencias/BuscarPreferencias.vue"),
   },
   {
-    path: '/EditarPreferencias',
-    name: 'EditarPreferencias',
-    component: () => import("@/components/preferencias/EditarPreferencias.vue")
+    path: '/AcademicCreate',
+    name: 'AcademicCreate',
+    component: () => import("@/components/academic/AcademicCreate.vue")
+  },
+{
+    path: '/AcademicEdit',
+    name: 'AcademicEdit',
+    component: () => import("@/components/academic/AcademicEdit.vue")
+  },
+{
+    path: '/AcademicViewCard',
+    name: 'AcademicViewCard',
+    component: () => import("@/components/academic/AcademicViewCard.vue")
+  },
+{
+    path: '/AcademicViewCard',
+    name: 'AcademicViewCard',
+    component: () => import("@/components/academic/ConfirmDeleteModal.vue")
   },
 
     // --- REDIRECIONAMENTO PADRÃO ---
