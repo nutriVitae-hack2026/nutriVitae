@@ -53,6 +53,12 @@ onMounted(() => {
 })
 
 function apagarSuporte(id) {
+  const suporte = suportes.value.find((item) => item.id === id)
+
+  if (!suporte || obterStatus(suporte) !== 'resolvido') {
+    return
+  }
+
   suportes.value = suportes.value.filter((item) => item.id !== id)
   localStorage.setItem('suportes', JSON.stringify(suportes.value))
 }
@@ -202,7 +208,14 @@ function fecharImagemComEsc(event) {
           >
             Marcar como resolvido
           </button>
-          <button type="button" class="botao-apagar" @click="apagarSuporte(item.id)">Apagar</button>
+          <button
+            type="button"
+            class="botao-apagar"
+            :disabled="obterStatus(item) !== 'resolvido'"
+            @click="apagarSuporte(item.id)"
+          >
+            Apagar
+          </button>
         </div>
       </article>
     </div>
