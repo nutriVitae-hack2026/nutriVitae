@@ -141,6 +141,26 @@ const router = createRouter({
     name: 'PerfilSuporte',
     component: () => import("@/components/Suporte/perfilSuporte.vue")
   },
+    {
+    path: '/CadastrarPreferencias',
+    name: 'CadastrarPreferencias',
+      component: () => import("@/components/preferencias/CadastrarPreferencias.vue"),
+  },
+  {
+    path: '/PerfilPreferencias',
+    name: 'PerfilPreferencias',
+         component: () => import("@/components/preferencias/PerfilPreferencias.vue"),
+  },
+  {
+    path: '/BuscarPreferencias',
+    name: 'BuscarPreferencias',
+      component: () => import("@/components/preferencias/BuscarPreferencias.vue"),
+  },
+  {
+    path: '/EditarPreferencias',
+    name: 'EditarPreferencias',
+    component: () => import("@/components/preferencias/EditarPreferencias.vue")
+  },
 
     // --- REDIRECIONAMENTO PADRÃO ---
     {
