@@ -49,13 +49,24 @@ function abrirModalExclusao() {
 }
 
 function meConfirmarExclusao() {
-  if (!senha.value) return alert('Digite sua senha para confirmar!')
+  if (!senha.value) {
+    alert('Digite sua senha para confirmar!')
+    return
+  }
+
+  const usuarioSessao = JSON.parse(localStorage.getItem('usuarioLogado') || '{}')
+  const senhaValida = usuarioSessao.senha || agendamento.value.usuario.senha || agendamento.value.profissional.senha
+
+  if (senhaValida && senha.value !== senhaValida) {
+    alert('Senha incorreta! Não foi possível excluir o agendamento.')
+    return
+  }
 
   localStorage.removeItem('dadosAgendamento')
-  
   mostrarModalSenha.value = false
   senha.value = ''
 
+  alert('Agendamento excluído com sucesso!')
   router.push('/buscar')
 }
 </script>

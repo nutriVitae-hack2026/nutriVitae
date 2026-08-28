@@ -6,67 +6,27 @@ import { useAuth } from '@/composables/useAuth'
 const router = useRouter()
 const { usuarioLogado, isPaciente, isProfissional, carregarUsuario } = useAuth()
 
-// 1. Listas de Cadastrados no Sistema
 const listaProfissionais = ref([
-  {
-    id: 1,
-    nome: 'Dra. Carolina Paz Alencar',
-    telefone: '(47) 99999-1111',
-    email: 'carolina@email.com',
-    foto: '/public/usuarios/carolina-user.png'
-  },
-  {
-    id: 2,
-    nome: 'Dr. Alexandre Xavier',
-    telefone: '(47) 99999-2222',
-    email: 'alexandre@email.com',
-    foto: '/public/usuarios/alexandre-user.png'
-  },
-  {
-    id: 3,
-    nome: 'Dra. Fabiana Oliveira',
-    telefone: '(47) 99999-3333',
-    email: 'fabiana@email.com',
-    foto: '/public/usuarios/fabiana-user.png'
-  }
+  { id: 1, nome: 'Dra. Carolina Paz Alencar', telefone: '(47) 99999-1111', email: 'carolina@email.com', foto: '/usuarios/carolina-user.png' },
+  { id: 2, nome: 'Dr. Alexandre Xavier', telefone: '(47) 99999-2222', email: 'alexandre@email.com', foto: '/usuarios/alexandre-user.png' },
+  { id: 3, nome: 'Dra. Fabiana Oliveira', telefone: '(47) 99999-3333', email: 'fabiana@email.com', foto: '/usuarios/fabiana-user.png' }
 ])
 
 const listaPacientes = ref([
-  {
-    id: 101,
-    nome: 'Gabriel Lima da Costa',
-    telefone: '(47) 98888-1111',
-    email: 'gabriel@email.com',
-    foto: '/public/usuarios/gabriel-user(1).png'
-  },
-  {
-    id: 102,
-    nome: 'Amanda de Sousa Lima',
-    telefone: '(47) 98888-2222',
-    email: 'amanda@email.com',
-    foto: '/public/usuarios/amanda-user.png'
-  },
-  {
-    id: 103,
-    nome: 'Carlos Eduardo da Silva',
-    telefone: '(47) 98888-3333',
-    email: 'carlos@email.com',
-    foto: '/public/usuarios/eduardo-user.png'
-  }
+  { id: 101, nome: 'Gabriel Lima da Costa', telefone: '(47) 98888-1111', email: 'gabriel@email.com', foto: '/usuarios/gabriel-user(1).png' },
+  { id: 102, nome: 'Amanda de Sousa Lima', telefone: '(47) 98888-2222', email: 'amanda@email.com', foto: '/usuarios/amanda-user.png' },
+  { id: 103, nome: 'Carlos Eduardo da Silva', telefone: '(47) 98888-3333', email: 'carlos@email.com', foto: '/usuarios/eduardo-user.png' }
 ])
 
-// Variáveis para guardar IDs selecionados nos dropdowns
 const profissionalSelecionadoId = ref('')
 const pacienteSelecionadoId = ref('')
 
-// Estrutura do agendamento
 const agendamento = ref({
-  usuario: { nome: '', telefone: '', email: '', foto: null },
-  profissional: { nome: '', telefone: '', email: '', foto: null },
+  usuario: { nome: '', telefone: '', email: '', foto: null, senha: '' },
+  profissional: { nome: '', telefone: '', email: '', foto: null, senha: '' },
   consulta: { data: '', horario: '', tipo: 'Presencial' }
 })
 
-// Carrega os dados do usuário autenticado assim que o componente entra na tela
 onMounted(() => {
   carregarUsuario()
 
@@ -76,20 +36,21 @@ onMounted(() => {
         nome: usuarioLogado.value.nome || '',
         telefone: usuarioLogado.value.telefone || '',
         email: usuarioLogado.value.email || '',
-        foto: usuarioLogado.value.foto || null
+        foto: usuarioLogado.value.foto || null,
+        senha: usuarioLogado.value.senha || ''
       }
     } else if (isProfissional.value) {
       agendamento.value.profissional = {
         nome: usuarioLogado.value.nome || '',
         telefone: usuarioLogado.value.telefone || '',
         email: usuarioLogado.value.email || '',
-        foto: usuarioLogado.value.foto || null
+        foto: usuarioLogado.value.foto || null,
+        senha: usuarioLogado.value.senha || ''
       }
     }
   }
 })
 
-// Converte arquivo enviado para Base64
 function converterParaBase64(arquivo, callback) {
   if (arquivo.size > 1024 * 1024) {
     alert('Selecione uma imagem menor que 1MB.')
@@ -118,7 +79,6 @@ function aoSelecionarFotoProfissional(event) {
   }
 }
 
-// Observa mudanças de seleção do Profissional (quando o paciente seleciona alguém)
 watch(profissionalSelecionadoId, (novoId) => {
   if (isPaciente.value) {
     const prof = listaProfissionais.value.find((p) => p.id === Number(novoId))
@@ -126,7 +86,6 @@ watch(profissionalSelecionadoId, (novoId) => {
   }
 })
 
-// Observa mudanças de seleção do Paciente (quando o profissional seleciona alguém)
 watch(pacienteSelecionadoId, (novoId) => {
   if (isProfissional.value) {
     const pac = listaPacientes.value.find((p) => p.id === Number(novoId))
@@ -136,7 +95,6 @@ watch(pacienteSelecionadoId, (novoId) => {
 
 function validarFormulario() {
   const { usuario, profissional, consulta } = agendamento.value
-
   if (
     !usuario.nome ||
     !usuario.telefone ||
@@ -150,7 +108,6 @@ function validarFormulario() {
     alert('Preencha ou selecione todas as informações do profissional, usuário e consulta.')
     return false
   }
-
   return true
 }
 
@@ -168,18 +125,12 @@ function agendar() {
 </script>
 
 <template>
-  <main class="container">
-    <h1>Agendar Consulta</h1>
+  <main class="agendamento-page">
+    <h1 class="main-title">Agendar Consulta</h1>
 
-    <!-- ======================================================== -->
-    <!-- MODO 1: PACIENTE LOGADO                                  -->
-    <!-- ======================================================== -->
     <template v-if="isPaciente">
-      <section>
-        <div class="divider">
-          <span>Escolha o Profissional</span>
-        </div>
-
+      <section class="section-block">
+        <div class="divider"><span>Escolha o Profissional</span></div>
         <div class="grid-form">
           <div class="input-card full-width">
             <label for="select-prof">Profissional:</label>
@@ -201,27 +152,21 @@ function agendar() {
         </div>
       </section>
 
-      <section>
-        <div class="divider">
-          <span>Seus Dados (Usuário)</span>
-        </div>
-
+      <section class="section-block">
+        <div class="divider"><span>Seus Dados (Usuário)</span></div>
         <div class="grid-form">
           <div class="input-card">
             <label for="usr-nome">Nome:</label>
             <input id="usr-nome" type="text" v-model="agendamento.usuario.nome" />
           </div>
-
           <div class="input-card">
             <label for="usr-tel">Telefone:</label>
             <input id="usr-tel" type="text" v-model="agendamento.usuario.telefone" />
           </div>
-
           <div class="input-card full-width">
             <label for="usr-email">E-mail:</label>
             <input id="usr-email" type="email" v-model="agendamento.usuario.email" />
           </div>
-
           <div class="input-card full-width">
             <label for="usr-foto">Sua Foto:</label>
             <input id="usr-foto" type="file" accept="image/*" @change="aoSelecionarFotoUsuario" />
@@ -230,31 +175,22 @@ function agendar() {
       </section>
     </template>
 
-    <!-- ======================================================== -->
-    <!-- MODO 2: PROFISSIONAL LOGADO                              -->
-    <!-- ======================================================== -->
     <template v-else-if="isProfissional">
-      <section>
-        <div class="divider">
-          <span>Seus Dados (Profissional)</span>
-        </div>
-
+      <section class="section-block">
+        <div class="divider"><span>Seus Dados (Profissional)</span></div>
         <div class="grid-form">
           <div class="input-card">
             <label for="prof-nome">Nome:</label>
             <input id="prof-nome" type="text" v-model="agendamento.profissional.nome" />
           </div>
-
           <div class="input-card">
             <label for="prof-tel">Telefone:</label>
             <input id="prof-tel" type="text" v-model="agendamento.profissional.telefone" />
           </div>
-
           <div class="input-card full-width">
             <label for="prof-email">E-mail:</label>
             <input id="prof-email" type="email" v-model="agendamento.profissional.email" />
           </div>
-
           <div class="input-card full-width">
             <label for="prof-foto">Sua Foto:</label>
             <input id="prof-foto" type="file" accept="image/*" @change="aoSelecionarFotoProfissional" />
@@ -262,11 +198,8 @@ function agendar() {
         </div>
       </section>
 
-      <section>
-        <div class="divider">
-          <span>Escolha o Paciente</span>
-        </div>
-
+      <section class="section-block">
+        <div class="divider"><span>Escolha o Paciente</span></div>
         <div class="grid-form">
           <div class="input-card full-width">
             <label for="select-pac">Paciente:</label>
@@ -277,7 +210,6 @@ function agendar() {
               </option>
             </select>
           </div>
-
           <div v-if="agendamento.usuario.nome" class="profile-preview full-width">
             <img :src="agendamento.usuario.foto || 'https://via.placeholder.com/150'" class="preview-avatar" />
             <div>
@@ -289,32 +221,23 @@ function agendar() {
       </section>
     </template>
 
-    <!-- ======================================================== -->
-    <!-- MODO 3: SEM LOGIN                                        -->
-    <!-- ======================================================== -->
     <template v-else>
       <div class="nao-logado">
         <p>Você precisa estar logado para realizar um agendamento.</p>
       </div>
     </template>
 
-    <!-- SEÇÃO SOBRE A CONSULTA -->
-    <section v-if="isPaciente || isProfissional">
-      <div class="divider">
-        <span>Sobre a Consulta</span>
-      </div>
-
+    <section v-if="isPaciente || isProfissional" class="section-block">
+      <div class="divider"><span>Sobre a Consulta</span></div>
       <div class="grid-form">
         <div class="input-card">
           <label for="data">Data:</label>
           <input id="data" type="date" v-model="agendamento.consulta.data" />
         </div>
-
         <div class="input-card">
           <label for="horario">Horário:</label>
           <input id="horario" type="time" v-model="agendamento.consulta.horario" />
         </div>
-
         <div class="input-card full-width">
           <label for="tipo">Tipo de agendamento:</label>
           <select id="tipo" v-model="agendamento.consulta.tipo">
@@ -330,17 +253,23 @@ function agendar() {
 </template>
 
 <style scoped>
-.container {
+/* Adicionando margem no container principal para resolver o corte na tela */
+.agendamento-page {
   max-width: 800px;
-  margin: 0 auto;
+  margin: 70px auto 40px auto; 
   padding: 20px;
+  box-sizing: border-box;
 }
 
-h1 {
+.main-title {
   color: #73441b;
   text-align: center;
   font-size: 3rem;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
+}
+
+.section-block {
+  margin-bottom: 20px;
 }
 
 .nao-logado {
@@ -350,7 +279,6 @@ h1 {
   padding: 40px 0;
 }
 
-/* Linha divisória */
 .divider {
   display: flex;
   align-items: center;
@@ -370,7 +298,6 @@ h1 {
   font-weight: bold;
 }
 
-/* Layout do formulário */
 .grid-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -409,12 +336,6 @@ h1 {
   font-weight: bold;
 }
 
-.input-card select option {
-  background-color: #cbba9c;
-  color: #4b5a32;
-}
-
-/* Preview do item selecionado */
 .profile-preview {
   display: flex;
   align-items: center;
@@ -430,12 +351,6 @@ h1 {
   height: 50px;
   border-radius: 50%;
   object-fit: cover;
-}
-
-.profile-preview p {
-  margin: 2px 0;
-  color: #333f34;
-  font-size: 0.9rem;
 }
 
 .btn-agendar {

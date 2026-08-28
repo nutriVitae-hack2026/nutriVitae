@@ -116,31 +116,33 @@ const salvarAlteracoes = (novosDados) => {
 
 <style scoped>
 .perfil-container {
- position: relative;
-  min-width: 800px;
-  margin: 30px auto;
+  position: relative;
+  max-width: 900px;
+  /* Espaçamento superior suficiente para o Header fixo */
+  margin: 120px auto 40px auto; 
   padding: 0 20px;
   box-sizing: border-box;
 }
 
 .delete-icon-btn {
   position: absolute;
-  top: 0;
+  top: -40px;
   right: 20px;
   background: none;
   border: none;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   cursor: pointer;
+  z-index: 5;
 }
 
 .profile-header {
   display: flex;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 
 .user-name {
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 500;
   color: #73441B;
 }
@@ -148,7 +150,7 @@ const salvarAlteracoes = (novosDados) => {
 .info-row {
   display: flex;
   gap: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 16px; /* Reduzido levemente para um espaçamento mais uniforme */
 }
 
 .info-box, .small-box {
@@ -158,11 +160,12 @@ const salvarAlteracoes = (novosDados) => {
 .input-pill {
   background-color: #D1BFA5;
   border-radius: 8px;
-  padding: 20px 12px;
+  padding: 14px 16px; /* Ajustado o padding para alinhar com os outros campos do sistema */
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.15);
   color: #73441B;
-  font-size: 15px;
+  font-size: 0.95rem;
   font-weight: 500;
+  box-sizing: border-box;
 }
 
 .label-text {
@@ -174,22 +177,22 @@ const salvarAlteracoes = (novosDados) => {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
-  margin-top: 14px;
+  margin-top: 20px;
 }
 
 .green-card {
   background-color: #9A9E70;
   border-radius: 12px;
-  padding: 14px;
+  padding: 16px;
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.15);
   position: relative;
   color: #F1EDD2;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
 }
 
 .card-title {
   text-align: center;
-  font-size: 0.85rem;
+  font-size: 1rem;
 }
 
 .card-divider {
@@ -215,18 +218,19 @@ ul {
 
 .floating-edit-btn {
   position: absolute;
-  bottom: -30px;
-  left: -30px;
+  bottom: 12px;
+  right: 12px; /* Ajustado a posição para dentro do card, evitando estourar as margens da página */
+  left: auto;
   background-color: #F1EDD2;
   border: 1px solid #9A9E70;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.18);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
 }
 </style>

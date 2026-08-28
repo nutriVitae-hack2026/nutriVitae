@@ -101,9 +101,10 @@ const salvar = () => {
 
 <style scoped>
 .editar-container {
-   position: relative;
-  min-width: 800px;
-  margin: 30px auto;
+  position: relative;
+  max-width: 850px;
+  /* Espaçamento superior suficiente para o Header fixo */
+  margin: 10px auto 40px auto;
   padding: 0 20px;
   box-sizing: border-box;
 }
@@ -132,19 +133,20 @@ const salvar = () => {
 .input-pill {
   background-color: #D1BFA5;
   border-radius: 8px;
-  padding: 15px 12px;
+  padding: 12px 14px;
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-   margin-bottom: 15px;
+  margin-bottom: 12px;
+  box-sizing: border-box;
 }
 
 .label-text {
   color: #333F34;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 0.9rem;
 }
 
 .label-text-card {
@@ -157,7 +159,7 @@ const salvar = () => {
   background: transparent;
   outline: none;
   width: 100%;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: #333F34;
   margin-left: 8px;
 }
@@ -173,7 +175,7 @@ const salvar = () => {
   padding: 14px;
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.15);
   color: #F1EDD2;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
 }
 
 .card-edit {
@@ -196,6 +198,7 @@ const salvar = () => {
 ul {
   list-style: none;
   padding-left: 0;
+  margin: 0;
 }
 
 .mt-2 {
@@ -208,7 +211,7 @@ ul {
   justify-content: center;
   align-items: center;
   gap: 16px;
-  margin-top: 14px;
+  margin-top: 20px;
 }
 
 .btn-pill {
@@ -217,7 +220,7 @@ ul {
   border: none;
   border-radius: 8px;
   padding: 10px 24px;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.18);

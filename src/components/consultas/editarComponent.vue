@@ -50,7 +50,19 @@ function salvarAlteracoes() {
 }
 
 function meConfirmarEdicao() {
-  if (!senha.value) return alert('Digite sua senha para confirmar!')
+  if (!senha.value) {
+    alert('Digite sua senha para confirmar!')
+    return
+  }
+
+  // Recupera a senha válida cadastrada no login do usuário
+  const usuarioSessao = JSON.parse(localStorage.getItem('usuarioLogado') || '{}')
+  const senhaValida = usuarioSessao.senha || agendamento.value.usuario.senha || agendamento.value.profissional.senha
+
+  if (senhaValida && senha.value !== senhaValida) {
+    alert('Senha incorreta. As alterações não foram salvas.')
+    return
+  }
 
   localStorage.setItem('dadosAgendamento', JSON.stringify(agendamento.value))
   mostrarModalSenha.value = false
@@ -60,6 +72,7 @@ function meConfirmarEdicao() {
   editandoTipo.value = false
   senha.value = ''
 
+  alert('Alterações salvas com sucesso!')
   router.push('/resumo')
 }
 </script>

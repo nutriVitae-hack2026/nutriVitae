@@ -87,21 +87,23 @@ onMounted(() => {
 
 <style scoped>
 .perfil-container {
- position: relative;
-  min-width: 800px;
-  margin: 30px auto;
+  position: relative;
+  max-width: 850px;
+  /* Margem superior para livrar o Header fixo */
+  margin: 110px auto 40px auto;
   padding: 0 20px;
   box-sizing: border-box;
 }
 
 .delete-icon-btn {
   position: absolute;
-  top: 0;
+  top: -30px;
   right: 20px;
   background: none;
   border: none;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   cursor: pointer;
+  z-index: 5;
 }
 
 .profile-header {
@@ -119,13 +121,10 @@ onMounted(() => {
 .info-row {
   display: flex;
   gap: 16px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
-.info-box {
-  width: 50%;
-}
-
+.info-box,
 .small-box {
   width: 50%;
 }
@@ -133,34 +132,35 @@ onMounted(() => {
 .input-pill {
   background-color: #C3B199;
   border-radius: 8px;
-  padding: 8px 12px;
+  padding: 10px 14px;
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.18);
   color: #2b2118;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 500;
+  box-sizing: border-box;
 }
 
 .cards-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
-  margin-top: 14px;
+  margin-top: 18px;
 }
 
 .green-card {
   background-color: #8E996C;
   border-radius: 12px;
-  padding: 14px;
+  padding: 16px;
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.18);
   position: relative;
   color: #1a220c;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
 }
 
 .card-title {
   text-align: center;
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
 }
 
 .card-divider {
@@ -187,18 +187,19 @@ ul {
 
 .floating-edit-btn {
   position: absolute;
-  bottom: -12px;
-  left: -12px;
+  bottom: 10px;
+  right: 10px; /* Ajustado para dentro do card no canto inferior direito */
+  left: auto;
   background-color: #ECE3CA;
   border: 1px solid #8E996C;
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.18);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
 }
 </style>

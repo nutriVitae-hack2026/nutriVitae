@@ -229,7 +229,7 @@ function fecharModal() {
 .resumo-container {
   position: relative;
   max-width: 850px;
-  margin: 0 auto;
+  margin: 120 auto 40px auto;
   padding: 20px;
   min-height: 500px;
 }

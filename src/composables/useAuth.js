@@ -1,28 +1,34 @@
 import { ref, computed } from 'vue'
 
-const usuarioLogado = ref(JSON.parse(localStorage.getItem('usuarioLogado')) || null)
+const usuarioLogado = ref(null)
 
 export function useAuth() {
-  const carregarUsuario = () => {
-    const dados = localStorage.getItem('usuarioLogado')
-    usuarioLogado.value = dados ? JSON.parse(dados) : null
+  function carregarUsuario() {
+    const salvo = localStorage.getItem('usuarioLogado')
+    if (salvo) {
+      usuarioLogado.value = JSON.parse(salvo)
+    }
   }
 
-  const tipoUsuario = computed(() => usuarioLogado.value?.tipo || null)
-  const isPaciente = computed(() => tipoUsuario.value === 'paciente')
-  const isProfissional = computed(() => tipoUsuario.value === 'profissional')
+  function login(dadosUsuario) {
+    usuarioLogado.value = dadosUsuario
+    localStorage.setItem('usuarioLogado', JSON.stringify(dadosUsuario))
+  }
 
-  const logout = () => {
-    localStorage.removeItem('usuarioLogado')
+  function logout() {
     usuarioLogado.value = null
+    localStorage.removeItem('usuarioLogado')
   }
+
+  const isPaciente = computed(() => usuarioLogado.value?.tipo === 'paciente')
+  const isProfissional = computed(() => usuarioLogado.value?.tipo === 'profissional')
 
   return {
     usuarioLogado,
-    tipoUsuario,
     isPaciente,
     isProfissional,
     carregarUsuario,
+    login,
     logout
   }
 }

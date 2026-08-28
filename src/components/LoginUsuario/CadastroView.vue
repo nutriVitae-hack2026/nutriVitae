@@ -100,8 +100,9 @@ const submitCadastro = () => {
 <style scoped>
 .cadastro-wrapper {
   position: relative;
-  min-width: 800px;
-  margin: 30px auto;
+  max-width: 900px;
+  /* Espaçamento no topo para não cobrir o formulário */
+  margin: 120px auto 40px auto; 
   padding: 0 20px;
   box-sizing: border-box;
 }
@@ -110,7 +111,7 @@ const submitCadastro = () => {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 
 .main-heading {
@@ -122,29 +123,21 @@ const submitCadastro = () => {
 
 .welcome-badge {
   position: relative;
-  max-width: 850px;
-  margin: 0 auto;
-  padding: 20px;
-  min-height: 160px;
 }
+
+/* Removido o position: fixed para evitar sobreposição nos inputs */
 .serif-Title {
-  position: fixed;
-  top: 0;
-  right: 0;
+  position: absolute;
+  top: -120px;
+  right: -20px;
   background-color: #73441b;
   color: #f2ebd9;
-  padding: 30px 100px 30px 50px;
+  padding: 30px 60px 30px 40px;
   border-radius: 0 0 0 130px;
   box-shadow: -4px 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
-  z-index: 10;
-}
-.welcome-badge h2 {
-  position: fixed;
-  color: #f1edd2;
-  font-size: 50px;
-  text-align: right;
-  line-height: 1.1;
+  font-size: 1.8rem;
+  line-height: 1.2;
 }
 
 .form-grid {
@@ -160,7 +153,7 @@ const submitCadastro = () => {
 }
 
 .right-col {
-  margin-top: 18px;
+  margin-top: 0; /* Ajustado para alinhar perfeitamente com a coluna esquerda */
 }
 
 .footer-passwords {
@@ -174,19 +167,19 @@ const submitCadastro = () => {
   position: relative;
   background-color: #d1bfa5;
   border-radius: 8px;
-  padding: 20px 12px;
+  padding: 12px 16px; /* Reduzido levemente o padding vertical para evitar excesso de altura */
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 10px;
+  box-sizing: border-box;
 }
 
 .label-text {
   color: #333f34;
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
 }
 
 .input-pill input {
@@ -194,7 +187,7 @@ const submitCadastro = () => {
   background: transparent;
   outline: none;
   width: 100%;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: #333f34;
   margin-left: 8px;
 }
@@ -237,11 +230,10 @@ const submitCadastro = () => {
   color: #333f34;
   border: none;
   border-radius: 8px;
-  padding: 10px 24px;
-  font-size: 0.8rem;
+  padding: 12px 28px;
+  font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.18);
 }
 </style>
-

@@ -125,9 +125,10 @@ const confirmarExclusao = () => {
 
 <style scoped>
 .deletar-container {
-   position: relative;
-  min-width: 800px;
-  margin: 30px auto;
+  position: relative;
+  max-width: 850px;
+  /* Margem de topo para evitar que o Header cubra o conteúdo */
+  margin: 110px auto 40px auto;
   padding: 0 20px;
   box-sizing: border-box;
 }
@@ -159,12 +160,13 @@ const confirmarExclusao = () => {
 .input-pill {
   background-color: #D1BFA5;
   border-radius: 8px;
-  padding: 20px 12px;
+  padding: 12px 14px;
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.15);
   color: #73441B;
-  font-size: 15px;
+  font-size: 0.85rem;
   width: 50%;
-   margin-bottom: 20px;
+  margin-bottom: 0; /* Removido para manter alinhamento uniforme com as linhas */
+  box-sizing: border-box;
 }
 
 .label-text {
@@ -185,12 +187,12 @@ const confirmarExclusao = () => {
   padding: 14px;
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.15);
   color: #F1EDD2;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
 }
 
 .card-title {
   text-align: center;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
 }
 
 .card-divider {
@@ -203,6 +205,7 @@ const confirmarExclusao = () => {
 ul {
   list-style: none;
   padding-left: 0;
+  margin: 0;
 }
 
 .mt-2 {
@@ -219,7 +222,7 @@ ul {
   border: none;
   border-radius: 8px;
   padding: 10px 20px;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.18);
@@ -249,21 +252,24 @@ ul {
   max-width: 420px;
   text-align: center;
   color: #333F34;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
 .input-modal input {
   width: 100%;
-  padding: 10px;
+  padding: 10px 12px;
   border-radius: 8px;
   border: none;
+  outline: none;
   background-color: #D1BFA5;
   color: #333F34;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   margin-bottom: 20px;
+  box-sizing: border-box;
 }
 
 .input-modal input::placeholder {
-  color: #333F34;
+  color: #555;
 }
 
 .modal-actions {
@@ -271,4 +277,4 @@ ul {
   gap: 12px;
   justify-content: center;
 }
-</style>    
+</style>
