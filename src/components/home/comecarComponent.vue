@@ -3,9 +3,6 @@
 
 <template>
   <section id="secao-escolha" class="comecar">
-    <h2>
-      Comece agora mesmo!
-    </h2>
     <div class="users">
       <RouterLink to="/cadastro">
         <div class="user">
@@ -38,12 +35,6 @@
   margin: 50px 0;
   gap: 50px;
 
-  & h2 {
-    color: #333F34;
-    font-size: 5rem;
-    -webkit-text-stroke: #333F34 1px;
-  }
-
   & .users {
     display: flex;
     width: 100%;
@@ -74,7 +65,7 @@
         }
 
         & p {
-          font-size: 3rem;
+          font-size: 2.5rem;
         }
       }
     }

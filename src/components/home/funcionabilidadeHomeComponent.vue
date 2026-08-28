@@ -30,7 +30,7 @@
     flex-direction: column;
     gap: 50px;
   & h2{
-    font-size: 4rem;
+    font-size: 2.5rem;
     color: #73441B;
     -webkit-text-stroke: #73441B 1px;
     margin-top: 50px;
@@ -39,7 +39,7 @@
     list-style: none;
     & li{
     font-size: 1.5rem;
-    color: #101010;
+    color: #333f34;
     -webkit-text-stroke: #101010 1px;
     }
   }

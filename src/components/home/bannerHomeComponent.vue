@@ -43,7 +43,7 @@ function rolarParaEscolha() {
 }
 
 .banner h2 {
-  font-size: 1.4rem;
+  font-size: 2rem;
   font-weight: 400;
   color: #F1EDD2;
   margin: 0;

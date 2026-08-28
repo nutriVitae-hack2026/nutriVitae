@@ -31,6 +31,12 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
 }
 
+p, li {
+  font-family: "roboto", serif;
+  font-weight: normal;
+  margin-top: 0;
+}
+
 body a {
   text-decoration: none;
   font-family: inherit; /* Herda a fonte do elemento pai ou botão */

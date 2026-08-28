@@ -28,13 +28,13 @@
   & h2{
     color: #333F34;
     -webkit-text-stroke: 1px #333F34;
-    font-size: 4rem;
+    font-size: 3rem;
     margin: 20px 0 10px;
   }
   & p{
     color: #536236;
-    -webkit-text-stroke: #536236 1px;
-    font-size: 2rem;
+    -webkit-text-stroke: #333F34 1px;
+    font-size: 1.5rem;
     margin: 10px 50px;
   }
   & ul{
@@ -44,7 +44,7 @@
     border-radius: 100px 0 0 100px;
     border: #333F34 2px solid;
     & li{
-      color: #101010;
+      color: #333F34;
       font-size: 1.5rem;
     }
 

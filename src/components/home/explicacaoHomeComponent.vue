@@ -31,7 +31,7 @@
   padding: 50px 0;
   gap: 50px;
   & h2{
-    font-size: 4rem;
+    font-size: 2.5rem;
     color: #333F34;
     -webkit-text-stroke: #333F34 1px;
   }
@@ -45,7 +45,7 @@
       background: #F1EDD2;
       color: #101010;
       -webkit-text-stroke: #101010 1px;
-      font-size: 1.5rem;
+      font-size: 1rem;
       box-shadow: inset 0 0 30px rgba(154,158,112, 1);
       border-radius: 40px;
       padding: 20px;
@@ -53,7 +53,7 @@
     }
   }
   & a{
-    font-size: 4rem;
+    font-size: 2.5rem;
     color: #333F34;
     -webkit-text-stroke: #333F34 1px;
     padding: 5px 50px;
