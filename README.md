@@ -1,44 +1,45 @@
-# .
+# Nutri-Vitae
 
-This template should help get you started developing with Vue 3 in Vite.
+* **Tema:**
+Nutrição Alimentar.
+  
+ **Objetivo:**
+A Nutri-Vitae tem como objetivo facilitar o acesso à saúde e à alimentação de qualidade, conectando pacientes a nutricionistas de forma simples, rápida e segura.
+Nossa plataforma foi desenvolvida para ajudar cada paciente a encontrar um profissional adequado às suas necessidades, permitindo pesquisar e conhecer nutricionistas de maneira prática. Queremos tornar a busca por acompanhamento nutricional mais acessível e contribuir para que mais pessoas encontrem o suporte necessário para cuidar da sua saúde e melhorar sua qualidade de vida.
 
-## Recommended IDE Setup
+### Funcionalidades Planejadas:
+- Cadastro do profissional.  (cadastro de profissional)
+- Cadastro de usuário.  (cadastro de usuário)
+- Cadastro de suporte. (cadastro de suporte)
+- Cadastro de agendamento. (cadastro de consulta)
+- Cadastro de pratos. (cadastro de pratos personalizados)
+- Cadastro de preferencias. (Não deu tempo de implementar)
+- Cadastro de formação acadêmica. (Não deu tempo de implementar)
+- Cadastrar conversas(Chat). (Não deu tempo de implementar)
+- página sobre nós, páginas agendamentos, página profissional. (Não deu tempo de implementar)
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+### Funcionalidades Efetivamente Desenvolvidas:
+- Cadastro do profissional.
+- Cadastro de usuário.
+- Cadastro de suporte.
+- Cadastro de agendamento.
+- Cadastro de pratos.
 
-## Recommended Browser Setup
+## Dificuldades Encontradas
+- Algumas partes de implementação foram difíceis.
+- A perda de uma integrante aumentaram as responsabilidades de todos os integrantes.
+- login de profissional e usuário  tiveram algumas dificuldades.
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+## Divisão de Tarefas entre os Integrantes
+* Felipe:** Responsável por: Chat, Login de usuário
+* Mizael:** Responsável por: Formação acadêmica, suporte.
+* Kauan:** Responsável por: Preferências, formação acadêmica.
+* Ruty:** Responsável por: Suporte, Preferências.
+* Bianca:** Responsável por: Pratos, agendamentos, Sobre nós.
+* Sara:** Responsável por: Home, Profissional.
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+## Autoavaliação do Grupo
+* **Nota do Grupo:**
+  7,5
+* **Justificativa:**
+ A ideal do nosso site é muito bom nos esforçamos para fazer o nosso melhor conseguimos superar nossas limitações mais poderíamos fazer mais ainda do que fizemos, não é o melhor site mais foi dado o melhor de cada um , perdemos uma integrante no meio do processo o que nos prejudicou muito mais nos esforçamos e estamos conseguindo se sobre sair, acredito que vamos conseguir melhorar cada vez mais.
