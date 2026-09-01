@@ -40,7 +40,7 @@ const router = createRouter({
     {
       path: '/cadastro-profissional',
       name: 'cadastro-profissional',
-      component: () => import('@/components/profissional/cadastroProfissional.vue'), // Adicionado para o botão "Cadastrar nutricionista"
+      component: () => import('@/components/profissional/cadastroProfissional.vue'),
     },
     {
       path: '/profissionais',
@@ -61,6 +61,13 @@ const router = createRouter({
       path: '/profissional/:id/delete',
       name: 'delete-perfil-profissional',
       component: () => import('@/components/profissional/delete/deleteProfissional.vue'),
+    },
+
+    // --- MENSAGENS E CHAT ---
+    {
+      path: '/mensagens',
+      name: 'mensagens',
+      component: () => import('@/components/mensagens/Mensagens.vue'),
     },
 
     // --- CONSULTAS E AGENDAMENTOS ---
@@ -126,56 +133,57 @@ const router = createRouter({
       name: 'buscar-pratos-id',
       component: () => import('@/components/pratos/buscarComponents.vue'),
     },
-     {
-    path: '/CadastroSuporte',
-    name: 'CadastroSuporte',
-    component: () => import("@/components/Suporte/cadastroSuporte.vue")
-  },
-  {
-    path: '/buscar-suporte',
-    name: 'BuscarSuporte',
-    component: () => import("@/components/Suporte/buscarSuporte.vue")
-  },
-  {
-    path: '/perfilSuporte',
-    name: 'PerfilSuporte',
-    component: () => import("@/components/Suporte/perfilSuporte.vue")
-  },
+
+    // --- SUPORTE ---
     {
-    path: '/CadastrarPreferencias',
-    name: 'CadastrarPreferencias',
+      path: '/CadastroSuporte',
+      name: 'CadastroSuporte',
+      component: () => import("@/components/Suporte/cadastroSuporte.vue")
+    },
+    {
+      path: '/buscar-suporte',
+      name: 'BuscarSuporte',
+      component: () => import("@/components/Suporte/buscarSuporte.vue")
+    },
+    {
+      path: '/perfilSuporte',
+      name: 'PerfilSuporte',
+      component: () => import("@/components/Suporte/perfilSuporte.vue")
+    },
+
+    // --- PREFERÊNCIAS ---
+    {
+      path: '/CadastrarPreferencias',
+      name: 'CadastrarPreferencias',
       component: () => import("@/components/preferencias/CadastrarPreferencias.vue"),
-  },
-  {
-    path: '/PerfilPreferencias',
-    name: 'PerfilPreferencias',
-         component: () => import("@/components/preferencias/PerfilPreferencias.vue"),
-  },
-  {
-    path: '/BuscarPreferencias',
-    name: 'BuscarPreferencias',
+    },
+    {
+      path: '/PerfilPreferencias',
+      name: 'PerfilPreferencias',
+      component: () => import("@/components/preferencias/PerfilPreferencias.vue"),
+    },
+    {
+      path: '/BuscarPreferencias',
+      name: 'BuscarPreferencias',
       component: () => import("@/components/preferencias/BuscarPreferencias.vue"),
-  },
-  {
-    path: '/AcademicCreate',
-    name: 'AcademicCreate',
-    component: () => import("@/components/academic/AcademicCreate.vue")
-  },
-{
-    path: '/AcademicEdit',
-    name: 'AcademicEdit',
-    component: () => import("@/components/academic/AcademicEdit.vue")
-  },
-{
-    path: '/AcademicViewCard',
-    name: 'AcademicViewCard',
-    component: () => import("@/components/academic/AcademicViewCard.vue")
-  },
-{
-    path: '/AcademicViewCard',
-    name: 'AcademicViewCard',
-    component: () => import("@/components/academic/ConfirmDeleteModal.vue")
-  },
+    },
+
+    // --- ACADÊMICO ---
+    {
+      path: '/AcademicCreate',
+      name: 'AcademicCreate',
+      component: () => import("@/components/academic/AcademicCreate.vue")
+    },
+    {
+      path: '/AcademicEdit',
+      name: 'AcademicEdit',
+      component: () => import("@/components/academic/AcademicEdit.vue")
+    },
+    {
+      path: '/AcademicViewCard',
+      name: 'AcademicViewCard',
+      component: () => import("@/components/academic/AcademicViewCard.vue")
+    },
 
     // --- REDIRECIONAMENTO PADRÃO ---
     {

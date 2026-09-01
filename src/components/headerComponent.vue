@@ -36,7 +36,7 @@ import { RouterLink } from 'vue-router';
             </RouterLink>
           </li>
           <li>
-            <RouterLink to="#">
+            <RouterLink to="/mensagens">
               <i class="mdi mdi-forum-outline"></i>
               Conversas
             </RouterLink>
