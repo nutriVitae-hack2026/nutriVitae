@@ -15,7 +15,7 @@ const routes = [
     component: BuscarSuporte
   },
   {
-    path: '/perfilSuporte',
+    path: '/perfilSuporte/:id',
     name: 'PerfilSuporte',
     component: PerfilSuporte
   }

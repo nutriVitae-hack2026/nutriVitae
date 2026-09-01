@@ -71,7 +71,11 @@ function resolverSuporte(id) {
 }
 
 function voltarSuporte() {
-  router.push('/')
+  router.push('/perfilSuporte/novo')
+}
+
+function visualizarSuporte(id) {
+  router.push(`/perfilSuporte/${id}`)
 }
 
 function limparFiltros() {
@@ -136,7 +140,7 @@ function fecharImagemComEsc(event) {
           title="Limpar filtros"
           @click="limparFiltros"
         >
-          <span class="mdi mdi-delete-outline" aria-hidden="true"></span>
+          <img src="/img/trash-icon.svg" alt="Limpar filtros" class="trash-icon" />
         </button>
       </div>
     </div>
@@ -200,6 +204,9 @@ function fecharImagemComEsc(event) {
           <span class="valor-suporte">{{ item.usuario.descrever }}</span>
         </p>
         <div class="acoes-suporte">
+          <button type="button" class="botao-visualizar" @click="visualizarSuporte(item.id)">
+            Visualizar
+          </button>
           <button
             v-if="obterStatus(item) !== 'resolvido'"
             type="button"
@@ -272,10 +279,9 @@ h1 {
   align-items: center;
   margin-bottom: 18px;
   padding: 5px 14px;
-  background-color: #9a9e70;
+  background-color: #f1edd2;
   border: 1px solid #1b1a17;
   border-radius: 12px;
-  box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.25);
 }
 
 .barra-buscar input {
@@ -312,7 +318,7 @@ h1 {
   align-items: center;
   min-width: 0;
   padding: 4px 9px;
-  background-color: #cbba9c;
+  background-color: #f1edd2;
   border: 1px solid #9c8a6f;
   border-radius: 6px;
   box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.25);
@@ -336,7 +342,7 @@ h1 {
   width: 32px;
   height: 32px;
   padding: 0;
-  background-color: #536236;
+  background-color: #f1edd2;
   color: #f1edd2;
   border: 1px solid #333f34;
   border-radius: 50%;
@@ -347,6 +353,12 @@ h1 {
 
 .botao-limpar-filtros:hover {
   background-color: #6b7c4f;
+}
+
+.trash-icon {
+  width: 18px;
+  height: 18px;
+  color: #333f34;
 }
 
 .filtro label {

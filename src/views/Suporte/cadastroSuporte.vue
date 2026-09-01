@@ -315,8 +315,8 @@ h1 {
   width: 100%;
   margin-top: 20px;
   padding: 12px;
-  background-color: #9a9e70;
-  color: #333f34;
+  background-color: #333F34;
+  color: #F1EDD2;
   border: 1px solid #536236;
   border-radius: 12px;
   font-size: 1.1rem;
@@ -329,8 +329,8 @@ h1 {
   width: 100%;
   margin-top: 24px;
   padding: 12px;
-  background-color: #9a9e70;
-  color: #333f34;
+  background-color: #333f34;
+  color: #F1EDD2;
   border: 1px solid #536236;
   border-radius: 12px;
   font-size: 1.1rem;
