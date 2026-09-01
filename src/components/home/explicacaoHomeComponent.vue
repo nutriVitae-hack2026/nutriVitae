@@ -13,11 +13,8 @@
       <div>O acompanhamento permite ajustar hábitos e melhorar resultados ao longo do tempo.</div>
       <div>Uma boa alimentação contribui para mais disposição, equilíbrio e qualidade de vida no dia a dia.</div>
     </div>
-    <RouterLink to="#">
-      Começar Agora
-    </RouterLink>
   </section>
-  <div class="space"></div>
+  
 </template>
 <style scoped>
 .explicacao{
@@ -61,8 +58,5 @@
     border-radius: 100px;
     cursor: pointer;
   }
-}
-.space{
-  min-height: 100px;
 }
 </style>
