@@ -4,7 +4,6 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-// Ref para o input de arquivo (para resetar no botão cancelar)
 const fotoInputRef = ref(null)
 
 const agendamento = ref({
@@ -61,15 +60,15 @@ function salvar() {
   try {
     const dados = agendamento.value.profissional
 
-    // Converte a string de ingredientes separada por quebras de linha em um Array
+    
     const listaIngredientes = dados.ingredientes
       .split('\n')
       .filter((item) => item.trim() !== '')
 
-    // Formata o objeto do prato com a estrutura esperada pela tela de busca
+  
     const novoPrato = {
       nome: dados.nome,
-      profissional: 'Profissional Cadastrado', // Pode ajustar se houver um campo específico
+      profissional: 'Profissional Cadastrado',
       data: dados.data,
       calorias: dados.calorias.includes('Kcal') ? dados.calorias : `${dados.calorias} Kcal`,
       foto: dados.foto,
@@ -77,7 +76,6 @@ function salvar() {
       ingredientes: listaIngredientes,
     }
 
-    // Salva na chave 'dadosPrato' que é lida pela tela de busca
     localStorage.setItem('dadosPrato', JSON.stringify(novoPrato))
     router.push('/pratos/buscar')
   } catch (error) {
