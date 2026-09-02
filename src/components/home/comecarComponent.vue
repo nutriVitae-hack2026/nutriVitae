@@ -4,21 +4,17 @@
 <template>
   <section id="secao-escolha" class="comecar">
     <div class="users">
-      <RouterLink to="/cadastro">
+      <RouterLink to="/cadastro" class="btn-card primary">
         <div class="user">
-          <i class="mdi mdi-account-circle"></i>
-          <p>
-            Cadastrar Paciente
-          </p>
+          <i class="mdi mdi-account-heart-outline"></i>
+          <span>Cadastrar Paciente</span>
         </div>
       </RouterLink>
       
-      <RouterLink to="/cadastro-profissional">
+      <RouterLink to="/cadastro-profissional" class="btn-card secondary">
         <div class="user">
-          <i class="mdi mdi-account-circle"></i>
-          <p>
-            Cadastrar Nutricionista
-          </p>
+          <i class="mdi mdi-stethoscope"></i>
+          <span>Cadastrar Nutricionista</span>
         </div>
       </RouterLink>
     </div>
@@ -28,47 +24,93 @@
 <style scoped>
 .comecar {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 300px;
-  margin: 50px 0;
-  gap: 50px;
+  width: 100%;
+  padding: 20px 20px 60px;
+}
 
-  & .users {
-    display: flex;
+.users {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 800px;
+}
+
+.btn-card {
+  flex: 1;
+  text-decoration: none;
+  border-radius: 50px;
+  transition: all 0.25s ease;
+}
+
+.user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 28px;
+  border-radius: 50px;
+}
+
+.user i {
+  font-size: 2rem; 
+}
+
+.user span {
+  font-size: 1.15rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.btn-card.primary {
+  background: #536236;
+  border: 1.5px solid #536236;
+  box-shadow: 0 4px 15px rgba(83, 98, 54, 0.2);
+}
+
+.btn-card.primary .user {
+  color: #F1EDD2;
+}
+
+.btn-card.primary:hover {
+  background: #414e2a;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(83, 98, 54, 0.3);
+}
+
+.btn-card.secondary {
+  background: transparent;
+  border: 1.5px solid #536236;
+}
+
+.btn-card.secondary .user {
+  color: #536236;
+}
+
+.btn-card.secondary:hover {
+  background: #536236;
+  transform: translateY(-3px);
+}
+
+.btn-card.secondary:hover .user {
+  color: #F1EDD2;
+}
+
+@media (max-width: 650px) {
+  .users {
+    flex-direction: column;
     width: 100%;
-    gap: 50px;
-    justify-content: center;
-    align-items: center;
+  }
 
-    & a {
-      width: 40%;
-      text-decoration: none;
+  .btn-card {
+    width: 100%;
+  }
 
-      & .user {
-        color: #73441B;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
-        border-radius: 100px;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-
-        &:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
-        }
-
-        & i {
-          font-size: 100px;
-        }
-
-        & p {
-          font-size: 2.5rem;
-        }
-      }
-    }
+  .user span {
+    font-size: 1rem;
   }
 }
 </style>

@@ -29,7 +29,6 @@
 }
 
 .card {
-  border: 1.5px solid #73441B; 
   border-radius: 20px;
   padding: 40px clamp(20px, 4vw, 50px);
   width: 98%; 
