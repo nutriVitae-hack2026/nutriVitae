@@ -9,7 +9,7 @@ const membros = [
     turma: '2info2',
     github: 'Bianca161',
     email: 'bianca@gmail.com',
-    foto: '/membros/Bianca.png',
+    foto: '/membros/Bianca.jpeg',
   },
   {
     nome: 'Felipe Hodecker',
@@ -22,28 +22,28 @@ const membros = [
     nome: 'Kauan Gunther',
     turma: '2info2',
     github: 'kauan-gunther',
-    email: 'kauan@gmail.com',
+    email: 'kauangunther11@gmail.com',
     foto: '/membros/Kauan.png',
   },
   {
     nome: 'Mizael Estevam',
     turma: '2info2',
     github: 'mizaelestevam',
-    email: 'mizael@gmail.com',
+    email: 'vambastter14@gmail.com',
     foto: '/membros/Mizael.png',
   },
   {
     nome: 'Ruty Liandra',
     turma: '2info2',
     github: 'ruty-ruby',
-    email: 'ruty@gmail.com',
+    email: 'rutyliandra83@gmail.com',
     foto: '/membros/Ruty.png',
   },
   {
     nome: 'Sara Schulz',
     turma: '2info2',
     github: 'saraSchulz',
-    email: 'sara@gmail.com',
+    email: 'saraifc2024@gmail.com',
     foto: '/membros/sara.png',
   },
 ]
@@ -94,13 +94,14 @@ function voltar() {
 </template>
 
 <style scoped>
+
 .nossoEquipe {
-  padding: 55px clamp(20px, 6vw, 80px);
+  margin: 30px 0 60px;
+  width: 100%;
+  padding: 60px clamp(20px, 6vw, 80px);
   color: #f1edd2;
-  background:
-    linear-gradient(135deg, rgba(137, 162, 91, 0.2), transparent 45%),
-    #536236;
-  box-shadow: 0 0 75px rgba(0, 0, 0, 0.45);
+  background: linear-gradient(135deg, #536236 0%, #7E9552 50%, #536236 78%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
   display: flex;
   justify-content: center;
 }
@@ -115,15 +116,16 @@ function voltar() {
 .cartao {
   display: flex;
   align-items: center;
-  gap: 40px;
+  justify-content: center;
+  gap: 50px;
   width: 100%;
-  max-width: 340px;
+  max-width: 480px;
   transition: all 0.3s ease;
 }
 
 .wrap.ativo .cartao {
-  max-width: 560px;
-  padding: 26px 34px;
+  max-width: 850px;
+  padding: 20px;
 }
 
 .lista {
@@ -132,12 +134,14 @@ function voltar() {
 }
 
 .lista h3 {
-  margin: 0 0 14px;
+  margin: 0 0 20px;
   color: #f1edd2;
-  font-size: 0.9rem;
+  font-size: 2rem; 
   font-weight: 400;
   text-transform: uppercase;
   text-align: center;
+  letter-spacing: 0.05em;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
 }
 
 .wrap.ativo .lista h3 {
@@ -146,6 +150,7 @@ function voltar() {
 
 .lista ul {
   padding: 0;
+  margin: 0;
   list-style: none;
   text-align: center;
 }
@@ -158,12 +163,12 @@ function voltar() {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  padding: 4px 0;
+  gap: 6px;
+  padding: 8px 0;
   color: #f1edd2;
-  font-size: 0.8rem;
+  font-size: 1.4rem; 
   cursor: pointer;
-  transition: color 0.2s ease, font-size 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .wrap.ativo .lista li {
@@ -172,16 +177,17 @@ function voltar() {
 
 .lista li:hover {
   color: #ffffff;
+  transform: translateX(3px);
 }
 
 .lista li.selecionado {
   color: #ffffff;
-  font-size: 1rem;
+  font-size: 1.65rem;
   font-weight: 600;
 }
 
 .lista li span {
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 
 .detalhes {
@@ -189,25 +195,25 @@ function voltar() {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  min-width: 150px;
+  min-width: 260px;
 }
 
 .foto {
-  width: 64px;
-  height: 64px;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #f1edd2;
+  border: 3px solid #f1edd2;
   background: #7f8f66;
-  margin-bottom: 10px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .linha {
-  margin: 2px 0;
-  font-size: 0.62rem;
+  margin: 6px 0;
+  font-size: 1rem;
   letter-spacing: 0.03em;
   color: #f1edd2;
-  text-transform: uppercase;
 }
 
 .linha span {
@@ -216,6 +222,10 @@ function voltar() {
 
 .github {
   color: #7fc7f2;
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  gap: 6px;
 }
 
 .github span {
@@ -226,15 +236,17 @@ function voltar() {
 .detalhes button {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  margin-top: 12px;
-  padding: 5px 10px;
+  gap: 6px;
+  margin-top: 18px;
+  padding: 8px 16px;
   border: 1px solid #f1edd2;
   color: #f1edd2;
   background: transparent;
   font: inherit;
-  font-size: 0.7rem;
+  font-size: 0.95rem;
   cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
 }
 
 .detalhes button:hover {
@@ -246,15 +258,29 @@ function voltar() {
 .fade-leave-active {
   transition: opacity 0.25s ease;
 }
+
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
+  .nossoEquipe {
+    margin: 20px 0 40px;
+  }
+
   .wrap.ativo .cartao {
     flex-direction: column;
     max-width: 100%;
+  }
+
+  .wrap.ativo .lista h3,
+  .wrap.ativo .lista ul {
+    text-align: center;
+  }
+
+  .wrap.ativo .lista li {
+    justify-content: center;
   }
 }
 </style>
