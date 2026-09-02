@@ -56,7 +56,7 @@ import { RouterLink } from 'vue-router';
             </li>
           </div>
           <li>
-            <RouterLink to="/equipe">
+            <RouterLink to="/sobreNos">
               <i class="mdi mdi-account-group"></i>
               Sobre nós
             </RouterLink>

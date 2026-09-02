@@ -177,6 +177,13 @@ const router = createRouter({
     component: () => import("@/components/academic/ConfirmDeleteModal.vue")
   },
 
+// --- SOBRE NÓS ---
+    {
+      path: '/sobreNos',
+      name: 'sobreNos',
+      component: () => import('@/components/sobreNos/bannerHome.vue'),
+    },
+
     // --- REDIRECIONAMENTO PADRÃO ---
     {
       path: '/:pathMatch(.*)*',
