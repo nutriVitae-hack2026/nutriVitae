@@ -39,7 +39,7 @@ p, li {
 
 body a {
   text-decoration: none;
-  font-family: inherit; /* Herda a fonte do elemento pai ou botão */
+  font-family: inherit; 
 }
 
 /* Estrutura principal da aplicação Vue */
@@ -52,7 +52,7 @@ body a {
   flex-direction: column;
 }
 
-/* Ajustes para mobile */
+/* mobile */
 @media (max-width: 768px) {
   #app {
     padding-left: 0;
