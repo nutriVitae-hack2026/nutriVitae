@@ -1,8 +1,10 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuth } from '@/composables/useAuth'
 
 const router = useRouter()
+const { usuarioLogado, isPaciente, carregarUsuario } = useAuth()
 const buscaTermo = ref('')
 
 const pratos = ref([
@@ -39,6 +41,7 @@ const pratos = ref([
 ])
 
 onMounted(() => {
+  carregarUsuario()
   const salvo = localStorage.getItem('dadosPrato')
   if (salvo) {
     const dados = JSON.parse(salvo)
@@ -68,8 +71,9 @@ const pratosFiltrados = computed(() => {
   )
 })
 
+const temPratos = computed(() => pratos.value.length > 0)
+
 function verPrato(prato) {
-  // Salva o prato selecionado no localStorage para resgatar na página de visualização
   localStorage.setItem('pratoSelecionado', JSON.stringify(prato))
   router.push('/pratos/ver-prato')
 }
@@ -77,65 +81,75 @@ function verPrato(prato) {
 
 <template>
   <div class="container">
-    <h1>Buscar Pratos Personalizados</h1>
+    <template v-if="isPaciente">
+      <template v-if="temPratos">
+        <h1>Buscar Pratos Personalizados</h1>
 
-    <!-- Barra de busca -->
-    <div class="search-bar">
-      <input type="text" v-model="buscaTermo" placeholder="Pratos Personalizados..." />
-      <span class="search-icon">🔍</span>
-    </div>
-
-    <!-- Lista de Cards -->
-    <div class="card-list">
-      <div v-for="prato in pratosFiltrados" :key="prato.id" class="dish-card">
-        <!-- Coluna Esquerda: Imagem e Botão -->
-        <div class="left-col">
-          <img v-if="prato.foto" :src="prato.foto" :alt="prato.nome" class="dish-img" />
-          <div v-else class="dish-img placeholder">Sem imagem</div>
-          <button class="btn-ver" @click="verPrato(prato)">Ver Prato</button>
+        <!-- Barra de busca -->
+        <div class="search-bar">
+          <input type="text" v-model="buscaTermo" placeholder="Pratos Personalizados..." />
+          <span class="search-icon">🔍</span>
         </div>
 
-        <!-- Coluna Central: Nomes e Modo de Preparo -->
-        <div class="center-col">
-          <p class="field">
-            <strong>Nome do Prato:</strong>
-            <span class="highlight">{{ prato.nome }}</span>
-          </p>
-          <p class="field">
-            <strong>Nome do Profissional:</strong>
-            <span class="highlight">{{ prato.profissional }}</span>
-          </p>
+        <!-- Lista de Cards -->
+        <div class="card-list">
+          <div v-for="prato in pratosFiltrados" :key="prato.id" class="dish-card">
+            <!-- Coluna Esquerda: Imagem e Botão -->
+            <div class="left-col">
+              <img v-if="prato.foto" :src="prato.foto" :alt="prato.nome" class="dish-img" />
+              <div v-else class="dish-img placeholder">Sem imagem</div>
+              <button class="btn-ver" @click="verPrato(prato)">Ver Prato</button>
+            </div>
 
-          <div class="section-block">
-            <h3>Modo de Preparo</h3>
-            <p class="text-body">{{ prato.modoPreparo }}</p>
+            <div class="center-col">
+              <p class="field">
+                <strong>Nome do Prato:</strong>
+                <span class="highlight">{{ prato.nome }}</span>
+              </p>
+              <p class="field">
+                <strong>Nome do Profissional:</strong>
+                <span class="highlight">{{ prato.profissional }}</span>
+              </p>
+
+              <div class="section-block">
+                <h3>Modo de Preparo</h3>
+                <p class="text-body">{{ prato.modoPreparo }}</p>
+              </div>
+            </div>
+
+            <div class="right-col">
+              <p class="field">
+                <strong>Data de Criação:</strong>
+                <span class="highlight">{{ prato.data }}</span>
+              </p>
+              <p class="field">
+                <strong>Calorias:</strong>
+                <span class="highlight">{{ prato.calorias }}</span>
+              </p>
+
+              <div class="section-block">
+                <h3>Ingredientes</h3>
+                <ul>
+                  <li v-for="(ing, idx) in prato.ingredientes" :key="idx">• {{ ing }}</li>
+                </ul>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <!-- Coluna Direita: Data, Calorias e Ingredientes -->
-        <div class="right-col">
-          <p class="field">
-            <strong>Data de Criação:</strong>
-            <span class="highlight">{{ prato.data }}</span>
+          <p v-if="pratosFiltrados.length === 0" class="no-results">
+            Nenhum prato encontrado para "{{ buscaTermo }}".
           </p>
-          <p class="field">
-            <strong>Calorias:</strong>
-            <span class="highlight">{{ prato.calorias }}</span>
-          </p>
-
-          <div class="section-block">
-            <h3>Ingredientes</h3>
-            <ul>
-              <li v-for="(ing, idx) in prato.ingredientes" :key="idx">• {{ ing }}</li>
-            </ul>
-          </div>
         </div>
-      </div>
+      </template>
 
-      <p v-if="pratosFiltrados.length === 0" class="no-results">
-        Nenhum prato encontrado para "{{ buscaTermo }}".
-      </p>
-    </div>
+      <template v-else>
+        <p class="sem-pratos">Você ainda não tem pratos cadastrados.</p>
+      </template>
+    </template>
+
+    <template v-else>
+      <p class="nao-logado">Você precisa estar logado para ver seus pratos.</p>
+    </template>
   </div>
 </template>
 
@@ -267,10 +281,18 @@ h1 {
   color: #536236;
   font-weight: bold;
 }
-.no-results {
+.no-results  {
   color: #536236;
   text-align: center;
   font-weight: 500;
   margin-top: 15px;
+}
+
+.nao-logado,
+.sem-pratos {
+  color: #536236;
+  text-align: center;
+  font-weight: bold;
+  padding: 40px 0;
 }
 </style>

@@ -40,7 +40,7 @@ const router = createRouter({
     {
       path: '/cadastro-profissional',
       name: 'cadastro-profissional',
-      component: () => import('@/components/profissional/cadastroProfissional.vue'), // Adicionado para o botão "Cadastrar nutricionista"
+      component: () => import('@/components/profissional/cadastroProfissional.vue'), 
     },
     {
       path: '/profissionais',
@@ -119,7 +119,7 @@ const router = createRouter({
     {
       path: '/pratos/ver-prato',
       name: 'ver-prato',
-      component: () => import('@/components/pratos/buscarComponents.vue'),
+      component: () => import('@/components/pratos/visualizarComponents.vue'),
     },
     {
       path: '/pratos/:id/buscar',
@@ -172,8 +172,8 @@ const router = createRouter({
     component: () => import("@/components/academic/AcademicViewCard.vue")
   },
 {
-    path: '/AcademicViewCard',
-    name: 'AcademicViewCard',
+  path: '/ConfirmDeleteModal',
+  name: 'ConfirmDeleteModal',
     component: () => import("@/components/academic/ConfirmDeleteModal.vue")
   },
 
