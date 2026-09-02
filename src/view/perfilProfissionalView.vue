@@ -208,3 +208,191 @@ const profissional = profissionais.find(
   }
 }
 </style>
+
+<style scoped>
+.perfil-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #EFE8D3;
+  padding: 40px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Título */
+h1 {
+  font-size: clamp(3rem, 5vw, 4.2rem);
+  color: #536236;
+  font-weight: 400;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.perfil-conteudo {
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Dados Pessoais (Inputs/Caixas) */
+.dados-pessoais {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.linha-nome {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.foto-perfil {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.campo-dado {
+  width: 100%;
+  padding: 16px 24px;
+  border: 1.5px solid #8C7355;
+  border-radius: 18px;
+  background-color: rgba(239, 232, 211, 0.6);
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.03);
+}
+
+.flex-grow {
+  flex: 1;
+}
+
+.campo-dado .label {
+  font-size: 1.25rem;
+  color: #536236;
+  min-width: 90px;
+}
+
+.campo-dado .valor {
+  font-size: 1.25rem;
+  color: #333F34;
+}
+
+/* Cards de Formação e Especialização */
+.cards-informacoes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-top: 10px;
+}
+
+.card-info {
+  border: 1.5px solid #8C7355;
+  border-radius: 20px;
+  padding: 28px;
+  background-color: rgba(239, 232, 211, 0.4);
+}
+
+.card-info h2 {
+  font-size: 1.8rem;
+  color: #536236;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.card-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.card-info li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 1.1rem;
+  color: #333F34;
+}
+
+.card-info .bullet {
+  color: #333F34;
+  font-size: 1.2rem;
+}
+
+.card-info .tipo {
+  font-weight: 600;
+  color: #333F34;
+}
+
+.card-info .nome {
+  color: #536236;
+}
+
+/* Botões Circulares de Ação (Ícones) */
+.btn-icone {
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: #EFE8D3;
+  border: 1px solid rgba(140, 115, 85, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  font-size: 1.5rem;
+  color: #333F34;
+  transition: all 0.2s ease;
+}
+
+.btn-icone:hover {
+  transform: scale(1.08);
+  background-color: #E6DFC9;
+}
+
+.btn-deletar {
+  top: 30px;
+  right: 40px;
+}
+
+.btn-editar {
+  bottom: 30px;
+  left: 40px;
+}
+
+@media (max-width: 850px) {
+  .perfil-container {
+    padding: 30px 20px;
+  }
+
+  .cards-informacoes {
+    grid-template-columns: 1fr;
+  }
+
+  .linha-nome {
+    flex-direction: column;
+  }
+
+  .btn-deletar {
+    top: 15px;
+    right: 15px;
+  }
+
+  .btn-editar {
+    bottom: 15px;
+    left: 15px;
+  }
+}
+</style>
