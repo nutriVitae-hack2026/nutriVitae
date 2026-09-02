@@ -27,16 +27,17 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 20px 20px 60px;
+  padding: 0 20px 60px;
+  margin-top: 55px; /* Distancia os botões das pílulas acima */
 }
 
 .users {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 24px;
+  gap: 32px; /* Maior espaço entre os dois botões */
   width: 100%;
-  max-width: 800px;
+  max-width: 1050px; /* Expandido para os botões ficarem mais largos e ir mais para as bordas */
 }
 
 .btn-card {
@@ -51,7 +52,7 @@
   justify-content: center;
   align-items: center;
   gap: 12px;
-  padding: 16px 28px;
+  padding: 18px 32px; /* Aumentado padding interno */
   border-radius: 50px;
 }
 
@@ -60,7 +61,7 @@
 }
 
 .user span {
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   font-weight: 500;
   white-space: nowrap;
 }
@@ -99,10 +100,15 @@
   color: #F1EDD2;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 768px) {
+  .comecar {
+    margin-top: 35px;
+  }
+
   .users {
     flex-direction: column;
     width: 100%;
+    gap: 16px;
   }
 
   .btn-card {

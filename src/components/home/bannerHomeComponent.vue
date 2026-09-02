@@ -20,7 +20,7 @@ function rolarParaEscolha() {
 
 <style scoped>
 .banner {
-  min-height: 85vh;
+  min-height: calc(100vh - 80px); 
   width: 100%;
   background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), 
               url("/banner-home.png") no-repeat center center / cover;
