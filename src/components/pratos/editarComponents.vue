@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const prato = ref({
+  id: null,
   nome: '',
   calorias: '',
   data: '',
@@ -16,10 +17,23 @@ const prato = ref({
 const ingredientesTexto = ref('')
 
 onMounted(() => {
+  const idSelecionado = localStorage.getItem('pratoSelecionadoId')
+  const listaSalva = localStorage.getItem('listaPratos')
+
+  if (listaSalva && idSelecionado) {
+    const lista = JSON.parse(listaSalva)
+    const encontrado = lista.find((item) => item.id === Number(idSelecionado))
+    if (encontrado) {
+      prato.value = encontrado
+      ingredientesTexto.value = prato.value.ingredientes.join('\n')
+      return
+    }
+  }
+
   const salvo = localStorage.getItem('pratoSelecionado')
   if (salvo) {
     prato.value = JSON.parse(salvo)
-    ingredientesTexto.value = prato.value.ingredientes.join('\n')
+    ingredientesTexto.value = prato.value.ingredientes ? prato.value.ingredientes.join('\n') : ''
   }
 })
 
@@ -27,6 +41,16 @@ function salvar() {
   prato.value.ingredientes = ingredientesTexto.value
     .split('\n')
     .filter((item) => item.trim() !== '')
+
+  const listaSalva = localStorage.getItem('listaPratos')
+  if (listaSalva && prato.value.id) {
+    const lista = JSON.parse(listaSalva)
+    const index = lista.findIndex((item) => item.id === prato.value.id)
+    if (index !== -1) {
+      lista[index] = prato.value
+      localStorage.setItem('listaPratos', JSON.stringify(lista))
+    }
+  }
 
   localStorage.setItem('pratoSelecionado', JSON.stringify(prato.value))
   router.push('/pratos/ver-prato')

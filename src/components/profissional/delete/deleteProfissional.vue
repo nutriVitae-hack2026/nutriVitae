@@ -8,10 +8,15 @@ const router = useRouter()
 const profissional = profissionais.find(p => p.id === Number(route.params.id))
 
 const confirmar = ref(false)
-const nomeConfirmacao = ref("")
+const senhaConfirmacao = ref("")
 
 function abrirConfirmacao() {
   confirmar.value = true
+}
+
+function fecharConfirmacao() {
+  confirmar.value = false
+  senhaConfirmacao.value = ""
 }
 
 function cancelar() {
@@ -19,7 +24,8 @@ function cancelar() {
 }
 
 function excluir() {
-  if (nomeConfirmacao.value !== profissional.nome) return
+  // Valida se a senha foi preenchida
+  if (!senhaConfirmacao.value) return
 
   const index = profissionais.findIndex(p => p.id === profissional.id)
 
@@ -32,306 +38,458 @@ function excluir() {
 </script>
 
 <template>
-  <main v-if="profissional" class="excluir">
-    <div class="title">
-      <img :src="profissional.foto" :alt="profissional.nome">
+  <main v-if="profissional" class="excluir-container">
+    <div class="conteudo-principal">
       <h1>Deletar Perfil do Profissional</h1>
+
+      <div class="perfil-campos">
+        <!-- Linha da Foto + Nome -->
+        <div class="linha-foto-nome">
+          <div class="foto-wrapper">
+            <img :src="profissional.foto" :alt="profissional.nome" />
+            <span class="icon-lixeira-foto"><i class="mdi mdi-delete-outline"></i></span>
+          </div>
+          <div class="campo campo-flex">
+            <span class="label">Nome:</span>
+            <span class="valor">{{ profissional.nome }}</span>
+            <i class="mdi mdi-delete-outline icon-lixeira"></i>
+          </div>
+        </div>
+
+        <!-- Campo Email -->
+        <div class="campo">
+          <span class="label">Email:</span>
+          <span class="valor">{{ profissional.email }}</span>
+          <i class="mdi mdi-delete-outline icon-lixeira"></i>
+        </div>
+
+        <!-- Campo Telefone -->
+        <div class="campo">
+          <span class="label">Telefone:</span>
+          <span class="valor">{{ profissional.telefone }}</span>
+          <i class="mdi mdi-delete-outline icon-lixeira"></i>
+        </div>
+
+        <!-- Cards de Formações e Especializações -->
+        <div class="grid-listas">
+          <div class="card-lista">
+            <div class="card-header">
+              <h2>Formação Acadêmica</h2>
+              <i class="mdi mdi-delete-outline icon-lixeira"></i>
+            </div>
+            <ul>
+              <li v-for="formacao in profissional.formacoes" :key="formacao.nome">
+                <span class="bullet">•</span>
+                <strong>{{ formacao.tipo }}:</strong>
+                <span class="texto-item">{{ formacao.nome }}</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card-lista">
+            <div class="card-header">
+              <h2>Formação Acadêmica</h2>
+              <i class="mdi mdi-delete-outline icon-lixeira"></i>
+            </div>
+            <ul>
+              <li v-for="especializacao in profissional.especializacoes" :key="especializacao.nome">
+                <span class="bullet">•</span>
+                <strong>{{ especializacao.tipo }}:</strong>
+                <span class="texto-item">{{ especializacao.nome }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Botões Principais -->
+        <div class="acoes-principais">
+          <button type="button" class="btn-excluir" @click="abrirConfirmacao">
+            Excluir Perfil
+          </button>
+          <button type="button" class="btn-cancelar" @click="cancelar">
+            Cancelar a Exclusão
+          </button>
+        </div>
+      </div>
     </div>
 
-    <div class="dados">
-      <div>
-        <strong>Nome:</strong>
-        {{ profissional.nome }}
-      </div>
-      <div>
-        <strong>Telefone:</strong>
-        {{ profissional.telefone }}
-      </div>
-      <div>
-        <strong>Email:</strong>
-        {{ profissional.email }}
-      </div>
-      <div>
-        <strong>Data de Nascimento:</strong>
-        {{ profissional.dataNascimento }}
-      </div>
-    </div>
+    <!-- Modal de Confirmação com Senha -->
+    <div v-if="confirmar" class="modal-overlay" @click.self="fecharConfirmacao">
+      <div class="modal-card">
+        <i class="mdi mdi-delete-outline modal-icon"></i>
+        <h2>Excluir Perfil</h2>
 
-    <div class="listas">
-      <div class="lista">
-        <h2>Formação Acadêmica</h2>
-        <ul>
-          <li v-for="formacao in profissional.formacoes" :key="formacao.nome">
-            <strong>{{ formacao.tipo }}:</strong>
-            {{ formacao.nome }}
-          </li>
-        </ul>
-      </div>
+        <div class="input-senha-wrapper">
+          <input
+            v-model="senhaConfirmacao"
+            type="password"
+            placeholder="Digite sua senha para confirmar exclusão:"
+          />
+        </div>
 
-      <div class="lista">
-        <h2>Especializações</h2>
-        <ul>
-          <li v-for="especializacao in profissional.especializacoes" :key="especializacao.nome">
-            <strong>{{ especializacao.tipo }}:</strong>
-            {{ especializacao.nome }}
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="acoes">
-      <button @click="cancelar">Cancelar a exclusão</button>
-      <button @click="abrirConfirmacao" class="delete">Excluir Perfil do Profissional</button>
-    </div>
-
-    <div v-if="confirmar" class="confirmacao">
-      <i class="mdi mdi-delete-outline"></i>
-      <h2>Excluir Perfil</h2>
-      <p>Essa ação não poderá ser desfeita.</p>
-      <p>Digite <strong>{{ profissional.nome }}</strong> para confirmar:</p>
-      <input v-model="nomeConfirmacao" type="text" :placeholder="profissional.nome">
-      <div>
-        <button @click="confirmar = false">Cancelar</button>
-        <button :disabled="nomeConfirmacao !== profissional.nome" @click="excluir">
-          Excluir
-        </button>
+        <div class="modal-acoes">
+          <button type="button" class="btn-modal-cancelar" @click="fecharConfirmacao">
+            Cancelar
+          </button>
+          <button
+            type="button"
+            class="btn-modal-confirmar"
+            :disabled="!senhaConfirmacao.trim()"
+            @click="excluir"
+          >
+            Excluir
+          </button>
+        </div>
       </div>
     </div>
   </main>
 
   <main v-else class="naoEncontrado">
     <h2>Profissional não encontrado.</h2>
-    <RouterLink to="/profissionais">
-      <button>
-        <i class="mdi mdi-account-group"></i>
-        Voltar para profissionais
-      </button>
-    </RouterLink>
+    <button type="button" class="btn-voltar" @click="router.push('/profissionais')">
+      <i class="mdi mdi-account-group"></i> Voltar para profissionais
+    </button>
   </main>
 </template>
 
 <style scoped>
-.excluir {
+.excluir-container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f1ebd9;
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.conteudo-principal {
+  width: 100%;
+  max-width: 820px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
-  padding-bottom: 50px;
+}
 
-  & .title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 40px;
-    margin-top: 25px;
+h1 {
+  font-family: "Italiana", serif, sans-serif;
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  color: #705335;
+  font-weight: 400;
+  margin-bottom: 35px;
+  text-align: center;
+}
 
-    & img {
-      width: 125px;
-      height: 125px;
-      object-fit: cover;
-      border-radius: 50%;
-      box-shadow: 4px 4px 10px rgba(0, 0, 0, .4);
-    }
+.perfil-campos {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
 
-    & h1 {
-      font-size: 4.8rem;
-      font-weight: normal;
-      color: #73441B;
-    }
+/* Linha da Foto + Campo Nome */
+.linha-foto-nome {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.foto-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.foto-wrapper img {
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.icon-lixeira-foto {
+  position: absolute;
+  bottom: -2px;
+  left: -2px;
+  background: #2b2b2b;
+  color: #ffffff;
+  border-radius: 6px;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+}
+
+/* Estilo padrão dos inputs simulados */
+.campo {
+  width: 100%;
+  padding: 12px 18px;
+  border: 1.5px solid #8c7355;
+  border-radius: 14px;
+  background-color: rgba(235, 226, 204, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+.campo-flex {
+  flex: 1;
+}
+
+.label {
+  font-size: 1.1rem;
+  color: #4a5435;
+  font-weight: 500;
+}
+
+.valor {
+  flex: 1;
+  font-size: 1.1rem;
+  color: #555555;
+  margin-left: 10px;
+}
+
+.icon-lixeira {
+  font-size: 1.2rem;
+  color: #2b2b2b;
+  cursor: pointer;
+}
+
+/* Grid de Formações / Especializações */
+.grid-listas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 6px;
+}
+
+.card-lista {
+  border: 1.5px solid #8c7355;
+  border-radius: 16px;
+  padding: 18px 20px;
+  background-color: rgba(235, 226, 204, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.card-header h2 {
+  font-size: 1.35rem;
+  color: #4a5435;
+  font-weight: 500;
+  margin: 0;
+}
+
+.card-lista ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-lista li {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 0.95rem;
+  color: #333333;
+}
+
+.bullet {
+  font-size: 1.1rem;
+  color: #333333;
+}
+
+.texto-item {
+  color: #555555;
+}
+
+/* Botões da Tela Principal */
+.acoes-principais {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 25px;
+}
+
+.btn-excluir,
+.btn-cancelar {
+  min-width: 220px;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 50px;
+  background-color: #536236;
+  color: #f1ebd9;
+  font-size: 1.15rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+
+.btn-excluir:hover,
+.btn-cancelar:hover {
+  background-color: #43502a;
+  transform: translateY(-2px);
+}
+
+/* Estilização do Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-card {
+  background: #f1ebd9;
+  border: 1.5px solid #8c7355;
+  border-radius: 24px;
+  padding: 30px 35px;
+  width: 90%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.modal-icon {
+  font-size: 2.8rem;
+  color: #2b2b2b;
+  margin-bottom: -5px;
+}
+
+.modal-card h2 {
+  font-family: "Italiana", serif, sans-serif;
+  font-size: 2.4rem;
+  color: #111111;
+  font-weight: 400;
+  margin: 10px 0 20px 0;
+}
+
+.input-senha-wrapper {
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+.input-senha-wrapper input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1.5px solid #536236;
+  border-radius: 30px;
+  background-color: transparent;
+  color: #4a5435;
+  font-size: 1rem;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.input-senha-wrapper input::placeholder {
+  color: #536236;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.modal-acoes {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.btn-modal-cancelar,
+.btn-modal-confirmar {
+  flex: 1;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 50px;
+  background-color: #536236;
+  color: #f1ebd9;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+
+.btn-modal-cancelar:hover,
+.btn-modal-confirmar:hover:not(:disabled) {
+  background-color: #43502a;
+}
+
+.btn-modal-confirmar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .linha-foto-nome {
+    flex-direction: column;
   }
 
-  & .dados {
-    width: 75%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 70px 80px;
-    margin-top: 30px;
-    margin: 5vw 0 3vw;
-
-    & div {
-      background: #D1BFA5;
-      border: 1px solid #73441B;
-      border-radius: 15px;
-      padding: 10px 15px;
-      color: #73441B;
-      -webkit-text-stroke: #73441B 1px;
-      font-size: 25px;
-      box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.4);
-
-      & strong {
-        color: #536236;
-        -webkit-text-stroke: #536236 1px;
-      }
-    }
+  .grid-listas {
+    grid-template-columns: 1fr;
   }
 
-  & .listas {
-    width: 80%;
-    display: flex;
-    justify-content: space-between;
-    margin-top: 100px;
-
-    & .lista {
-      width: 40%;
-      padding: 15px 20px;
-      background: #9A9E70;
-      border: 2px solid #536236;
-      border-radius: 18px;
-      box-shadow: 8px 8px 15px rgba(0, 0, 0, .4);
-      display: flex;
-      flex-direction: column;
-
-      & h2 {
-        text-align: center;
-        color: #333F34;
-        -webkit-text-stroke: #333F34 1px;
-        font-size: 30px;
-        margin: 0 0 10px;
-      }
-
-      & ul {
-        padding-left: 20px;
-        margin: 0;
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-
-        & li {
-          color: #536236;
-          -webkit-text-stroke: #536236 1px;
-          margin: 7px 0;
-          font-size: 20px;
-
-          & strong {
-            color: #333F34;
-            -webkit-text-stroke: #333F34 1px;
-          }
-        }
-      }
-    }
+  .acoes-principais {
+    flex-direction: column;
+    gap: 12px;
   }
 
-  & .acoes {
-    width: 80%;
-    display: flex;
-    justify-content: space-between;
-    margin-top: 75px;
-
-    & button {
-      width: 30%;
-      height: 50px;
-      border: #333F34 solid 1px;
-      border-radius: 15px;
-      background: #9A9E70;
-      color: #333F34;
-      -webkit-text-stroke: #333F34 1px;
-      font-family: "Italiana", serif;
-      font-size: 30px;
-      cursor: pointer;
-      padding: 5px 10px;
-      box-shadow: 8px 8px 15px rgba(0, 0, 0, .4);
-    }
-
-  }
-
-  & .confirmacao {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 460px;
-    padding: 25px 40px;
-    background: #9A9E70;
-    border: 2px solid #536236;
-    border-radius: 25px;
-    box-shadow: 10px 10px 30px rgba(0, 0, 0, .6);
-    text-align: center;
-    z-index: 10;
-
-    &>i {
-      font-size: 55px;
-      color: #111;
-    }
-
-    & h2 {
-      font-size: 40px;
-      margin: 5px;
-      color: #111;
-      text-shadow: 3px 3px 5px rgba(0, 0, 0, .3);
-    }
-
-    & p {
-      color: #333F34;
-      font-size: 18px;
-
-      & strong {
-        color: #73441B;
-      }
-    }
-
-    & input {
-      width: 90%;
-      padding: 14px;
-      border: none;
-      outline: none;
-      border-radius: 15px;
-      background: #D1BFA5;
-      color: #73441B;
-      font-family: inherit;
-      font-size: 18px;
-      box-shadow: 5px 5px 10px rgba(0, 0, 0, .3);
-    }
-
-    & div {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 25px;
-
-      & button {
-        width: 140px;
-        padding: 10px;
-        border: none;
-        border-radius: 12px;
-        background: #D1BFA5;
-        color: #333F34;
-        font-family: "Italiana", serif;
-        font-size: 20px;
-        cursor: pointer;
-        box-shadow: 5px 5px 10px rgba(0, 0, 0, .3);
-      }
-
-      & button:disabled {
-        opacity: .4;
-        cursor: not-allowed;
-      }
-    }
+  .btn-excluir,
+  .btn-cancelar {
+    width: 100%;
   }
 }
 
+/* Não Encontrado */
 .naoEncontrado {
+  min-height: 100vh;
+  background-color: #f1ebd9;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  color: #73441B;
-  text-align: center;
+  gap: 20px;
+  padding: 20px;
+}
 
-  & h2 {
-    font-size: 50px;
-  }
+.naoEncontrado h2 {
+  font-size: 1.8rem;
+  color: #705335;
+}
 
-  & button {
-    padding: 15px 25px;
-    border: none;
-    border-radius: 15px;
-    background: #9A9E70;
-    color: #333F34;
-    font-family: "Italiana", serif;
-    font-size: 30px;
-    cursor: pointer;
-    box-shadow: 8px 8px 15px rgba(0, 0, 0, .4);
-  }
+.btn-voltar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #536236;
+  color: #f1ebd9;
+  padding: 12px 24px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
 }
 </style>

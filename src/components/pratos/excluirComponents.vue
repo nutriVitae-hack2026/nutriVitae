@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const prato = ref({
+  id: null,
   nome: '',
   calorias: '',
   data: '',
@@ -14,6 +15,17 @@ const prato = ref({
 })
 
 onMounted(() => {
+  const idSelecionado = localStorage.getItem('pratoSelecionadoId')
+  const listaSalva = localStorage.getItem('listaPratos')
+
+  if (listaSalva && idSelecionado) {
+    const lista = JSON.parse(listaSalva)
+    const encontrado = lista.find((item) => item.id === Number(idSelecionado))
+    if (encontrado) {
+      prato.value = encontrado
+      return
+    }
+  }
   const salvo = localStorage.getItem('pratoSelecionado')
   if (salvo) {
     prato.value = JSON.parse(salvo)
@@ -21,7 +33,17 @@ onMounted(() => {
 })
 
 function excluirPrato() {
+  const listaSalva = localStorage.getItem('listaPratos')
+
+  if (listaSalva && prato.value.id) {
+    const lista = JSON.parse(listaSalva)
+    const listaAtualizada = lista.filter((item) => item.id !== prato.value.id)
+    localStorage.setItem('listaPratos', JSON.stringify(listaAtualizada))
+  }
+
   localStorage.removeItem('pratoSelecionado')
+  localStorage.removeItem('pratoSelecionadoId')
+
   router.push('/pratos/buscar')
 }
 

@@ -7,7 +7,7 @@ const router = useRouter()
 const { usuarioLogado, isPaciente, carregarUsuario } = useAuth()
 const buscaTermo = ref('')
 
-const pratos = ref([
+const pratosPadrao = [
   {
     id: 1,
     nome: 'Arroz de Frango Cremoso',
@@ -38,27 +38,16 @@ const pratos = ref([
       '1 colher de sopa: de água (para deixar a massa mais leve)',
     ],
   },
-])
+]
+
+const pratos = ref([])
 
 onMounted(() => {
   carregarUsuario()
-  const salvo = localStorage.getItem('dadosPrato')
-  if (salvo) {
-    const dados = JSON.parse(salvo)
 
-    const novoPrato = {
-      id: Date.now(),
-      nome: dados.nome || 'Prato sem nome',
-      profissional: dados.profissional || 'Profissional não informado',
-      data: dados.data || new Date().toLocaleDateString('pt-BR'),
-      calorias: dados.calorias || '0 Kcal',
-      foto: dados.foto || '/img/prato.png',
-      modoPreparo: dados.modoPreparo || '',
-      ingredientes: dados.ingredientes || [],
-    }
-
-    pratos.value.unshift(novoPrato)
-  }
+  const cadastrados = JSON.parse(localStorage.getItem('listaPratos') || '[]')
+  
+  pratos.value = [...cadastrados, ...pratosPadrao]
 })
 
 const pratosFiltrados = computed(() => {
@@ -74,6 +63,7 @@ const pratosFiltrados = computed(() => {
 const temPratos = computed(() => pratos.value.length > 0)
 
 function verPrato(prato) {
+  localStorage.setItem('pratoSelecionadoId', prato.id)
   localStorage.setItem('pratoSelecionado', JSON.stringify(prato))
   router.push('/pratos/ver-prato')
 }
@@ -85,16 +75,15 @@ function verPrato(prato) {
       <template v-if="temPratos">
         <h1>Buscar Pratos Personalizados</h1>
 
-        <!-- Barra de busca -->
+   
         <div class="search-bar">
           <input type="text" v-model="buscaTermo" placeholder="Pratos Personalizados..." />
           <span class="search-icon">🔍</span>
         </div>
 
-        <!-- Lista de Cards -->
         <div class="card-list">
           <div v-for="prato in pratosFiltrados" :key="prato.id" class="dish-card">
-            <!-- Coluna Esquerda: Imagem e Botão -->
+      
             <div class="left-col">
               <img v-if="prato.foto" :src="prato.foto" :alt="prato.nome" class="dish-img" />
               <div v-else class="dish-img placeholder">Sem imagem</div>

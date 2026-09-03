@@ -60,13 +60,12 @@ function salvar() {
   try {
     const dados = agendamento.value.profissional
 
-    
     const listaIngredientes = dados.ingredientes
       .split('\n')
       .filter((item) => item.trim() !== '')
 
-  
     const novoPrato = {
+      id: Date.now(), 
       nome: dados.nome,
       profissional: 'Profissional Cadastrado',
       data: dados.data,
@@ -76,10 +75,14 @@ function salvar() {
       ingredientes: listaIngredientes,
     }
 
-    localStorage.setItem('dadosPrato', JSON.stringify(novoPrato))
+    const listaAtual = JSON.parse(localStorage.getItem('listaPratos') || '[]')
+    listaAtual.unshift(novoPrato)
+
+    localStorage.setItem('listaPratos', JSON.stringify(listaAtual))
+
     router.push('/pratos/buscar')
   } catch (error) {
-    alert('Erro ao salvar o agendamento. Tente utilizar fotos menores.')
+    alert('Erro ao salvar o prato. Tente utilizar fotos menores.')
     console.error(error)
   }
 }

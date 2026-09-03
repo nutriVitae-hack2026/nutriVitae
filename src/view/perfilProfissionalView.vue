@@ -11,7 +11,7 @@ const profissional = profissionais.find(
 
 <template>
   <main v-if="profissional" class="perfil-container">
-    <!-- Botão de Excluir no Canto Superior Direito -->
+   
     <RouterLink :to="`/profissional/${profissional.id}/delete`" class="btn-icone btn-deletar" title="Excluir">
       <i class="mdi mdi-delete-outline"></i>
     </RouterLink>
@@ -19,7 +19,7 @@ const profissional = profissionais.find(
     <h1>Perfil do Profissional</h1>
 
     <div class="perfil-conteudo">
-      <!-- Seção Principal com Foto + Dados -->
+
       <div class="dados-pessoais">
         <div class="linha-nome">
           <img :src="profissional.foto" :alt="profissional.nome" class="foto-perfil" />
@@ -40,7 +40,6 @@ const profissional = profissionais.find(
         </div>
       </div>
 
-      <!-- Seção Inferior: Cards de Formação e Especialização -->
       <div class="cards-informacoes">
         <div class="card-info">
           <h2>Formação Acadêmica</h2>
@@ -66,13 +65,11 @@ const profissional = profissionais.find(
       </div>
     </div>
 
-    <!-- Botão de Editar no Canto Inferior Esquerdo -->
     <RouterLink :to="`/profissional/${profissional.id}/edit`" class="btn-icone btn-editar" title="Editar">
       <i class="mdi mdi-pencil-outline"></i>
     </RouterLink>
   </main>
 
-  <!-- Estado quando o ID não é encontrado -->
   <main v-else class="naoEncontrado">
     <h2>Profissional não encontrado.</h2>
     <RouterLink to="/" class="btn-voltar">
@@ -83,7 +80,6 @@ const profissional = profissionais.find(
 
 <style scoped>
 .perfil-container {
-  
   position: relative;
   width: 100%;
   min-height: 100vh;
