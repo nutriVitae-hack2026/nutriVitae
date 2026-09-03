@@ -17,6 +17,12 @@ const agendamento = ref({
   },
 })
 
+function triggerInputFoto() {
+  if (fotoInputRef.value) {
+    fotoInputRef.value.click()
+  }
+}
+
 function converterParaBase64(arquivo, callback) {
   if (arquivo.size > 1024 * 1024) {
     alert('Selecione uma imagem menor que 1MB.')
@@ -65,7 +71,7 @@ function salvar() {
       .filter((item) => item.trim() !== '')
 
     const novoPrato = {
-      id: Date.now(), 
+      id: Date.now(),
       nome: dados.nome,
       profissional: 'Profissional Cadastrado',
       data: dados.data,
@@ -106,16 +112,40 @@ function cancelar() {
 <template>
   <main class="resumo-container">
     <header class="header-banner">
-      <h1>Bem-Vindo ao NutriVitae</h1>
+      <h1>Cadastro de Pratos</h1>
     </header>
 
-    <section>
-      <div class="grid-form">
-        <div class="input-card full-width">
-          <label for="usr-nome">Nome do Prato</label>
-          <input id="usr-nome" type="text" v-model="agendamento.profissional.nome" />
+    <section class="conteudo-formulario">
+      <div class="linha-superior">
+        <!-- Avatar Redondo de Foto com Ícone de Câmera -->
+        <div class="avatar-container" @click="triggerInputFoto" title="Adicionar Foto">
+          <div 
+            class="avatar-circle" 
+            :style="agendamento.profissional.foto ? { backgroundImage: `url(${agendamento.profissional.foto})` } : {}"
+          >
+            <span v-if="!agendamento.profissional.foto" class="pattern-bg"></span>
+          </div>
+          <button type="button" class="btn-camera" aria-label="Tirar foto ou anexar">
+            <span class="mdi mdi-camera"></span>
+          </button>
+          <input 
+            ref="fotoInputRef" 
+            id="usr-foto" 
+            type="file" 
+            accept="image/*" 
+            class="input-hidden" 
+            @change="aoSelecionarFotoPrato" 
+          />
         </div>
 
+        <!-- Nome do Prato ao lado do Avatar -->
+        <div class="input-card flex-1">
+          <label for="usr-nome">Nome do Prato:</label>
+          <input id="usr-nome" type="text" v-model="agendamento.profissional.nome" />
+        </div>
+      </div>
+
+      <div class="grid-form">
         <div class="input-card">
           <label for="usr-calorias">Calorias:</label>
           <input id="usr-calorias" type="text" v-model="agendamento.profissional.calorias" />
@@ -126,72 +156,150 @@ function cancelar() {
           <input id="data" type="date" v-model="agendamento.profissional.data" />
         </div>
 
-        <div class="input-card full-width">
-          <label for="usr-foto">Foto do Prato</label>
-          <input 
-            ref="fotoInputRef" 
-            id="usr-foto" 
-            type="file" 
-            accept="image/*" 
-            @change="aoSelecionarFotoPrato" 
-          />
-        </div>
-
         <div class="input-grande">
-          <span class="label-titulo">Modo de Preparo:</span>
+          <span class="label-titulo">Modo de Preparo</span>
           <textarea id="preparo" v-model="agendamento.profissional.preparo"></textarea>
         </div>
 
         <div class="input-grande">
-          <span class="label-titulo">Ingredientes:</span>
+          <span class="label-titulo">Ingredientes</span>
           <textarea 
             id="ingredientes" 
             v-model="agendamento.profissional.ingredientes"
-            placeholder="Digite um ingrediente por linha"
           ></textarea>
         </div>
       </div>
 
       <div class="botao-container">
-        <button class="button" @click="salvar">Salvar</button>
         <button class="button" @click="cancelar">Cancelar</button>
+        <button class="button" @click="salvar">Salvar</button>
       </div>
     </section>
   </main>
 </template>
 
 <style scoped>
-.container {
-  max-width: 800px;
+.resumo-container {
+  max-width: 850px;
   margin: 0 auto;
   padding: 20px;
 }
 
 h1 {
-  color: #73441B;
+  color: #705335;
   text-align: center;
-  font-size: 3rem;
-  margin-bottom: 24px;
+  font-size: 3.5rem;
+  margin-bottom: 30px;
+  font-weight: 400;
+}
+
+.conteudo-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.linha-superior {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.avatar-container {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.avatar-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #e5ded0;
+  border: 1px solid #8c7355;
+  background-size: cover;
+  background-position: center;
+}
+
+.pattern-bg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(#d3c8b4 20%, transparent 20%);
+  background-size: 10px 10px;
+  opacity: 0.6;
+}
+
+.btn-camera {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.input-hidden {
+  display: none;
+}
+
+.flex-1 {
+  flex: 1;
 }
 
 .grid-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 20px;
 }
 
-.full-width {
-  grid-column: span 2;
+.input-card {
+  display: flex;
+  align-items: center;
+  background-color: #ebe2cc;
+  border: 1.5px solid #8c7355;
+  border-radius: 14px;
+  padding: 10px 18px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.input-card label {
+  color: #4a5435;
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+
+.input-card input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #4a5435;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .input-grande {
   display: flex;
   flex-direction: column;
-  background-color: #cbba9c;
-  border: 1px solid #9c8a6f;
-  border-radius: 12px;
-  padding: 12px;
-  box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.25);
+  background-color: #ebe2cc;
+  border: 1.5px solid #8c7355;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   height: 200px;
   box-sizing: border-box;
 }
@@ -199,11 +307,10 @@ h1 {
 .label-titulo {
   display: block;
   text-align: center;
-  color: #333f34;
-  font-weight: bold;
-  font-size: 1.5rem;
+  color: #4a5435;
+  font-weight: 700;
+  font-size: 1.35rem;
   margin-bottom: 8px;
-  flex-shrink: 0;
 }
 
 .input-grande textarea {
@@ -212,124 +319,72 @@ h1 {
   background: transparent;
   border: none;
   outline: none;
-  color: #333f34;
-  font-size: 1.1rem;
-  font-weight: bold;
+  color: #4a5435;
+  font-size: 1.05rem;
+  font-weight: 600;
   font-family: inherit;
   resize: none;
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+  scrollbar-color: #536236 #333f34;
+  scrollbar-width: thin;
 }
 
-.input-card {
-  display: flex;
-  align-items: center;
-  background-color: #cbba9c;
-  border: 1px solid #9c8a6f;
-  border-radius: 12px;
-  padding: 10px 16px;
-  box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.25);
-}
-
-.input-card label {
-  color: #536236;
-  font-weight: bold;
-  margin-right: 8px;
-  white-space: nowrap;
-  font-size: 1.25rem;
-}
-
-.input-card input,
-.input-card select {
-  width: 100%;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #333f34;
-  font-size: 1.25rem;
-  font-weight: bold;
-}
-
-.input-card select {
-  cursor: pointer;
-}
-
-.input-card select option {
-  background-color: #cbba9c;
-  color: #4b5a32;
-  padding: 10px;
-}
-
-.input-card input[type='file'] {
-  font-size: 0.85rem;
-  color: #333f34;
-}
-
-.input-card input[type='file']::file-selector-button {
-  background-color: #9a9e70;
-  color: #333f34;
-  border: 1px solid #536236;
-  border-radius: 8px;
-  padding: 2px 8px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-right: 10px;
-  transition: background 0.2s;
-}
-
-.input-card input[type='file']::file-selector-button:hover {
-  background-color: #6b7c4f;
-}
-
-.botao-container {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 32px;
-  padding: 0 20px;
-}
-
-.button {
-  min-width: 160px;
-  padding: 10px 28px;
-  background-color: #9a9e70;
-  color: #333f34;
-  border: 1px solid #536236;
-  border-radius: 20px;
-  font-size: 1.25rem;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.25);
-  transition: background-color 0.2s, transform 0.1s;
-}
-
-.button:hover {
-  background-color: #83875a;
-}
-
-.button:active {
-  transform: scale(0.98);
-}
-
-.resumo-container {
-  position: relative;
-  max-width: 850px;
-  margin: 0 auto;
-  padding: 20px;
-  min-height: 500px;
-}
-
+/* Barra de rolagem personalizada (Webkit - Chrome, Edge, Safari) */
 .input-grande textarea::-webkit-scrollbar {
-  width: 12px;
+  width: 10px;
 }
 
 .input-grande textarea::-webkit-scrollbar-track {
-  background-color: #333F34;
+  background-color: #333f34;
   border-radius: 10px;
 }
 
 .input-grande textarea::-webkit-scrollbar-thumb {
   background-color: #536236;
   border-radius: 10px;
+  border: 2px solid #333f34;
+}
+
+.input-grande textarea::-webkit-scrollbar-thumb:hover {
+  background-color: #9a9e70;
+}
+
+/* Botões Inferiores */
+.botao-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  gap: 24px;
+}
+
+.button {
+  flex: 1;
+  background-color: #536236;
+  color: #f1ebd9;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 28px;
+  font-size: 1.25rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.35);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.button:hover {
+  background-color: #43502a;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .linha-superior,
+  .grid-form {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+
+  .botao-container {
+    flex-direction: column;
+    gap: 16px;
+  }
 }
 </style>

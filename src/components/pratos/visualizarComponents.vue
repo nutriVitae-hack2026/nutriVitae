@@ -38,17 +38,21 @@ function irParaExcluir() {
 
 <template>
   <main class="visualizar-prato">
-    <button class="btn-excluir-topo" @click="irParaExcluir" title="Excluir">🗑️</button>
+    <button class="btn-excluir-topo" @click="irParaExcluir" title="Excluir">
+      🗑️
+    </button>
 
-    <h1 class="titulo">Visualizar Prato Personalizado</h1>
+    <h1 class="titulo">Vizualizar Prato Personalizado</h1>
 
-    <div class="foto-wrapper">
-      <img :src="prato.foto || 'https://via.placeholder.com/150'" class="foto-prato" />
-    </div>
+    <div class="linha-superior">
+      <div class="foto-wrapper">
+        <img :src="prato.foto || 'https://via.placeholder.com/150'" class="foto-prato" />
+      </div>
 
-    <div class="campo full-width">
-      <span class="label">Nome do Prato:</span>
-      <span class="valor">{{ prato.nome }}</span>
+      <div class="campo flex-1">
+        <span class="label">Nome do Prato:</span>
+        <span class="valor">{{ prato.nome }}</span>
+      </div>
     </div>
 
     <div class="linha-dupla">
@@ -65,115 +69,178 @@ function irParaExcluir() {
     <div class="linha-dupla">
       <div class="box-texto">
         <h3>Modo de Preparo</h3>
-        <p>{{ prato.modoPreparo }}</p>
+        <div class="conteudo-scroll">
+          <p>{{ prato.modoPreparo }}</p>
+        </div>
       </div>
 
       <div class="box-texto">
         <h3>Ingredientes</h3>
-        <ul>
-          <li v-for="(ing, idx) in prato.ingredientes" :key="idx">• {{ ing }}</li>
-        </ul>
+        <div class="conteudo-scroll">
+          <ul>
+            <li v-for="(ing, idx) in prato.ingredientes" :key="idx">• {{ ing }}</li>
+          </ul>
+        </div>
       </div>
     </div>
 
-    <button class="btn-editar" @click="irParaEditar" title="Editar">✏️</button>
+    <button class="btn-editar" @click="irParaEditar" title="Editar">
+      ✏️
+    </button>
   </main>
 </template>
 
 <style scoped>
-
 .visualizar-prato {
   max-width: 850px;
-  margin: 40px auto;
-  padding: 24px;
-  background-color: #f1edd2;
-  border: 1px solid #73441b;
-  border-radius: 20px;
+  margin: 20px auto;
+  padding: 20px;
+  background: transparent;
   position: relative;
-}
-
-.titulo {
-  color: #73441b;
-  text-align: center;
-  font-size: 2.2rem;
-  margin-bottom: 20px;
-}
-
-.btn-excluir-topo {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: none;
-  border: none;
-  font-size: 1.3rem;
-  cursor: pointer;
-}
-
-.foto-wrapper {
-  display: flex;
-  justify-content: flex-start;
-  margin-bottom: 16px;
-}
-
-.foto-prato {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid #73441b;
-}
-
-.campo {
-  background-color: #cbba9c;
-  border: 1px solid #9c8a6f;
-  border-radius: 12px;
-  padding: 10px 16px;
-  margin-bottom: 16px;
-}
-
-.full-width {
-  width: 100%;
   box-sizing: border-box;
 }
 
+.titulo {
+  font-family: 'Italiana', serif;
+  color: #633b1e;
+  text-align: center;
+  font-size: 3.5rem;
+  margin-top: 0;
+  margin-bottom: 25px;
+  font-weight: 400;
+}
+
+/* Botão Lixeira Redondo */
+.btn-excluir-topo {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background-color: #eee3c8;
+  border: 1.5px solid #633b1e;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.25);
+  font-size: 1.1rem;
+}
+
+.linha-superior {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.foto-wrapper {
+  width: 95px;
+  height: 95px;
+  flex-shrink: 0;
+}
+
+.foto-prato {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+/* Camadas de entrada / cards */
+.campo {
+  display: flex;
+  align-items: center;
+  background-color: #eee3c8;
+  border: 1.5px solid #846d50;
+  border-radius: 16px;
+  padding: 12px 20px;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 .label {
-  color: #536236;
-  font-weight: bold;
+  color: #4e5d32;
+  font-weight: 700;
+  font-size: 1.2rem;
   margin-right: 8px;
+  white-space: nowrap;
 }
 
 .valor {
-  color: #333f34;
-  font-weight: bold;
+  color: #633b1e;
+  font-weight: 700;
+  font-size: 1.2rem;
 }
 
 .linha-dupla {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 16px;
+  gap: 20px;
+  margin-bottom: 20px;
 }
 
+/* Boxes de Modo de Preparo e Ingredientes */
 .box-texto {
-  background-color: #cbba9c;
-  border: 1px solid #9c8a6f;
-  border-radius: 12px;
-  padding: 12px;
-  max-height: 160px;
-  overflow-y: auto;
+  background-color: #eee3c8;
+  border: 1.5px solid #846d50;
+  border-radius: 18px;
+  padding: 16px;
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .box-texto h3 {
+  font-family: 'Italiana', serif;
   text-align: center;
-  color: #333f34;
-  margin: 0 0 8px 0;
+  color: #4e5d32;
+  font-size: 2rem;
+  margin: 0 0 10px 0;
+  font-weight: 400;
+}
+
+.conteudo-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 8px;
+  
+  /* Firefox Scrollbar */
+  scrollbar-color: #838e55 #333d29;
+  scrollbar-width: thin;
+}
+
+/* Custom WebKit Scrollbar sem estourar os limites */
+.conteudo-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.conteudo-scroll::-webkit-scrollbar-track {
+  background-color: #333d29;
+  border-radius: 10px;
+  margin: 4px 0;
+}
+
+.conteudo-scroll::-webkit-scrollbar-thumb {
+  background-color: #838e55;
+  border-radius: 10px;
+  border: 2px solid #333d29;
 }
 
 .box-texto p,
 .box-texto li {
-  color: #536236;
-  font-weight: bold;
-  font-size: 0.85rem;
+  color: #4e5d32;
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  word-break: break-word;
 }
 
 .box-texto ul {
@@ -182,13 +249,33 @@ function irParaExcluir() {
   margin: 0;
 }
 
+.box-texto li {
+  margin-bottom: 6px;
+}
+
+/* Botão Lápis Redondo no Canto Inferior */
 .btn-editar {
-  background-color: #f1edd2;
-  border: 1px solid #73441b;
+  position: absolute;
+  bottom: -10px;
+  left: 0px;
+  background-color: #eee3c8;
+  border: 1.5px solid #633b1e;
   border-radius: 50%;
-  width: 34px;
-  height: 34px;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  margin-top: 8px;
+  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.25);
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .linha-superior,
+  .linha-dupla {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
 }
 </style>

@@ -1,8 +1,72 @@
+<template>
+  <main class="principal container-formulario grade-formulario">
+    <h1>Cadastro de suporte</h1>
+
+    <div class="nome cartao-entrada">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" v-model="cadastro.usuario.nome" />
+    </div>
+
+    <div class="email cartao-entrada">
+      <label for="email">Email:</label>
+      <input type="email" id="email" v-model="cadastro.usuario.email" />
+    </div>
+
+    <div class="assunto cartao-entrada">
+      <label for="assunto">Assunto:</label>
+      <input type="text" id="assunto" v-model="cadastro.usuario.assunto" />
+    </div>
+
+    <div class="categoria cartao-entrada">
+      <label for="categoria">Categoria:</label>
+      <select id="categoria" v-model="cadastro.usuario.categoria">
+        <option value="" disabled></option>
+        <option value="documentoErro">Erro no upload de documento</option>
+        <option value="resultadoErro">Resultado exibindo médicos inativos</option>
+        <option value="horarioErro">Choque de horário</option>
+        <option value="mobilidadeErro">Mobilidade no site</option>
+        <option value="filtroErro">Filtro não funciona</option>
+        <option value="linkErro">Falha no link da teleconsulta</option>
+      </select>
+    </div>
+
+    <!-- Painel de Anexo com o botão + -->
+    <div class="painel-quadrado cartao-entrada">
+      <label>Anexar imagem/arquivo</label>
+      <div class="upload-container" @click="triggerInput">
+        <div class="plus-box">
+          <span class="plus-icon">+</span>
+        </div>
+        <input 
+          ref="fileInput" 
+          id="foto" 
+          type="file" 
+          accept="image/*" 
+          class="input-file-hidden" 
+          @change="aoSelecionarFotoProblema" 
+        />
+      </div>
+    </div>
+
+    <!-- Painel da Descrição -->
+    <div class="painel-quadrado cartao-entrada">
+      <label for="descrever">Descrever problema:</label>
+      <textarea id="descrever" v-model="cadastro.usuario.descrever"></textarea>
+    </div>
+
+    <div class="acoes-container">
+      <button type="button" class="btn-pill" @click="validarFormulario">Confirmar</button>
+      <button type="button" class="btn-pill" @click="cancelar">Cancelar</button>
+    </div>
+  </main>
+</template>
+
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+const fileInput = ref(null)
 
 const cadastro = ref({
   usuario: {
@@ -14,6 +78,10 @@ const cadastro = ref({
     foto: null,
   },
 })
+
+function triggerInput() {
+  fileInput.value.click()
+}
 
 function converterParaBase64(arquivo, callback) {
   const reader = new FileReader()
@@ -92,153 +160,107 @@ function cancelar() {
 }
 </script>
 
-<template>
-  <main class="principal container-formulario grade-formulario">
-    <h1>Cadastro de Suporte</h1>
-
-    <div class="nome cartao-entrada">
-      <label for="nome">Nome:</label>
-      <input type="text" id="nome" v-model="cadastro.usuario.nome" placeholder="Digite seu nome" />
-    </div>
-
-    <div class="email cartao-entrada">
-      <label for="email">E-mail:</label>
-      <input type="email" id="email" v-model="cadastro.usuario.email" placeholder="Digite seu e-mail" />
-    </div>
-
-    <div class="assunto cartao-entrada">
-      <label for="assunto">Assunto:</label>
-      <input type="text" id="assunto" v-model="cadastro.usuario.assunto" placeholder="Assunto do chamado" />
-    </div>
-
-    <div class="categoria cartao-entrada">
-      <label for="categoria">Categoria:</label>
-      <select id="categoria" v-model="cadastro.usuario.categoria">
-        <option value="" disabled>Selecione a categoria</option>
-        <option value="documentoErro">Erro no upload de documento</option>
-        <option value="resultadoErro">Resultado exibindo médicos inativos</option>
-        <option value="horarioErro">Choque de horário</option>
-        <option value="mobilidadeErro">Mobilidade no site</option>
-        <option value="filtroErro">Filtro não funciona</option>
-        <option value="linkErro">Falha no link da teleconsulta</option>
-      </select>
-    </div>
-
-    <div class="anexar-imagem painel-quadrado cartao-entrada">
-      <label for="foto">Anexar Imagem:</label>
-      <input id="foto" type="file" accept="image/*" @change="aoSelecionarFotoProblema" />
-    </div>
-
-    <div class="descrever-problema painel-quadrado cartao-entrada">
-      <label for="descrever">Descrição do Problema:</label>
-      <textarea id="descrever" v-model="cadastro.usuario.descrever" placeholder="Descreva os detalhes do problema..."></textarea>
-    </div>
-
-    <button type="button" class="bnt-confirmar" @click="validarFormulario">Confirmar</button>
-    <button type="button" class="bnt-cancelar" @click="cancelar">Cancelar</button>
-  </main>
-</template>
-
 <style scoped>
-.principal {
-  font-family: 'Roboto', sans-serif;
+.container-formulario {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
 }
 
 h1 {
   font-family: 'Italiana', serif;
   grid-column: span 2;
-  color: #73441b;
+  color: #705335;
   text-align: center;
-  font-size: 3rem;
+  font-size: 3.2rem;
   margin-bottom: 24px;
-  font-weight: bold;
+  font-weight: 400;
 }
 
 .grade-formulario {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-.container-formulario {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+  gap: 20px 24px;
 }
 
 .cartao-entrada {
   display: flex;
   align-items: center;
-  border: 1px solid #9c8a6f;
-  border-radius: 12px;
-  padding: 10px 16px;
-  font-size: 18px;
-  background-color: #cbba9c;
+  border: 1.5px solid #8c7355;
+  border-radius: 14px;
+  padding: 12px 18px;
+  background-color: #ebe2cc;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .cartao-entrada label {
-  color: #536236;
-  font-weight: 900;
+  color: #4a5435;
+  font-weight: 700;
+  font-size: 1.15rem;
   margin-right: 8px;
   white-space: nowrap;
 }
 
-.cartao-entrada input,
+.cartao-entrada input[type='text'],
+.cartao-entrada input[type='email'],
 .cartao-entrada select {
   width: 100%;
   background: transparent;
   border: none;
   outline: none;
-  color: #333f34;
-  font-size: 1rem;
-  font-weight: bold;
+  color: #4a5435;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .cartao-entrada select {
   cursor: pointer;
 }
 
-.cartao-entrada select option {
-  background-color: #cbba9c;
-  color: #4b5a32;
-  padding: 10px;
-}
-
-.cartao-entrada input[type='file'] {
-  font-size: 0.85rem;
-  color: #333f34;
-}
-
-.cartao-entrada input[type='file']::file-selector-button {
-  background-color: #9a9e70;
-  color: #333f34;
-  border: 1px solid #536236;
-  border-radius: 8px;
-  padding: 4px 8px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-right: 10px;
-  transition: background 0.2s;
-}
-
-.cartao-entrada input[type='file']::file-selector-button:hover {
-  background-color: #6b7c4f;
-}
-
+/* Painéis de Anexo e Descrição */
 .painel-quadrado {
-  width: 100%;
-  aspect-ratio: 1.9 / 1;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 8px;
-  align-self: start;
-  padding: 12px;
+  align-items: center;
+  height: 220px;
+  padding: 16px;
+  box-sizing: border-box;
 }
 
 .painel-quadrado label {
-  margin: 0;
+  margin: 0 0 16px 0;
   text-align: center;
-  flex-shrink: 0;
+  font-size: 1.25rem;
+}
+
+.upload-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  width: 100%;
+  cursor: pointer;
+}
+
+.plus-box {
+  border: 1.5px solid #8c7355;
+  width: 120px;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+}
+
+.plus-icon {
+  font-size: 3rem;
+  color: #b3b3b3;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.input-file-hidden {
+  display: none;
 }
 
 .painel-quadrado textarea {
@@ -247,50 +269,52 @@ h1 {
   background: transparent;
   border: none;
   outline: none;
-  color: #333f34;
-  font-size: 1rem;
-  font-weight: bold;
+  color: #4a5435;
+  font-size: 1.1rem;
+  font-weight: 600;
   resize: none;
 }
 
-.bnt-confirmar,
-.bnt-cancelar {
-  width: 100%;
-  margin-top: 12px;
-  padding: 12px;
-  background-color: #9a9e70;
-  color: #333f34;
-  border: 1px solid #536236;
-  border-radius: 12px;
-  font-size: 1.1rem;
-  font-weight: bold;
+/* Área e Estilo dos Botões */
+.acoes-container {
+  grid-column: span 2;
+  display: flex;
+  gap: 24px;
+  margin-top: 10px;
+}
+
+.btn-pill {
+  flex: 1;
+  background-color: #536236;
+  color: #f1ebd9;
+  border: none;
+  border-radius: 50px;
+  padding: 14px 28px;
+  font-size: 1.25rem;
+  font-weight: 500;
   cursor: pointer;
-  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
-  transition: background 0.2s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  text-align: center;
 }
 
-.bnt-confirmar:hover,
-.bnt-cancelar:hover {
-  background-color: #6b7c4f;
+.btn-pill:hover {
+  background-color: #43502a;
+  transform: translateY(-2px);
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   .grade-formulario {
     grid-template-columns: 1fr;
   }
 
-  h1 {
+  h1, .acoes-container {
     grid-column: auto;
   }
 
-  .cartao-entrada {
-    align-items: flex-start;
+  .acoes-container {
     flex-direction: column;
-    gap: 6px;
-  }
-
-  .cartao-entrada label {
-    margin-right: 0;
+    gap: 16px;
   }
 }
 </style>
