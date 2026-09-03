@@ -14,33 +14,25 @@ const prato = ref({
 })
 
 onMounted(() => {
-  const listaSalva = localStorage.getItem('listaPratos')
-  const idSelecionado = localStorage.getItem('pratoSelecionadoId')
-
-  if (listaSalva && idSelecionado) {
-    const lista = JSON.parse(listaSalva)
-    const encontrado = lista.find((item) => item.id === Number(idSelecionado))
-
-    if (encontrado) {
-      prato.value = encontrado
-    }
+  const salvo = localStorage.getItem('pratoSelecionado')
+  if (salvo) {
+    prato.value = JSON.parse(salvo)
   }
 })
 
-function irParaEditar() {
-  router.push('/pratos/editar')
+function excluirPrato() {
+  localStorage.removeItem('pratoSelecionado')
+  router.push('/pratos/buscar')
 }
 
-function irParaExcluir() {
-  router.push('/pratos/excluir')
+function cancelarExclusao() {
+  router.push('/pratos/ver-prato')
 }
 </script>
 
 <template>
-  <main class="visualizar-prato">
-    <button class="btn-excluir-topo" @click="irParaExcluir" title="Excluir">🗑️</button>
-
-    <h1 class="titulo">Visualizar Prato Personalizado</h1>
+  <main class="excluir-prato">
+    <h1 class="titulo">Deletar Prato Personalizado</h1>
 
     <div class="foto-wrapper">
       <img :src="prato.foto || 'https://via.placeholder.com/150'" class="foto-prato" />
@@ -76,20 +68,21 @@ function irParaExcluir() {
       </div>
     </div>
 
-    <button class="btn-editar" @click="irParaEditar" title="Editar">✏️</button>
+    <div class="botoes">
+      <button class="btn-cancelar" @click="cancelarExclusao">Cancelar Exclusão</button>
+      <button class="btn-excluir" @click="excluirPrato">Excluir Prato</button>
+    </div>
   </main>
 </template>
 
 <style scoped>
-
-.visualizar-prato {
+.excluir-prato {
   max-width: 850px;
   margin: 40px auto;
   padding: 24px;
   background-color: #f1edd2;
   border: 1px solid #73441b;
   border-radius: 20px;
-  position: relative;
 }
 
 .titulo {
@@ -97,16 +90,6 @@ function irParaExcluir() {
   text-align: center;
   font-size: 2.2rem;
   margin-bottom: 20px;
-}
-
-.btn-excluir-topo {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: none;
-  border: none;
-  font-size: 1.3rem;
-  cursor: pointer;
 }
 
 .foto-wrapper {
@@ -182,13 +165,21 @@ function irParaExcluir() {
   margin: 0;
 }
 
-.btn-editar {
-  background-color: #f1edd2;
-  border: 1px solid #73441b;
-  border-radius: 50%;
-  width: 34px;
-  height: 34px;
+.botoes {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+.btn-cancelar,
+.btn-excluir {
+  min-width: 160px;
+  padding: 10px 20px;
+  background-color: #9a9e70;
+  color: #333f34;
+  border: 1px solid #536236;
+  border-radius: 20px;
+  font-weight: bold;
   cursor: pointer;
-  margin-top: 8px;
 }
 </style>

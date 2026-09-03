@@ -117,6 +117,16 @@ const router = createRouter({
       component: () => import('@/components/pratos/buscarComponents.vue'),
     },
     {
+      path: '/pratos/editar',
+      name: 'editar-prato',
+      component: () => import('@/components/pratos/editarComponents.vue'),
+    },
+      {
+      path: '/pratos/excluir',
+      name: 'excluir-prato',
+      component: () => import('@/components/pratos/excluirComponents.vue'),
+    },
+    {
       path: '/pratos/ver-prato',
       name: 'ver-prato',
       component: () => import('@/components/pratos/visualizarComponents.vue'),
@@ -126,7 +136,10 @@ const router = createRouter({
       name: 'buscar-pratos-id',
       component: () => import('@/components/pratos/buscarComponents.vue'),
     },
-     {
+
+    // --- SUporte ---
+
+    {
     path: '/CadastroSuporte',
     name: 'CadastroSuporte',
     component: () => import("@/components/Suporte/cadastroSuporte.vue")

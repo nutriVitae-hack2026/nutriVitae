@@ -13,34 +13,33 @@ const prato = ref({
   ingredientes: [],
 })
 
+const ingredientesTexto = ref('')
+
 onMounted(() => {
-  const listaSalva = localStorage.getItem('listaPratos')
-  const idSelecionado = localStorage.getItem('pratoSelecionadoId')
-
-  if (listaSalva && idSelecionado) {
-    const lista = JSON.parse(listaSalva)
-    const encontrado = lista.find((item) => item.id === Number(idSelecionado))
-
-    if (encontrado) {
-      prato.value = encontrado
-    }
+  const salvo = localStorage.getItem('pratoSelecionado')
+  if (salvo) {
+    prato.value = JSON.parse(salvo)
+    ingredientesTexto.value = prato.value.ingredientes.join('\n')
   }
 })
 
-function irParaEditar() {
-  router.push('/pratos/editar')
+function salvar() {
+  prato.value.ingredientes = ingredientesTexto.value
+    .split('\n')
+    .filter((item) => item.trim() !== '')
+
+  localStorage.setItem('pratoSelecionado', JSON.stringify(prato.value))
+  router.push('/pratos/ver-prato')
 }
 
-function irParaExcluir() {
-  router.push('/pratos/excluir')
+function cancelar() {
+  router.push('/pratos/ver-prato')
 }
 </script>
 
 <template>
-  <main class="visualizar-prato">
-    <button class="btn-excluir-topo" @click="irParaExcluir" title="Excluir">🗑️</button>
-
-    <h1 class="titulo">Visualizar Prato Personalizado</h1>
+  <main class="editar-prato">
+    <h1 class="titulo">Editar Prato Personalizado</h1>
 
     <div class="foto-wrapper">
       <img :src="prato.foto || 'https://via.placeholder.com/150'" class="foto-prato" />
@@ -48,48 +47,47 @@ function irParaExcluir() {
 
     <div class="campo full-width">
       <span class="label">Nome do Prato:</span>
-      <span class="valor">{{ prato.nome }}</span>
+      <input type="text" v-model="prato.nome" class="input-editavel" />
     </div>
 
     <div class="linha-dupla">
       <div class="campo">
         <span class="label">Calorias:</span>
-        <span class="valor">{{ prato.calorias }}</span>
+        <input type="text" v-model="prato.calorias" class="input-editavel" />
       </div>
       <div class="campo">
         <span class="label">Data de Criação:</span>
-        <span class="valor">{{ prato.data }} 📅</span>
+        <input type="date" v-model="prato.data" class="input-editavel" />
       </div>
     </div>
 
     <div class="linha-dupla">
       <div class="box-texto">
         <h3>Modo de Preparo</h3>
-        <p>{{ prato.modoPreparo }}</p>
+        <textarea v-model="prato.modoPreparo"></textarea>
       </div>
 
       <div class="box-texto">
         <h3>Ingredientes</h3>
-        <ul>
-          <li v-for="(ing, idx) in prato.ingredientes" :key="idx">• {{ ing }}</li>
-        </ul>
+        <textarea v-model="ingredientesTexto" placeholder="Um ingrediente por linha"></textarea>
       </div>
     </div>
 
-    <button class="btn-editar" @click="irParaEditar" title="Editar">✏️</button>
+    <div class="botoes">
+      <button class="btn-salvar" @click="salvar">Salvar</button>
+      <button class="btn-cancelar" @click="cancelar">Cancelar</button>
+    </div>
   </main>
 </template>
 
 <style scoped>
-
-.visualizar-prato {
+.editar-prato {
   max-width: 850px;
   margin: 40px auto;
   padding: 24px;
   background-color: #f1edd2;
   border: 1px solid #73441b;
   border-radius: 20px;
-  position: relative;
 }
 
 .titulo {
@@ -97,16 +95,6 @@ function irParaExcluir() {
   text-align: center;
   font-size: 2.2rem;
   margin-bottom: 20px;
-}
-
-.btn-excluir-topo {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: none;
-  border: none;
-  font-size: 1.3rem;
-  cursor: pointer;
 }
 
 .foto-wrapper {
@@ -142,9 +130,14 @@ function irParaExcluir() {
   margin-right: 8px;
 }
 
-.valor {
+.input-editavel {
+  background: transparent;
+  border: none;
+  outline: none;
   color: #333f34;
   font-weight: bold;
+  font-size: 1rem;
+  font-family: inherit;
 }
 
 .linha-dupla {
@@ -159,8 +152,6 @@ function irParaExcluir() {
   border: 1px solid #9c8a6f;
   border-radius: 12px;
   padding: 12px;
-  max-height: 160px;
-  overflow-y: auto;
 }
 
 .box-texto h3 {
@@ -169,26 +160,35 @@ function irParaExcluir() {
   margin: 0 0 8px 0;
 }
 
-.box-texto p,
-.box-texto li {
+.box-texto textarea {
+  width: 100%;
+  height: 100px;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
   color: #536236;
   font-weight: bold;
   font-size: 0.85rem;
+  font-family: inherit;
+  box-sizing: border-box;
 }
 
-.box-texto ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.botoes {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
 }
 
-.btn-editar {
-  background-color: #f1edd2;
-  border: 1px solid #73441b;
-  border-radius: 50%;
-  width: 34px;
-  height: 34px;
+.btn-salvar,
+.btn-cancelar {
+  min-width: 140px;
+  padding: 10px 24px;
+  background-color: #9a9e70;
+  color: #333f34;
+  border: 1px solid #536236;
+  border-radius: 20px;
+  font-weight: bold;
   cursor: pointer;
-  margin-top: 8px;
 }
 </style>
