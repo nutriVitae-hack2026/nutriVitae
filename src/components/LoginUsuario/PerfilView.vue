@@ -7,69 +7,63 @@
       @cancelar="editando = false"
     />
 
-    <div v-else>
+    <div v-else class="perfil-content">
+      <!-- Botão Excluir no canto superior direito -->
       <button 
         class="delete-icon-btn" 
         title="Excluir Perfil" 
         @click="router.push('/perfil/deletar')"
       >
-        🗑️
+        <i class="mdi mdi-delete-outline"></i>
       </button>
 
+      <!-- Cabeçalho com Foto e Nome -->
       <div class="profile-header">
+        <div class="avatar-wrapper">
+          <img :src="usuario.foto || 'https://via.placeholder.com/150'" :alt="usuario.nome" class="avatar-img" />
+        </div>
         <h1 class="user-name">{{ usuario.nome }}</h1>
       </div>
 
-      <div class="info-row">
+      <!-- Campos de Informações -->
+      <div class="info-grid">
         <div class="info-box input-pill">
-          <span><strong class="label-text">Cpf:</strong> {{ usuario.cpf }}</span>
+          <span class="label-text">peso:</span>
+          <span class="valor-text">{{ usuario.peso }}</span>
         </div>
         <div class="info-box input-pill">
-          <span><strong class="label-text">E-mail:</strong> {{ usuario.email }}</span>
+          <span class="label-text">Telefone:</span>
+          <span class="valor-text">{{ usuario.telefone }}</span>
+        </div>
+        <div class="info-box input-pill">
+          <span class="label-text">Idade:</span>
+          <span class="valor-text">{{ calcularIdade(usuario.dataNascimento) }} anos</span>
         </div>
       </div>
 
-      <div class="info-row">
-        <div class="info-box input-pill">
-          <span><strong class="label-text">peso:</strong> {{ usuario.peso }}</span>
-        </div>
-        <div class="info-box input-pill">
-          <span><strong class="label-text">Telefone:</strong> {{ usuario.telefone }}</span>
-        </div>
-      </div>
-
-      <div class="info-row">
-        <div class="small-box input-pill">
-          <span><strong class="label-text">Data de nascimento:</strong> {{ usuario.dataNascimento }}</span>
-        </div>
-      </div>
-
+      <!-- Cards de Preferências e Alergias -->
       <div class="cards-grid">
-        <div class="card-box green-card">
-          <h3 class="card-title label-text">Preferencias</h3>
+        <!-- Card Preferências -->
+        <div class="card-box light-card">
+          <h3 class="card-title">Preferencias</h3>
           <hr class="card-divider" />
-          <p class="section-subtitle label-text">gosto:</p>
+          
+          <p class="section-subtitle">gosto:</p>
           <ul>
             <li v-if="!usuario.preferencias?.gosto?.length">• Não registrado</li>
             <li v-for="(item, i) in usuario.preferencias?.gosto" :key="i">• {{ item }}</li>
           </ul>
-          <p class="section-subtitle mt-2 label-text">Não gosta</p>
+
+          <p class="section-subtitle mt-2">Não gosta</p>
           <ul>
             <li v-if="!usuario.preferencias?.naoGosto?.length">• Não registrado</li>
             <li v-for="(item, i) in usuario.preferencias?.naoGosto" :key="i">• {{ item }}</li>
           </ul>
-          
-          <button 
-            class="floating-edit-btn" 
-            title="Editar Perfil" 
-            @click="editando = true"
-          >
-            ✏️
-          </button>
         </div>
 
-        <div class="card-box green-card">
-          <h3 class="card-title label-text">Alergias</h3>
+        <!-- Card Alergias -->
+        <div class="card-box light-card">
+          <h3 class="card-title">Alergias</h3>
           <hr class="card-divider" />
           <ul>
             <li v-if="!usuario.alergias?.length">• Não registrado</li>
@@ -77,6 +71,15 @@
           </ul>
         </div>
       </div>
+
+      <!-- Botão Flutuante de Editar no canto inferior esquerdo -->
+      <button 
+        class="floating-edit-btn" 
+        title="Editar Perfil" 
+        @click="editando = true"
+      >
+        <i class="mdi mdi-pencil-outline"></i>
+      </button>
     </div>
   </div>
 </template>
@@ -96,6 +99,7 @@ const usuario = reactive({
   dataNascimento: '',
   email: '',
   telefone: '',
+  foto: '',
   preferencias: { gosto: [], naoGosto: [] },
   alergias: []
 });
@@ -112,98 +116,164 @@ const salvarAlteracoes = (novosDados) => {
   localStorage.setItem('usuarioLogado', JSON.stringify(novosDados));
   editando.value = false;
 };
+
+// Função para calcular idade a partir da data de nascimento
+const calcularIdade = (dataNasc) => {
+  if (!dataNasc) return '--';
+  const hoje = new Date();
+  const nascimento = new Date(dataNasc);
+  let idade = hoje.getFullYear() - nascimento.getFullYear();
+  const m = hoje.getMonth() - nascimento.getMonth();
+  if (m < 0 || (m === 0 && hoje.getDate() < nascimento.getDate())) {
+    idade--;
+  }
+  return idade;
+};
 </script>
 
 <style scoped>
 .perfil-container {
-  position: relative;
-  max-width: 900px;
-  /* Espaçamento superior suficiente para o Header fixo */
-  margin: 120px auto 40px auto; 
+  width: 100%;
+  max-width: 820px;
+  margin: 40px auto;
   padding: 0 20px;
   box-sizing: border-box;
+  position: relative;
 }
 
+.perfil-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Botão Lixeira */
 .delete-icon-btn {
   position: absolute;
-  top: -40px;
-  right: 20px;
-  background: none;
-  border: none;
+  top: 0;
+  right: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #ebe2cc;
+  border: 1.5px solid #8c7355;
+  color: #536236;
   font-size: 1.4rem;
   cursor: pointer;
-  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
 }
 
+.delete-icon-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Header do Perfil com Avatar e Nome */
 .profile-header {
   display: flex;
   align-items: center;
-  margin-bottom: 24px;
+  gap: 25px;
+  margin-top: 10px;
+  margin-bottom: 35px;
+}
+
+.avatar-wrapper {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .user-name {
-  font-size: 2rem;
-  font-weight: 500;
-  color: #73441B;
+  font-family: 'Italiana', serif, sans-serif;
+  font-size: 3rem;
+  font-weight: 400;
+  color: #705335;
+  margin: 0;
 }
 
-.info-row {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 16px; /* Reduzido levemente para um espaçamento mais uniforme */
-}
-
-.info-box, .small-box {
-  width: 50%;
+/* Grid de Informações Principais */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 24px;
+  margin-bottom: 35px;
 }
 
 .input-pill {
-  background-color: #D1BFA5;
-  border-radius: 8px;
-  padding: 14px 16px; /* Ajustado o padding para alinhar com os outros campos do sistema */
-  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.15);
-  color: #73441B;
-  font-size: 0.95rem;
-  font-weight: 500;
+  background-color: #ebe2cc;
+  border: 1.5px solid #8c7355;
+  border-radius: 14px;
+  padding: 12px 18px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 8px;
   box-sizing: border-box;
+  height: 52px;
 }
 
 .label-text {
-  color: #333F34;
+  color: #4a5435;
+  font-size: 1.15rem;
+  font-weight: 500;
+  font-family: 'Italiana', serif, sans-serif;
+}
+
+.valor-text {
+  color: #705335;
+  font-size: 1.1rem;
   font-weight: 600;
 }
 
+/* Cards Inferiores */
 .cards-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-top: 20px;
+  gap: 24px;
 }
 
-.green-card {
-  background-color: #9A9E70;
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.15);
-  position: relative;
-  color: #F1EDD2;
-  font-size: 0.85rem;
+.light-card {
+  background-color: #ebe2cc;
+  border: 1.5px solid #8c7355;
+  border-radius: 16px;
+  padding: 18px 22px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  min-height: 200px;
 }
 
 .card-title {
   text-align: center;
-  font-size: 1rem;
+  font-family: 'Italiana', serif, sans-serif;
+  font-size: 1.4rem;
+  color: #705335;
+  font-weight: 600;
+  margin: 0 0 8px 0;
 }
 
 .card-divider {
   border: 0;
-  height: 1px;
+  height: 1.5px;
   background-color: #536236;
-  margin: 6px 0 8px 0;
+  margin-bottom: 12px;
 }
 
 .section-subtitle {
-  margin-bottom: 2px;
+  color: #4a5435;
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin: 0 0 4px 0;
 }
 
 ul {
@@ -212,25 +282,50 @@ ul {
   margin: 0;
 }
 
-.mt-2 {
-  margin-top: 8px;
+li {
+  color: #4a5435;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 3px;
+  padding-left: 12px;
 }
 
+.mt-2 {
+  margin-top: 10px;
+}
+
+/* Botão Lápis no canto inferior esquerdo */
 .floating-edit-btn {
   position: absolute;
-  bottom: 12px;
-  right: 12px; /* Ajustado a posição para dentro do card, evitando estourar as margens da página */
-  left: auto;
-  background-color: #F1EDD2;
-  border: 1px solid #9A9E70;
-  width: 36px;
-  height: 36px;
+  bottom: -15px;
+  left: -15px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.18);
+  background-color: #ebe2cc;
+  border: 1.5px solid #8c7355;
+  color: #536236;
+  font-size: 1.3rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.9rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+}
+
+.floating-edit-btn:hover {
+  transform: scale(1.08);
+}
+
+@media (max-width: 768px) {
+  .info-grid, .cards-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+  }
 }
 </style>

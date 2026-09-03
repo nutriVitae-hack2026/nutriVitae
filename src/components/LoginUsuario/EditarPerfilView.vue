@@ -1,68 +1,81 @@
 <template>
   <div class="editar-container">
+    <!-- Cabeçalho com Avatar, Título e Nome -->
     <div class="profile-header">
-      <h1 class="serif-title user-name">Editar Perfil</h1>
+      <div class="avatar-wrapper">
+        <img :src="form.foto || 'https://via.placeholder.com/150'" :alt="form.nome" class="avatar-img" />
+      </div>
+      <div class="header-titles">
+        <h1 class="serif-title page-title">Editar Perfil</h1>
+        <h2 class="serif-title user-name">{{ form.nome }}</h2>
+      </div>
     </div>
 
+    <!-- Grid do Formulário -->
     <div class="edit-grid">
-      <div class="input-pill">
+      <!-- Nome e CPF -->
+      <div class="input-pill col-half">
         <span class="label-text">Nome:</span>
         <input v-model="form.nome" />
-        <span class="icon">✏️</span>
+        <div class="icon-circle"><i class="mdi mdi-pencil-outline"></i></div>
       </div>
 
-      <div class="input-pill">
+      <div class="input-pill col-half">
         <span class="label-text">Cpf:</span>
         <input v-model="form.cpf" />
-        <span class="icon">✏️</span>
+        <div class="icon-circle"><i class="mdi mdi-pencil-outline"></i></div>
       </div>
 
-      <div class="input-pill">
+      <!-- Peso (meia largura) -->
+      <div class="input-pill col-half">
         <span class="label-text">Peso:</span>
         <input v-model="form.peso" />
-        <span class="icon">✏️</span>
+        <div class="icon-circle"><i class="mdi mdi-pencil-outline"></i></div>
       </div>
 
-      <div class="input-pill">
+      <!-- Data de Nascimento (largura total) -->
+      <div class="input-pill col-full">
         <span class="label-text">Data de nascimento:</span>
         <input v-model="form.dataNascimento" />
-        <span class="icon">✏️</span>
+        <div class="icon-circle"><i class="mdi mdi-pencil-outline"></i></div>
       </div>
 
-      <div class="input-pill">
+      <!-- Telefone e E-mail -->
+      <div class="input-pill col-half">
         <span class="label-text">Telefone:</span>
         <input v-model="form.telefone" />
-        <span class="icon">✏️</span>
+        <div class="icon-circle"><i class="mdi mdi-pencil-outline"></i></div>
       </div>
 
-      <div class="input-pill">
+      <div class="input-pill col-half">
         <span class="label-text">E-mail:</span>
         <input v-model="form.email" />
-        <span class="icon">✏️</span>
+        <div class="icon-circle"><i class="mdi mdi-pencil-outline"></i></div>
       </div>
 
-      <div class="card-green card-edit">
+      <!-- Cards de Preferências e Alergias -->
+      <div class="card-light card-edit col-half">
         <div class="card-header">
-          <h3 class="label-text-card">Preferencias</h3>
-          <span class="icon">✏️</span>
+          <h3 class="card-title">Preferencias</h3>
+          <div class="icon-circle"><i class="mdi mdi-pencil-outline"></i></div>
         </div>
         <hr class="card-divider" />
-        <p><strong class="label-text-card">gosto:</strong></p>
+        <p class="section-subtitle">gosto:</p>
         <ul>
           <li v-for="(p, i) in form.preferencias?.gosto" :key="i">• {{ p }}</li>
           <li v-if="!form.preferencias?.gosto?.length">• Não registrado</li>
         </ul>
-        <p class="mt-2"><strong class="label-text-card">Não gosta</strong></p>
+        <p class="section-subtitle mt-2">Não gosta</p>
         <ul>
           <li v-for="(np, i) in form.preferencias?.naoGosto" :key="i">• {{ np }}</li>
           <li v-if="!form.preferencias?.naoGosto?.length">• Não registrado</li>
         </ul>
       </div>
 
-      <div class="card-green card-edit">
+      <div class="card-light card-edit col-half">
         <div class="card-header">
-          <h3 class="label-text-card">Alergias</h3>
-          <span class="icon">✏️</span>
+          <h3 class="card-title">Alergias</h3>
+          <div class="icon-circle"><i class="mdi mdi-pencil-outline"></i></div>
         </div>
         <hr class="card-divider" />
         <ul>
@@ -71,9 +84,10 @@
         </ul>
       </div>
 
+      <!-- Botões Inferiores -->
       <div class="footer-confirm">
-        <button class="btn-pill btn-cancel" @click="$emit('cancelar')">Cancelar</button>
-        <button class="btn-pill" @click="salvar">Salvar Alterações</button>
+        <button type="button" class="btn-pill btn-confirmar" @click="salvar">Confirmar</button>
+        <button type="button" class="btn-pill btn-cancelar" @click="$emit('cancelar')">Cancelar</button>
       </div>
     </div>
   </div>
@@ -101,57 +115,98 @@ const salvar = () => {
 
 <style scoped>
 .editar-container {
-  position: relative;
-  max-width: 850px;
-  /* Espaçamento superior suficiente para o Header fixo */
-  margin: 10px auto 40px auto;
+  width: 100%;
+  max-width: 820px;
+  margin: 30px auto;
   padding: 0 20px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+/* Header com Avatar e Nome */
 .profile-header {
   display: flex;
-  justify-content: center;
   align-items: center;
+  gap: 25px;
+  margin-bottom: 30px;
   width: 100%;
-  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.avatar-wrapper {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.header-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.serif-title {
+  font-family: 'Italiana', serif, sans-serif;
+  font-weight: 400;
+  margin: 0;
+}
+
+.page-title {
+  font-size: 3rem;
+  color: #705335;
 }
 
 .user-name {
-  font-size: 2.2rem;
-  color: #73441B;
-  text-align: center;
+  font-size: 2.8rem;
+  color: #705335;
 }
 
+/* Grid do Formulário */
 .edit-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 24px;
   width: 100%;
 }
 
+.col-half {
+  width: calc(50% - 12px);
+}
+
+.col-full {
+  width: 100%;
+}
+
+/* Inputs em Formato de Pílula */
 .input-pill {
-  background-color: #D1BFA5;
-  border-radius: 8px;
-  padding: 12px 14px;
-  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.15);
+  background-color: #ebe2cc;
+  border: 1.5px solid #8c7355;
+  border-radius: 14px;
+  padding: 12px 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
-  margin-bottom: 12px;
   box-sizing: border-box;
+  height: 52px;
 }
 
 .label-text {
-  color: #333F34;
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
-.label-text-card {
-  color: #333F34;
-  font-weight: 600;
+  color: #4a5435;
+  font-size: 1.15rem;
+  font-weight: 500;
+  font-family: 'Italiana', serif, sans-serif;
+  white-space: nowrap;
 }
 
 .input-pill input {
@@ -159,40 +214,64 @@ const salvar = () => {
   background: transparent;
   outline: none;
   width: 100%;
+  font-size: 1.05rem;
+  color: #705335;
+  margin: 0 10px;
+  font-family: inherit;
+  font-weight: 600;
+}
+
+.icon-circle {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 0.85rem;
-  color: #333F34;
-  margin-left: 8px;
+  color: #4a5435;
+  flex-shrink: 0;
 }
 
-.icon {
-  font-size: 0.8rem;
-  margin-left: 12px;
-}
-
-.card-green {
-  background-color: #9A9E70;
-  border-radius: 12px;
-  padding: 14px;
-  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.15);
-  color: #F1EDD2;
-  font-size: 0.8rem;
-}
-
-.card-edit {
-  grid-row: span 2;
+/* Cards de Preferências e Alergias */
+.card-light {
+  background-color: #ebe2cc;
+  border: 1.5px solid #8c7355;
+  border-radius: 16px;
+  padding: 18px 22px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+  min-height: 220px;
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 8px;
+}
+
+.card-title {
+  font-family: 'Italiana', serif, sans-serif;
+  font-size: 1.4rem;
+  color: #705335;
+  font-weight: 600;
+  margin: 0;
 }
 
 .card-divider {
   border: 0;
-  height: 1px;
+  height: 1.5px;
   background-color: #536236;
-  margin: 6px 0 8px 0;
+  margin-bottom: 12px;
+}
+
+.section-subtitle {
+  color: #4a5435;
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin: 0 0 4px 0;
 }
 
 ul {
@@ -201,33 +280,60 @@ ul {
   margin: 0;
 }
 
-.mt-2 {
-  margin-top: 8px;
+li {
+  color: #4a5435;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 3px;
+  padding-left: 12px;
 }
 
+.mt-2 {
+  margin-top: 10px;
+}
+
+/* Botões do Rodapé */
 .footer-confirm {
-  grid-column: span 2;
+  width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-  margin-top: 20px;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 25px;
 }
 
 .btn-pill {
-  background-color: #9A9E70;
-  color: #333F34;
+  flex: 1;
+  background-color: #536236;
+  color: #f1ebd9;
   border: none;
-  border-radius: 8px;
-  padding: 10px 24px;
-  font-size: 0.85rem;
-  font-weight: 600;
+  border-radius: 50px;
+  padding: 14px 28px;
+  font-size: 1.25rem;
+  font-weight: 500;
   cursor: pointer;
-  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  text-align: center;
 }
 
-.btn-cancel {
-  background-color: #9A9E70;
-  color: #333F34;
+.btn-pill:hover {
+  background-color: #43502a;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .col-half {
+    width: 100%;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-confirm {
+    flex-direction: column;
+    gap: 15px;
+  }
 }
 </style>
