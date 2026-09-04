@@ -4,6 +4,7 @@
 <template>
   <section id="secao-escolha" class="comecar">
     <div class="users">
+      
       <RouterLink to="/cadastro" class="btn-card primary">
         <div class="user">
           <i class="mdi mdi-account-heart-outline"></i>
@@ -28,16 +29,16 @@
   align-items: center;
   width: 100%;
   padding: 0 20px 60px;
-  margin-top: 55px; /* Distancia os botões das pílulas acima */
+  margin-top: 55px; 
 }
 
 .users {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 32px; /* Maior espaço entre os dois botões */
+  gap: 32px; 
   width: 100%;
-  max-width: 1050px; /* Expandido para os botões ficarem mais largos e ir mais para as bordas */
+  max-width: 1050px; 
 }
 
 .btn-card {
@@ -52,7 +53,7 @@
   justify-content: center;
   align-items: center;
   gap: 12px;
-  padding: 18px 32px; /* Aumentado padding interno */
+  padding: 18px 32px; 
   border-radius: 50px;
 }
 

@@ -1,4 +1,5 @@
 <script setup>
+
 function rolarParaEscolha() {
   const el = document.getElementById('secao-escolha')
   if (el) {

@@ -9,7 +9,7 @@ const agendamento = ref({
     nome: '',
     telefone: '',
     email: '',
-    foto: null, // <-- Guarda a URL da foto do usuário
+    foto: null,
   },
 
   profissional: {
@@ -22,7 +22,7 @@ const agendamento = ref({
   consulta: {
     data: '',
     horario: '',
-    tipo: 'Presencial', //ou 'online (EAD)'
+    tipo: 'Presencial',
   },
 })
 
@@ -50,7 +50,6 @@ function extrairPrimeiroNome(nomeCompleto, ehProfissional = false) {
   return partes[0]
 }
 
-// Variáveis para controlar o Modal de Perfil
 const modalAberto = ref(false)
 const pessoaSelecionada = ref({
   titulo: '',
@@ -60,7 +59,6 @@ const pessoaSelecionada = ref({
   foto: null
 })
 
-// Função para abrir o perfil recebendo o tipo ('profissional' ou 'paciente')
 function verPerfil(tipo) {
   if (tipo === 'profissional') {
     pessoaSelecionada.value = {
@@ -86,6 +84,7 @@ function fecharModal() {
   modalAberto.value = false
 }
 </script>
+
 <template>
   <div class="resumo-container">
     <header class="header-banner">
@@ -117,7 +116,7 @@ function fecharModal() {
 
             <button class="bnt-perfil" @click="verPerfil('profissional')">Ver Perfil</button>
           </div>
-          <button class="bnt-chat">Conversar Com o Profissional</button>
+          <button class="bnt-chat">Conversar com profissional</button>
         </div>
 
         <!-- Card Usuário / Paciente -->
@@ -139,47 +138,47 @@ function fecharModal() {
 
             <button class="bnt-perfil" @click="verPerfil('paciente')">Ver Perfil</button>
           </div>
-          <button class="bnt-chat">Conversar Com o paciente</button>
+          <button class="bnt-chat">Conversar com o paciente</button>
         </div>
       </div>
 
- 
       <div class="details-coluna">
         <div class="detail-item">
           <span class="icon">📅</span>
-          <div class="info">
-            <strong>Data:</strong>
+          <div class="info-item">
+            <span class="label">Data:</span>
             <span class="value">{{ formatarData(agendamento.consulta.data) }}</span>
           </div>
         </div>
 
         <div class="detail-item">
           <span class="icon">🕒</span>
-          <div>
-            <strong>Horario:</strong>
+          <div class="info-item">
+            <span class="label">Horario:</span>
             <span class="value">{{ agendamento.consulta.horario }}</span>
           </div>
         </div>
 
         <div class="detail-item full">
-          <strong>Tipo de agendamento:</strong>
+          <span class="label">Tipo de agendamento:</span>
           <span class="value">{{ agendamento.consulta.tipo }}</span>
         </div>
       </div>
     </div>
 
-    <!-- Ações de (Voltar/Editar e Excluir) -->
+    <!-- Ações (Editar, Excluir, Buscar) -->
     <div class="actions-footer">
       <button class="btn-icon" title="Editar" @click="router.push('/editar')">✏️</button>
 
       <button class="btn-icon" title="Excluir" @click="router.push('/excluir')">🗑️</button>
 
       <button class="btn-buscar" @click="router.push('/buscar')">
-       Buscar Profissionais
+        Buscar Profissionais
       </button>
     </div>
   </div>
 
+  <!-- Modal de Perfil -->
   <div v-if="modalAberto" class="modal-overlay" @click.self="fecharModal">
     <div class="modal-card">
       <button class="modal-close" @click="fecharModal">✕</button>
@@ -193,11 +192,10 @@ function fecharModal() {
         <h2>{{ pessoaSelecionada.titulo }}</h2>
       </div>
 
-      <!-- Informações detalhadas -->
       <div class="modal-body">
-        <p><strong>Nome:</strong> {{ pessoaSelecionada.nome }}</p>
-        <p><strong>Telefone:</strong> {{ pessoaSelecionada.telefone }}</p>
-        <p><strong>E-mail:</strong> {{ pessoaSelecionada.email }}</p>
+        <p><strong>Nome:</strong> <span class="modal-value">{{ pessoaSelecionada.nome }}</span></p>
+        <p><strong>Telefone:</strong> <span class="modal-value">{{ pessoaSelecionada.telefone }}</span></p>
+        <p><strong>E-mail:</strong> <span class="modal-value">{{ pessoaSelecionada.email }}</span></p>
       </div>
 
       <button class="btn-fechar" @click="fecharModal">Fechar</button>
@@ -205,109 +203,82 @@ function fecharModal() {
   </div>
 </template>
 
-<style>
-
-.btn-buscar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background-color: #6B7C4F;
-  color: #333F34;
-  border: none;
-  border-radius: 12px;
-  padding: 10px 18px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.2);
-  transition: background 0.2s;
-}
-
-.btn-buscar:hover {
-  background-color: #536236;
-}
-
+<style scoped>
 .resumo-container {
   position: relative;
-  max-width: 850px;
-  margin: 120 auto 40px auto;
-  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
   min-height: 500px;
 }
+
 .header-banner {
-  position: fixed;
-  top: 0;
-  right: 0;
-  background-color: #73441b;
-  color: #f2ebd9;
-  padding: 30px 70px 30px 50px;
-  border-radius: 0 0 0 130px;
-  box-shadow: -4px 4px 8px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  z-index: 10;
+  text-align: right;
+  margin-bottom: 20px;
 }
 
 .header-banner h1 {
-  color: #f1edd2;
-  font-size: 3.2rem; 
+  color: #73441b;
+  font-size: 3.5rem; 
   margin: 0;
 }
 
 .header-banner p {
-  margin: 4px 0 0 0;
-  font-size: 1.1rem;
+  margin: 0;
+  color: #73441b;
+  font-size: 1.5rem;
 }
 
 .resumo-content {
   display: flex;
-  gap: 40px;
-  margin-top: 90px;
+  gap: 50px;
+  align-items: flex-start;
 }
 
 .cards-coluna {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  flex: 1;
+  flex: 1.1;
 }
 
 .person-card {
-  border: 2px solid #73441b;
-  border-radius: 24px;
-  padding: 18px 20px; 
+  border: 1.5px solid #73441b;
+  border-radius: 20px;
+  padding: 16px; 
   display: grid;
-  grid-template-columns: 90px 1fr;
-  gap: 16px; 
+  grid-template-columns: 80px 1fr;
+  gap: 12px; 
   align-items: center;
+  background-color: transparent;
 }
 
 .avatar {
-  width: 85px; 
-  height: 85px; 
+  width: 80px; 
+  height: 80px; 
   border-radius: 50%;
   object-fit: cover;
 }
 
 .info h2 {
-  margin: 0 0 6px 0;
+  margin: 0 0 4px 0;
   color: #333f34;
-  font-size: 1.3rem; 
-  font-weight: bolder;
+  font-size: 1.1rem; 
+  font-weight: bold;
 }
 
 .info p {
   margin: 0 0 6px 0;
   color: #333f34;
-  font-size: 0.9rem;
-  font-weight: bolder;
+  font-size: 0.88rem;
 }
 
 .bnt-perfil {
-  background-color: #f1edd2;
-  border: 1px solid #73441b;
-  color: #333f34;
-  font-weight: bolder;
-  border-radius: 10px;
-  padding: 2px 12px;
+  background-color: transparent;
+  border: 1px solid #333f34;
+  color: #586937;
+  border-radius: 12px;
+  padding: 2px 16px;
   font-size: 0.8rem;
   cursor: pointer;
 }
@@ -316,23 +287,20 @@ function fecharModal() {
   grid-column: span 2;
   background-color: transparent;
   border: 1.5px dashed #73441b;
-  border-radius: 16px;
+  border-radius: 14px;
   padding: 6px;
   color: #73441b;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   cursor: pointer;
   text-align: center;
 }
 
 .details-coluna {
-  flex: 1;
+  flex: 0.9;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding-top: 50px;
-  color: #536236;
-  font-weight: bold;
-  font-size: 1.5rem;
+  gap: 24px;
+  padding-top: 30px;
 }
 
 .detail-item {
@@ -341,40 +309,74 @@ function fecharModal() {
   gap: 10px;
 }
 
-.detail-item .value {
-  color: #9a9e70;
-  margin-left: 6px;
-  font-weight: bolder;
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
+.detail-item .icon {
+  font-size: 1.4rem;
+  filter: sepia(100%) hue-rotate(50deg) saturate(300%);
+}
+
+.detail-item .label {
+  color: #333f34; 
+  font-size: 1.3rem;
+}
+
+.detail-item .value {
+  color: #586937; 
+  font-size: 1.3rem;
+}
+  
 .actions-footer {
   display: flex;
   gap: 12px;
-  margin-top: 30px;
+  margin-top: 40px;
+  align-items: center;
 }
 
 .btn-icon {
-  width: 42px;
-  height: 42px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
-  border: none;
-  background-color: #f1edd2;
+  border: 1.5px solid #586937;
+  background-color: #EFE8D3; 
   cursor: pointer;
-  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  transition: transform 0.1s, box-shadow 0.2s;
 }
 
-/* Estilos do Modal de Perfil */
+.btn-buscar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #586937;
+  color: #f1edd2;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 18px;
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  transition: background 0.2s;
+}
+
+.btn-buscar:hover {
+  background-color: #536236;
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -382,15 +384,15 @@ function fecharModal() {
 }
 
 .modal-card {
-  background-color: #F1EDD2;
-  border: 1.5px solid #73441b;
+  background-color: #f1edd2;
+  border: 1.5px solid #333f34;
   border-radius: 20px;
   padding: 24px;
   width: 90%;
-  max-width: 400px;
+  max-width: 380px;
   position: relative;
   text-align: center;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .modal-close {
@@ -401,7 +403,7 @@ function fecharModal() {
   border: none;
   font-size: 1.2rem;
   font-weight: bold;
-  color: #333F34;
+  color: #333f34;
   cursor: pointer;
 }
 
@@ -413,50 +415,52 @@ function fecharModal() {
 }
 
 .modal-avatar {
-  width: 110px;
-  height: 110px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #73441b;
-  margin-bottom: 12px;
+  border: 1px solid #73441b;
+  margin-bottom: 8px;
 }
 
 .modal-header h2 {
   margin: 0;
-  color: #333F34;
-  font-size: 1.4rem;
+  color: #333f34;
+  font-size: 1.3rem;
 }
 
 .modal-body {
   text-align: left;
-  background-color: #f1edd2;
-  padding: 16px;
-  border-radius: 12px;
+  background-color: transparent;
+  padding: 8px 0;
   margin-bottom: 16px;
-  border: 1px solid #73441b;
 }
 
 .modal-body p {
-  margin: 8px 0;
-  color: #333f34;
-  font-size: 1rem;
-  font-weight: bold;
+  margin: 10px 0;
+  font-size: 0.90rem;
 }
 
 .modal-body strong {
-  color: #536236;
+  color: #333f34; 
   font-weight: bold;
 }
 
+.modal-value {
+  color: #536236; 
+  font-weight: bold;
+  margin-left: 4px;
+}
+
 .btn-fechar {
-  background-color: #333F34;
-  color: #f1edd2;
+  background-color: #586937;
+  color: #f1edd2; 
   border: none;
   border-radius: 10px;
-  padding: 8px 24px;
-  font-weight: bold;
+  padding: 8px 28px;
   cursor: pointer;
   transition: background 0.2s;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 .btn-fechar:hover {

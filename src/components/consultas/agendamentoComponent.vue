@@ -7,9 +7,9 @@ const router = useRouter()
 const { usuarioLogado, isPaciente, isProfissional, carregarUsuario } = useAuth()
 
 const listaProfissionais = ref([
-  { id: 1, nome: 'Dra. Carolina Paz Alencar', telefone: '(47) 99999-1111', email: 'carolina@email.com', foto: '/profissionais/ana.png' },
-  { id: 2, nome: 'Dr. Alexandre Xavier', telefone: '(47) 99999-2222', email: 'alexandre@email.com', foto: '/profissionais/marcos.png' },
-  { id: 3, nome: 'Dra. Fabiana Oliveira', telefone: '(47) 99999-3333', email: 'fabiana@email.com', foto: '/profissionais/fernanda.png' }
+  { id: 1, nome: 'Dra. Carolina Paz Alencar - Especialista em Nutrição Esportiva', telefone: '(47) 99999-1111', email: 'carolina@email.com', foto: '/profissionais/ana.png' },
+  { id: 2, nome: 'Dr. Alexandre Xavier - Especialista em Nutrição Clínica & Emagrecimento', telefone: '(47) 99999-2222', email: 'alexandre@email.com', foto: '/profissionais/marcos.png' },
+  { id: 3, nome: 'Dra. Fabiana Oliveira - Especialista em Nutrição Infantil', telefone: '(47) 99999-3333', email: 'fabiana@email.com', foto: '/profissionais/fernanda.png' }
 ])
 
 const listaPacientes = ref([
@@ -163,11 +163,11 @@ function agendar() {
             <label for="usr-tel">Telefone:</label>
             <input id="usr-tel" type="text" v-model="agendamento.usuario.telefone" />
           </div>
-          <div class="input-card full-width">
+          <div class="input-card">
             <label for="usr-email">E-mail:</label>
             <input id="usr-email" type="email" v-model="agendamento.usuario.email" />
           </div>
-          <div class="input-card full-width">
+          <div class="input-card">
             <label for="usr-foto">Sua Foto:</label>
             <input id="usr-foto" type="file" accept="image/*" @change="aoSelecionarFotoUsuario" />
           </div>
@@ -187,11 +187,11 @@ function agendar() {
             <label for="prof-tel">Telefone:</label>
             <input id="prof-tel" type="text" v-model="agendamento.profissional.telefone" />
           </div>
-          <div class="input-card full-width">
+          <div class="input-card">
             <label for="prof-email">E-mail:</label>
             <input id="prof-email" type="email" v-model="agendamento.profissional.email" />
           </div>
-          <div class="input-card full-width">
+          <div class="input-card">
             <label for="prof-foto">Sua Foto:</label>
             <input id="prof-foto" type="file" accept="image/*" @change="aoSelecionarFotoProfissional" />
           </div>
@@ -228,7 +228,7 @@ function agendar() {
     </template>
 
     <section v-if="isPaciente || isProfissional" class="section-block">
-      <div class="divider"><span>Sobre a Consulta</span></div>
+      <div class="divider"><span>Sobre a consulta</span></div>
       <div class="grid-form">
         <div class="input-card">
           <label for="data">Data:</label>
@@ -253,18 +253,18 @@ function agendar() {
 </template>
 
 <style scoped>
-/* Adicionando margem no container principal para resolver o corte na tela */
 .agendamento-page {
   max-width: 800px;
-  margin: 70px auto 40px auto; 
-  padding: 20px;
+  margin: 40px auto; 
+  padding: 30px;
+  border-radius: 16px;
   box-sizing: border-box;
 }
 
 .main-title {
-  color: #73441b;
+  color: #6a4e32;
   text-align: center;
-  font-size: 3rem;
+  font-size: 2.8rem;
   margin-bottom: 24px;
 }
 
@@ -274,7 +274,7 @@ function agendar() {
 
 .nao-logado {
   text-align: center;
-  color: #73441b;
+  color: #6a4e32;
   font-weight: bold;
   padding: 40px 0;
 }
@@ -283,19 +283,19 @@ function agendar() {
   display: flex;
   align-items: center;
   text-align: center;
-  margin: 24px 0 16px 0;
+  margin: 20px 0 16px 0;
 }
 .divider::before,
 .divider::after {
   content: '';
   flex: 1;
-  border-bottom: 1.5px solid #536236;
+  border-bottom: 1px solid #586937;
 }
 .divider span {
   padding: 0 12px;
-  color: #6b7c4f;
+  color: #586937;
   font-size: 0.95rem;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .grid-form {
@@ -311,38 +311,46 @@ function agendar() {
 .input-card {
   display: flex;
   align-items: center;
-  background-color: #cbba9c;
-  border: 1px solid #9c8a6f;
-  border-radius: 12px;
-  padding: 10px 16px;
-  box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.25);
+  border: 1.5px solid #6a4e32;
+  border-radius: 8px;
+  padding: 8px 12px;
+  min-width: 0; 
 }
 
 .input-card label {
-  color: #536236;
+  color: #586937;
   font-weight: bold;
-  margin-right: 8px;
+  margin-right: 6px;
   white-space: nowrap;
+  flex-shrink: 0; 
 }
 
 .input-card input,
 .input-card select {
   width: 100%;
+  min-width: 0; 
   background: transparent;
   border: none;
   outline: none;
-  color: #333f34;
-  font-size: 1rem;
-  font-weight: bold;
+  color: #3e4d27;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.input-card input[type="time"]::-webkit-calendar-picker-indicator,
+.input-card input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(30%) sepia(20%) saturate(1000%) hue-rotate(50deg);
+  display: block !important;
+  opacity: 1 !important;
 }
 
 .profile-preview {
   display: flex;
   align-items: center;
   gap: 16px;
-  background-color: #f1edd2;
-  border: 1px solid #73441b;
-  border-radius: 12px;
+  border: 1.5px solid #6a4e32;
+  border-radius: 16px;
   padding: 12px;
 }
 
@@ -356,14 +364,52 @@ function agendar() {
 .btn-agendar {
   width: 100%;
   margin-top: 24px;
-  padding: 12px;
-  background-color: #9a9e70;
-  color: #333f34;
-  border: 1px solid #536236;
+  padding: 14px;
+  background-color: #526335;
+  color: #f1edd2;
+  border: none;
   border-radius: 12px;
   font-size: 1.1rem;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.2s ease;
+}
+
+.btn-agendar:hover {
+  background-color: #43522a;
+}
+
+.input-card input[type="file"] {
+  font-size: 0.8rem;
+  color: #3e4d27;
+  padding: 0;
+}
+
+.input-card input[type="file"]::-webkit-file-upload-button {
+  background-color: #526335; 
+  color: #f1edd2;        
+  border: none;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 6px;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease;
+}
+
+.input-card input[type="file"]::-webkit-file-upload-button:hover {
+  background-color: #43522a;
+}
+
+@media (max-width: 600px) {
+  .grid-form {
+    grid-template-columns: 1fr;
+  }
+  .full-width {
+    grid-column: span 1;
+  }
 }
 </style>
