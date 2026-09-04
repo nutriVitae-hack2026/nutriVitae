@@ -8,7 +8,6 @@
     />
 
     <div v-else class="perfil-content">
-      <!-- Botão Excluir no canto superior direito -->
       <button 
         class="delete-icon-btn" 
         title="Excluir Perfil" 
@@ -17,7 +16,6 @@
         <i class="mdi mdi-delete-outline"></i>
       </button>
 
-      <!-- Cabeçalho com Foto e Nome -->
       <div class="profile-header">
         <div class="avatar-wrapper">
           <img :src="usuario.foto || 'https://via.placeholder.com/150'" :alt="usuario.nome" class="avatar-img" />
@@ -25,7 +23,6 @@
         <h1 class="user-name">{{ usuario.nome }}</h1>
       </div>
 
-      <!-- Campos de Informações -->
       <div class="info-grid">
         <div class="info-box input-pill">
           <span class="label-text">peso:</span>
@@ -41,9 +38,7 @@
         </div>
       </div>
 
-      <!-- Cards de Preferências e Alergias -->
       <div class="cards-grid">
-        <!-- Card Preferências -->
         <div class="card-box light-card">
           <h3 class="card-title">Preferencias</h3>
           <hr class="card-divider" />
@@ -61,7 +56,6 @@
           </ul>
         </div>
 
-        <!-- Card Alergias -->
         <div class="card-box light-card">
           <h3 class="card-title">Alergias</h3>
           <hr class="card-divider" />
@@ -72,7 +66,6 @@
         </div>
       </div>
 
-      <!-- Botão Flutuante de Editar no canto inferior esquerdo -->
       <button 
         class="floating-edit-btn" 
         title="Editar Perfil" 
@@ -117,7 +110,6 @@ const salvarAlteracoes = (novosDados) => {
   editando.value = false;
 };
 
-// Função para calcular idade a partir da data de nascimento
 const calcularIdade = (dataNasc) => {
   if (!dataNasc) return '--';
   const hoje = new Date();
@@ -135,7 +127,7 @@ const calcularIdade = (dataNasc) => {
 .perfil-container {
   width: 100%;
   max-width: 820px;
-  margin: 40px auto;
+  margin: 40px auto 80px auto; 
   padding: 0 20px;
   box-sizing: border-box;
   position: relative;
@@ -147,10 +139,9 @@ const calcularIdade = (dataNasc) => {
   flex-direction: column;
 }
 
-/* Botão Lixeira */
 .delete-icon-btn {
   position: absolute;
-  top: 0;
+  top: 15px;
   right: 0;
   width: 44px;
   height: 44px;
@@ -171,7 +162,6 @@ const calcularIdade = (dataNasc) => {
   transform: scale(1.05);
 }
 
-/* Header do Perfil com Avatar e Nome */
 .profile-header {
   display: flex;
   align-items: center;
@@ -203,7 +193,6 @@ const calcularIdade = (dataNasc) => {
   margin: 0;
 }
 
-/* Grid de Informações Principais */
 .info-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -237,7 +226,6 @@ const calcularIdade = (dataNasc) => {
   font-weight: 600;
 }
 
-/* Cards Inferiores */
 .cards-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -294,11 +282,10 @@ li {
   margin-top: 10px;
 }
 
-/* Botão Lápis no canto inferior esquerdo */
 .floating-edit-btn {
   position: absolute;
-  bottom: -15px;
-  left: -15px;
+  bottom: -60px; 
+  left: -60px;
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -326,6 +313,11 @@ li {
   .profile-header {
     flex-direction: column;
     text-align: center;
+  }
+
+  .floating-edit-btn {
+    bottom: -50px;
+    left: 0; 
   }
 }
 </style>
