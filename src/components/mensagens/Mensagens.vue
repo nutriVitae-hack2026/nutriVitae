@@ -107,7 +107,7 @@
 </template>
 
 <script setup>
-import { ref, computed, nextTick, reactive, onMounted } from 'vue'
+import { ref, computed, nextTick, reactive, onMounted, watch } from 'vue'
 
 const showProfile = ref(false)
 const activeContactId = ref(1)
@@ -123,6 +123,20 @@ const userData = reactive({
   telefone: ''
 })
 
+const defaultHistory = {
+  1: [
+    { id: 101, sender: 'sent', text: 'Olá, nutricionista! Gostaria de melhorar minha alimentação.' },
+    { id: 102, sender: 'received', text: 'Olá! O primeiro passo é organizar sua rotina diária.' }
+  ],
+  2: [
+    { id: 201, sender: 'received', text: 'Olá! Como foram suas refeições essa semana?' }
+  ],
+  3: [],
+  4: []
+}
+
+const conversationHistory = reactive({})
+
 onMounted(() => {
   const savedData = localStorage.getItem('usuarioLogado')
   if (savedData) {
@@ -133,7 +147,31 @@ onMounted(() => {
       console.error('Erro ao carregar dados do usuário:', e)
     }
   }
+
+  const savedMessages = localStorage.getItem('chat_historico_mensagens')
+  if (savedMessages) {
+    try {
+      const parsedHistory = JSON.parse(savedMessages)
+      Object.assign(conversationHistory, parsedHistory)
+    } catch (e) {
+      Object.assign(conversationHistory, defaultHistory)
+    }
+  } else {
+    Object.assign(conversationHistory, defaultHistory)
+  }
+
+  nextTick(() => {
+    scrollToBottom()
+  })
 })
+
+watch(
+  conversationHistory,
+  (newHistory) => {
+    localStorage.setItem('chat_historico_mensagens', JSON.stringify(newHistory))
+  },
+  { deep: true }
+)
 
 const userInitial = computed(() => {
   return userData.nome ? userData.nome.charAt(0).toUpperCase() : 'U'
@@ -159,24 +197,18 @@ const contacts = ref([
   { id: 4, name: 'Mariana', role: 'Nutricionista', avatar: 'M' }
 ])
 
-const conversationHistory = reactive({
-  1: [
-    { id: 101, sender: 'sent', text: 'Olá, nutricionista! Gostaria de melhorar minha alimentação.' },
-    { id: 102, sender: 'received', text: 'Olá! O primeiro passo é organizar sua rotina diária.' }
-  ],
-  2: [
-    { id: 201, sender: 'received', text: 'Olá! Como foram suas refeições essa semana?' }
-  ],
-  3: [],
-  4: []
-})
-
 const activeContact = computed(() => {
   return contacts.value.find(c => c.id === activeContactId.value) || contacts.value[0]
 })
 
 const activeMessages = computed(() => {
   return conversationHistory[activeContactId.value] || []
+})
+
+watch(activeContactId, () => {
+  nextTick(() => {
+    scrollToBottom()
+  })
 })
 
 const toggleProfile = () => {
@@ -243,32 +275,32 @@ const editMessage = () => {
 </script>
 
 <style scoped>
-/* CONTAINER PRINCIPAL (+15% ADICIONAIS DE TAMANHO) */
 .chat-wrapper {
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 85px); 
   background-color: #F1EDD2;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
-  padding: 20px;
+  padding: 0;
   box-sizing: border-box;
+  margin-top: 85px; 
+  overflow: hidden; 
 }
 
 .app-container {
   width: 100%;
-  max-width: 1080px;
-  height: 690px;
+  max-width: 100%;
+  height: 100%; 
   background-color: #F1EDD2;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  border-radius: 0;
+  box-shadow: none;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
-/* TOP BAR */
 .top-bar {
   height: 56px;
   background-color: #333F34;
@@ -278,6 +310,7 @@ const editMessage = () => {
   justify-content: space-between;
   padding: 0 20px;
   z-index: 10;
+  flex-shrink: 0; 
 }
 
 .user-info {
@@ -323,11 +356,11 @@ const editMessage = () => {
   background-color: rgba(255, 255, 255, 0.15);
 }
 
-/* CHAT VIEW */
 .chat-view {
   display: flex;
   flex: 1;
-  height: calc(100% - 56px);
+  height: calc(100% - 56px); 
+  overflow: hidden;
 }
 
 .sidebar {
@@ -335,6 +368,7 @@ const editMessage = () => {
   background-color: #D1BFA5;
   border-right: 1px solid rgba(0, 0, 0, 0.1);
   overflow-y: auto;
+  flex-shrink: 0;
 }
 
 .contact-card {
@@ -373,11 +407,12 @@ const editMessage = () => {
   padding: 16px;
   justify-content: space-between;
   background-color: #F1EDD2;
+  overflow: hidden; 
 }
 
 .messages-container {
   flex: 1;
-  overflow-y: auto;
+  overflow-y: auto; 
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -413,6 +448,7 @@ const editMessage = () => {
   display: flex;
   gap: 12px;
   margin-top: 14px;
+  flex-shrink: 0; 
 }
 
 .input-container input {
@@ -442,7 +478,6 @@ const editMessage = () => {
   cursor: pointer;
 }
 
-/* MENU CONTEXTUAL */
 .context-menu {
   position: fixed;
   background-color: #333F34;
@@ -469,7 +504,6 @@ const editMessage = () => {
   color: #333F34;
 }
 
-/* PERFIL DO USUÁRIO */
 .profile-view {
   flex: 1;
   padding: 28px;
