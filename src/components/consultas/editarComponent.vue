@@ -15,7 +15,7 @@ const agendamento = ref({
     nome: '',
     telefone: '',
     email: '',
-    foto: null, // <-- Guarda a URL da foto do usuário
+    foto: null,
   },
 
   profissional: {
@@ -28,7 +28,7 @@ const agendamento = ref({
   consulta: {
     data: '',
     horario: '',
-    tipo: 'Presencial', //ou 'online (EAD)'
+    tipo: 'Presencial',
   },
 })
 
@@ -55,7 +55,6 @@ function meConfirmarEdicao() {
     return
   }
 
-  // Recupera a senha válida cadastrada no login do usuário
   const usuarioSessao = JSON.parse(localStorage.getItem('usuarioLogado') || '{}')
   const senhaValida = usuarioSessao.senha || agendamento.value.usuario.senha || agendamento.value.profissional.senha
 
@@ -74,6 +73,11 @@ function meConfirmarEdicao() {
 
   alert('Alterações salvas com sucesso!')
   router.push('/resumo')
+}
+
+function fecharModal() {
+  mostrarModalSenha.value = false
+  senha.value = ''
 }
 </script>
 
@@ -131,8 +135,8 @@ function meConfirmarEdicao() {
         <!-- Campo DATA -->
         <div class="detail-item">
           <span class="icon">📅</span>
-          <div>
-            <strong>Data:</strong>
+          <div class="info-item">
+            <span class="label">Data:</span>
             <input
               v-if="editandoData"
               type="date"
@@ -150,8 +154,8 @@ function meConfirmarEdicao() {
         <!-- Campo HORÁRIO -->
         <div class="detail-item">
           <span class="icon">🕒</span>
-          <div>
-            <strong>Horário:</strong>
+          <div class="info-item">
+            <span class="label">Horario:</span>
             <input
               v-if="editandoHorario"
               type="text"
@@ -168,7 +172,7 @@ function meConfirmarEdicao() {
 
         <!-- Campo TIPO -->
         <div class="detail-item full">
-          <strong>Tipo de agendamento:</strong>
+          <span class="label">Tipo de agendamento:</span>
           <select 
             v-if="editandoTipo" 
             v-model="agendamento.consulta.tipo" 
@@ -192,173 +196,296 @@ function meConfirmarEdicao() {
       </div>
     </div>
 
-    <div v-if="mostrarModalSenha" class="modal-overlay" @click.self="mostrarModalSenha = false">
+    <!-- Modal Compacto Fiel à Imagem -->
+    <div v-if="mostrarModalSenha" class="modal-overlay" @click.self="fecharModal">
       <div class="modal-card">
-        <button class="btn-fechar-modal" @click="mostrarModalSenha = false">✖</button>
-        <div class="modal-header">
-          <h3>Editar Agendamento</h3>
-        </div>
+        <h2 class="modal-titulo">Editar<br>Agendamento</h2>
 
-        <p class="modal-instruction">Digite sua senha para confirmar as alterações:</p>
-
-        <input
-          type="password"
-          placeholder="Sua senha"
+        <textarea
           v-model="senha"
+          placeholder="Digite sua senha para&#10;confirmar a edição:"
           class="modal-input"
-          @keyup.enter="meConfirmarEdicao"
-        />
+          @keyup.enter.prevent="meConfirmarEdicao"
+        ></textarea>
 
-        <button class="btn-confirmar-modal" @click="meConfirmarEdicao">Confirmar</button>
+        <div class="modal-botoes">
+          <button class="btn-modal btn-confirmar-modal" @click="meConfirmarEdicao">
+            Confirmar
+          </button>
+          <button class="btn-modal btn-cancelar-modal" @click="fecharModal">
+            Cancelar
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.resumo-container {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 80px 20px 40px 20px;
+  min-height: 500px;
+}
 
- .header-banner {
+.header-banner {
   position: fixed;
   top: 0;
   right: 0;
   background-color: #73441b;
-  color: #f2ebd9;
-  padding: 30px 70px 30px 50px;
-  border-radius: 0 0 0 130px;
-  box-shadow: -4px 4px 8px rgba(0, 0, 0, 0.2);
+  color: #EFE8D3;
+  padding: 20px 50px 20px 40px;
+  border-radius: 0 0 0 90px;
+  box-shadow: -4px 4px 10px rgba(0, 0, 0, 0.15);
   text-align: center;
   z-index: 10;
 }
 
 .header-banner h1 {
-  color: #f2ebd9;
-  font-size: 3rem; 
+  color: #EFE8D3;
+  font-size: 2.2rem; 
+  font-family: serif;
+  font-weight: normal;
   margin: 0;
 }
 
+.resumo-content {
+  display: flex;
+  gap: 50px;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+.cards-coluna {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1.1;
+}
+
+.person-card {
+  border: 1.5px solid #73441b;
+  border-radius: 20px;
+  padding: 16px; 
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 12px; 
+  align-items: center;
+  background-color: transparent;
+}
+
+.avatar {
+  width: 80px; 
+  height: 80px; 
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.info h2 {
+  margin: 0 0 4px 0;
+  color: #333f34;
+  font-size: 1.1rem; 
+  font-weight: bold;
+}
+
+.info p {
+  margin: 0 0 6px 0;
+  color: #333f34;
+  font-size: 0.88rem;
+  font-weight: bold;
+}
+
+.bnt-perfil {
+  background-color: transparent;
+  border: 1px solid #73441b;
+  color: #73441b;
+  font-weight: bold;
+  border-radius: 12px;
+  padding: 2px 16px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.bnt-chat {
+  grid-column: span 2;
+  background-color: transparent;
+  border: 1px dashed #73441b;
+  border-radius: 14px;
+  padding: 6px;
+  color: #73441b;
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.details-coluna {
+  flex: 0.9;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-top: 10px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.detail-item .icon {
+  font-size: 1.4rem;
+}
+
+.detail-item .label {
+  color: #586937;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.detail-item .value {
+  color: #586937;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
 
 .edit-input,
 .edit-select {
-  border: 1px solid #73441b;
+  border: 1.5px solid #586937;
   border-radius: 8px;
   padding: 4px 8px;
-  background-color: #f1edd2;
-  color: #333f34;
+  background-color: #EFE8D3;
+  color: #586937;
   font-weight: bold;
   margin-left: 8px;
+  outline: none;
 }
 
-.btn-confirmar {
-  margin-top: 20px;
-  background-color: #9a9e70;
-  color: #333f34;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-weight: bold;
-  font-size: 1.1rem;
-  cursor: pointer;
-  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.2);
-}
-
-/* Botão Lápis */
 .btn-lapis {
-  background-color: #f1edd2;
-  border: 1px solid #73441b;
+  background-color: #EFE8D3;
+  border: 1.5px solid #586937;
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  font-size: 0.8rem;
+  width: 32px;
+  height: 32px;
+  font-size: 0.85rem;
   cursor: pointer;
   margin-left: 8px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.15);
-  transition: transform 0.1s ease;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.1s, box-shadow 0.2s;
 }
 
 .btn-lapis:hover {
-  transform: scale(1.1);
-  background-color: #e2dcba;
+  transform: translateY(-1px);
+  box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.25);
 }
 
-/* Modal Styling */
+.btn-confirmar {
+  margin-top: 20px;
+  background-color: #586937;
+  color: #EFE8D3;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-confirmar:hover {
+  background-color: #435129;
+  transform: translateY(-1px);
+}
+
+/* Modal Estilizado Compacto */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
+  width: 100vw;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999;
+  z-index: 1000;
 }
 
 .modal-card {
-  background-color: #F1EDD2;
-  border: 1px solid #73441b; 
-  padding: 24px;
-  border-radius: 16px;
-  width: 320px;
+  background-color: #EFE8D3;
+  border-radius: 22px;
+  padding: 22px 20px 18px 20px;
+  width: 100%;
+  max-width: 340px;
   text-align: center;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-  position: relative;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
 }
 
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-  color: #333f34;
-}
-
-.modal-header h3 {
-  margin: 0;
-  font-size: 1.1rem;
-  font-weight: bold;
-}
-
-.btn-fechar-modal {
-  background: none;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  color: #333f34;
-  position: absolute;
-  top: 16px;
-  right: 20px;
-  line-height: 1;
-}
-
-.modal-instruction { 
-  font-size: 0.9rem;
-  color: #333f34;
-  font-weight: bolder;
-  margin-bottom: 14px;
-  text-align: left;
+.modal-titulo {
+  color: #1a1a1a;
+  font-family: serif;
+  font-size: 1.6rem;
+  font-weight: normal;
+  line-height: 1.15;
+  margin: 0 0 16px 0;
 }
 
 .modal-input {
   width: 100%;
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid #73441b; 
-  background-color: #F1EDD2;
-  margin-bottom: 16px;
+  height: 68px;
+  border-radius: 16px;
+  border: 1px solid #48542c;
+  background-color: transparent;
+  color: #48542c;
+  font-family: sans-serif;
+  font-size: 0.95rem;
+  font-weight: bold;
+  padding: 10px 14px;
   box-sizing: border-box;
   outline: none;
+  resize: none;
+  margin-bottom: 18px;
 }
 
-.btn-confirmar-modal {
-  background-color: #333F34;
-  color: #F1EDD2;
+.modal-input::placeholder {
+  color: #48542c;
   font-weight: bold;
-  border-radius: 8px;
-  padding: 8px 20px;
+  opacity: 0.9;
+  line-height: 1.25;
+}
+
+.modal-botoes {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.btn-modal {
+  flex: 1;
+  background-color: #48542c;
+  color: #EFE8D3;
+  border: none;
+  border-radius: 20px;
+  padding: 9px 0;
+  font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-modal:hover {
+  opacity: 0.9;
 }
 </style>

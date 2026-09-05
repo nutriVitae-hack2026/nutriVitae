@@ -173,7 +173,7 @@ function fecharModal() {
       <button class="btn-icon" title="Excluir" @click="router.push('/excluir')">🗑️</button>
 
       <button class="btn-buscar" @click="router.push('/buscar')">
-        Buscar Profissionais
+        Buscar Agendamentos
       </button>
     </div>
   </div>
@@ -271,12 +271,14 @@ function fecharModal() {
   margin: 0 0 6px 0;
   color: #333f34;
   font-size: 0.88rem;
+  font-weight: bold;
 }
 
 .bnt-perfil {
   background-color: transparent;
-  border: 1px solid #333f34;
-  color: #586937;
+  border: 1px solid #586937;
+  color: #333f34;
+  font-weight: bold;
   border-radius: 12px;
   padding: 2px 16px;
   font-size: 0.8rem;
@@ -286,7 +288,7 @@ function fecharModal() {
 .bnt-chat {
   grid-column: span 2;
   background-color: transparent;
-  border: 1.5px dashed #73441b;
+  border: 1px dashed #73441b;
   border-radius: 14px;
   padding: 6px;
   color: #73441b;
@@ -317,19 +319,20 @@ function fecharModal() {
 
 .detail-item .icon {
   font-size: 1.4rem;
-  filter: sepia(100%) hue-rotate(50deg) saturate(300%);
 }
 
 .detail-item .label {
-  color: #333f34; 
+  color: #586937;
+  font-weight: bold;
   font-size: 1.3rem;
 }
 
 .detail-item .value {
-  color: #586937; 
+  color: #73441b;
+  font-weight: bold;
   font-size: 1.3rem;
 }
-  
+
 .actions-footer {
   display: flex;
   gap: 12px;
@@ -352,22 +355,30 @@ function fecharModal() {
   transition: transform 0.1s, box-shadow 0.2s;
 }
 
+.btn-icon:hover {
+  transform: translateY(-1px);
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
+}
+
 .btn-buscar {
   display: flex;
   align-items: center;
   gap: 8px;
   background-color: #586937;
-  color: #f1edd2;
+  color: #EFE8D3;
   border: none;
-  border-radius: 10px;
-  padding: 10px 18px;
+  border-radius: 12px;
+  padding: 10px 22px;
+  font-size: 0.95rem;
   cursor: pointer;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
-  transition: background 0.2s;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25); 
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
 }
 
 .btn-buscar:hover {
-  background-color: #536236;
+  background-color: #435129;
+  transform: translateY(-1px);
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
 }
 
 .modal-overlay {
@@ -376,7 +387,7 @@ function fecharModal() {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -384,25 +395,25 @@ function fecharModal() {
 }
 
 .modal-card {
-  background-color: #f1edd2;
-  border: 1.5px solid #333f34;
-  border-radius: 20px;
-  padding: 24px;
+  background-color: #EFE8D3; 
+  border: 1.5px solid #586937;
+  border-radius: 24px;
+  padding: 32px 24px 24px 24px;
   width: 90%;
-  max-width: 380px;
+  max-width: 400px;
   position: relative;
   text-align: center;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
 .modal-close {
   position: absolute;
-  top: 12px;
-  right: 16px;
+  top: 16px;
+  right: 20px;
   background: transparent;
   border: none;
-  font-size: 1.2rem;
-  font-weight: bold;
+  font-size: 1.4rem;
+  font-weight: 300;
   color: #333f34;
   cursor: pointer;
 }
@@ -411,59 +422,63 @@ function fecharModal() {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .modal-avatar {
-  width: 90px;
-  height: 90px;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
   object-fit: cover;
   border: 1px solid #73441b;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .modal-header h2 {
   margin: 0;
-  color: #333f34;
-  font-size: 1.3rem;
+  color: #73441b;
+  font-size: 1.5rem;
+  font-family: serif;
+  font-weight: normal;
 }
 
 .modal-body {
   text-align: left;
   background-color: transparent;
-  padding: 8px 0;
-  margin-bottom: 16px;
+  padding: 0 10px;
+  margin-bottom: 24px;
 }
 
 .modal-body p {
-  margin: 10px 0;
-  font-size: 0.90rem;
+  margin: 12px 0;
+  font-size: 1rem;
 }
 
 .modal-body strong {
-  color: #333f34; 
+  color: #586937;
   font-weight: bold;
 }
 
 .modal-value {
-  color: #536236; 
+  color: #586937;
   font-weight: bold;
   margin-left: 4px;
 }
 
 .btn-fechar {
   background-color: #586937;
-  color: #f1edd2; 
+  color: #EFE8D3;
   border: none;
-  border-radius: 10px;
-  padding: 8px 28px;
+  border-radius: 12px;
+  padding: 8px 36px;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   transition: background 0.2s;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 .btn-fechar:hover {
-  background-color: #536236;
+  background-color: #435129;
 }
 </style>

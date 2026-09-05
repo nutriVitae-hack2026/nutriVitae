@@ -9,21 +9,21 @@ const senha = ref('')
 
 const agendamento = ref({
   usuario: {
-    nome: '',
-    telefone: '',
+    nome: 'Gabriel Lima da Costa',
+    telefone: '(11) 93333-4444',
     email: '',
     foto: null,
   },
   profissional: {
-    nome: '',
-    telefone: '',
+    nome: 'Dra. Carolina Paz Alencar',
+    telefone: '(11) 94444-3333',
     email: '',
     foto: null,
   },
   consulta: {
-    data: '',
-    horario: '',
-    tipo: 'Presencial',
+    data: '2026-08-17',
+    horario: '14h30 / 02h30 pm',
+    tipo: 'Online (EAD)',
   },
 })
 
@@ -36,12 +36,18 @@ onMounted(() => {
 
 function formatarData(dataIso) {
   if (!dataIso) return 'Selecionar a Data'
+  if (dataIso.includes('/')) return dataIso
   const [ano, mes, dia] = dataIso.split('-')
   return `${dia}/${mes}/${ano}`
 }
 
-function cancelarExclusao() {
-  router.push('/resumo')
+function extrairPrimeiroNome(nomeCompleto, ehProfissional = false) {
+  if (!nomeCompleto) return ''
+  const partes = nomeCompleto.trim().split(' ')
+  if (ehProfissional && partes.length > 1 && partes[0].toLowerCase().startsWith('dr')) {
+    return `${partes[0]} ${partes[1]}`
+  }
+  return partes[0]
 }
 
 function abrirModalExclusao() {
@@ -69,218 +75,383 @@ function meConfirmarExclusao() {
   alert('Agendamento excluído com sucesso!')
   router.push('/buscar')
 }
+
+function fecharModal() {
+  mostrarModalSenha.value = false
+  senha.value = ''
+}
 </script>
 
 <template>
-  <div class="resumo-container">
-    <header class="header-banner">
-      <h1>Agendamento</h1>
-       <p class="subtitle" v-if="agendamento.profissional.nome || agendamento.usuario.nome">
-        {{ agendamento.profissional.nome }} & {{ agendamento.usuario.nome }}
-      </p>
-    </header>
+    <main class="main-content">
+      <header class="header-banner">
+        <h1>Agendamento</h1>
+        <p class="subtitle">
+          {{ extrairPrimeiroNome(agendamento.profissional.nome, true) }} & {{ extrairPrimeiroNome(agendamento.usuario.nome) }}
+        </p>
+      </header>
 
-    <div class="resumo-content">
-      <div class="cards-coluna">
-        <!-- Card Profissional -->
-        <div class="person-card">
+      <div class="resumo-content">
+      
+        <div class="cards-coluna">
+          <!-- Card Profissional -->
+          <div class="person-card">
             <img
-            :src="agendamento.profissional.foto || 'https://via.placeholder.com/150'"
-            alt="Profissional"
-            class="avatar"
-          />
-          <div class="info">
-            <h2>{{ agendamento.profissional.nome || 'Nome Profissional' }}</h2>
-            <p><strong>Telefone:</strong> {{ agendamento.profissional.telefone }}</p>
-            <button class="bnt-perfil">Ver Perfil</button>
+              :src="agendamento.profissional.foto || 'https://via.placeholder.com/150'"
+              alt="Profissional"
+              class="avatar"
+            />
+            <div class="info">
+              <h2>{{ agendamento.profissional.nome || 'Nome Profissional' }}</h2>
+              <p><strong>Telefone:</strong> {{ agendamento.profissional.telefone }}</p>
+              <button class="bnt-perfil">Ver Perfil</button>
+            </div>
+            <button class="bnt-chat">Conversar com profissional</button>
           </div>
-          <button class="bnt-chat">Conversar com profissional</button>
+
+          <!-- Card Usuário -->
+          <div class="person-card">
+            <img
+              :src="agendamento.usuario.foto || 'https://via.placeholder.com/150'"
+              alt="Usuário"
+              class="avatar"
+            />
+            <div class="info">
+              <h2>{{ agendamento.usuario.nome || 'Nome Usuário' }}</h2>
+              <p><strong>Telefone:</strong> {{ agendamento.usuario.telefone }}</p>
+              <button class="bnt-perfil">Ver Perfil</button>
+            </div>
+            <button class="bnt-chat">Conversar com o paciente</button>
+          </div>
         </div>
 
-        <!-- Card Usuário -->
-        <div class="person-card">
-          <img
-            :src="agendamento.usuario.foto || 'https://via.placeholder.com/150'"
-            alt="Usuário"
-            class="avatar"
-          />
-          <div class="info">
-            <h2>{{ agendamento.usuario.nome || 'Nome Usuário' }}</h2>
-            <p><strong>Telefone:</strong> {{ agendamento.usuario.telefone }}</p>
-            <button class="bnt-perfil">Ver Perfil</button>
+        <!-- Coluna de Detalhes -->
+        <div class="details-coluna">
+          <div class="detail-item">
+            <span class="icon">📅</span>
+            <div class="info-item">
+              <span class="label">Data:</span>
+              <span class="value">{{ formatarData(agendamento.consulta.data) }}</span>
+            </div>
           </div>
-          <button class="bnt-chat">Conversar com o paciente</button>
+
+          <div class="detail-item">
+            <span class="icon">🕒</span>
+            <div class="info-item">
+              <span class="label">Horario:</span>
+              <span class="value">{{ agendamento.consulta.horario }}</span>
+            </div>
+          </div>
+
+          <div class="detail-item full">
+            <span class="label">Tipo de agendamento:</span>
+            <span class="value">{{ agendamento.consulta.tipo }}</span>
+          </div>
+
+          <!-- Botão Excluir Agendamento -->
+          <div class="action-container">
+            <button class="btn-excluir" @click="abrirModalExclusao">
+              Excluir agendamento
+            </button>
+          </div>
         </div>
       </div>
+    </main>
 
-      <!-- Coluna de Detalhes -->
-       <div class="details-coluna">
-        <div class="detail-item">
-          <span class="icon">📅</span>
-          <div>
-            <strong>Data:</strong>
-            <span class="value">{{ formatarData(agendamento.consulta.data) }}</span>
-          </div>
-        </div>
-
-        <div class="detail-item">
-          <span class="icon">🕒</span>
-          <div>
-            <strong>Horário:</strong>
-            <span class="value">{{ agendamento.consulta.horario || '00:00' }}</span>
-          </div>
-        </div>
-
-        <div class="detail-item full">
-          <strong>Tipo de agendamento:</strong>
-          <span class="value">{{ agendamento.consulta.tipo }}</span>
-        </div>
-
-        <!-- Ações do Rodapé da Coluna -->
-        <div class="action-buttons">
-          <button class="btn-cancelar" @click="cancelarExclusao">
-            Cancelar a exclusão
-          </button>
-          <button class="btn-excluir" @click="abrirModalExclusao">
-            Excluir agendamento 🗑️
-          </button>
-        </div>
-      </div>
-    </div>
-
-     <!-- Modal de Senha -->
-    <div v-if="mostrarModalSenha" class="modal-overlay" @click.self="mostrarModalSenha = false">
+    <!-- Modal de Senha -->
+    <div v-if="mostrarModalSenha" class="modal-overlay" @click.self="fecharModal">
       <div class="modal-card">
         <div class="modal-header">
           <span class="trash-icon">🗑️</span>
-          <h3>Excluir Agendamento</h3>
-          <button class="btn-fechar-modal" @click="mostrarModalSenha = false">✖</button>
+          <h2>Excluir<br>Agendamento</h2>
         </div>
 
-        <p class="modal-instruction">Digite sua senha para confirmar exclusão:</p>
-
-        <input
-          type="password"
-          placeholder="Sua senha"
+        <textarea
           v-model="senha"
+          placeholder="Digite sua senha para&#10;confirmar exclusão:"
           class="modal-input"
-          @keyup.enter="meConfirmarExclusao"
-        />
+          @keyup.enter.prevent="meConfirmarExclusao"
+        ></textarea>
 
-        <button class="btn-confirmar-modal" @click="meConfirmarExclusao">Confirmar</button>
+        <div class="modal-botoes">
+          <button class="btn-modal btn-cancelar-modal" @click="fecharModal">
+            Cancelar
+          </button>
+          <button class="btn-modal btn-cancelar-modal" @click="meConfirmarExclusao">
+            Confirmar
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 </template>
 
 <style scoped>
-.action-buttons {
+.page-layout {
   display: flex;
-  gap: 16px;
-  margin-top: 24px;
+  min-height: 100vh;
+  background-color: #ECE5CB;
+  font-family: serif;
 }
 
-.btn-cancelar,
-.btn-excluir {
-  flex: 1;
-  padding: 5px 8px;
-  border-radius: 12px;
-  font-weight: bold;
-  font-size: 0.9rem;
+.menu-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   cursor: pointer;
-  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.2);
-  background-color: #333f34;
-  color: #f1edd2;
+}
+
+.menu-icon span {
+  width: 28px;
+  height: 2px;
+  background-color: #ECE5CB;
+  display: block;
+}
+
+.logo-text {
+  color: #889660;
+  font-family: serif;
+  font-size: 0.8rem;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.main-content {
+  flex: 1;
+  padding: 30px 60px;
+  position: relative;
+}
+
+.header-banner {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.header-banner h1 {
+  color: #73441b;
+  font-size: 3.8rem; 
+  font-family: serif;
+  font-weight: normal;
+  margin: 0;
+  line-height: 1;
+}
+
+.header-banner .subtitle {
+  margin: 4px 0 0 0;
+  color: #73441b;
+  font-size: 1.8rem;
+  font-family: serif;
+}
+
+.resumo-content {
+  display: flex;
+  gap: 60px;
+  align-items: flex-start;
+  margin-top: 10px;
+}
+
+.cards-coluna {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 290px;
+}
+
+.person-card {
+  border: 1.5px solid #73441b;
+  border-radius: 20px;
+  padding: 12px; 
+  display: grid;
+  grid-template-columns: 75px 1fr;
+  gap: 10px; 
+  align-items: center;
+  background-color: transparent;
+}
+
+.avatar {
+  width: 75px; 
+  height: 75px; 
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.info h2 {
+  margin: 0 0 4px 0;
+  color: #1a1a1a;
+  font-size: 0.9rem; 
+  font-weight: bold;
+  font-family: sans-serif;
+}
+
+.info p {
+  margin: 0 0 6px 0;
+  color: #1a1a1a;
+  font-size: 0.75rem;
+  font-family: sans-serif;
+}
+
+.bnt-perfil {
+  background-color: transparent;
+  border: 1px solid #73441b;
+  color: #73441b;
+  font-weight: bold;
+  border-radius: 12px;
+  padding: 2px 10px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  font-family: sans-serif;
+}
+
+.bnt-chat {
+  grid-column: span 2;
+  background-color: transparent;
+  border: 1px dashed #73441b;
+  border-radius: 14px;
+  padding: 4px;
+  color: #73441b;
+  font-size: 0.7rem;
+  cursor: pointer;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.details-coluna {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-top: 25px;
+}
+
+.detail-item {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 10px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
   gap: 8px;
 }
 
-.btn-cancelar:hover,
-.btn-excluir:hover {
-  background-color: #888c60;
+.detail-item .icon {
+  font-size: 1.4rem;
 }
 
-/* Modal Estilizado para Exclusão */
+.detail-item .label {
+  color: #333333;
+  font-size: 1.4rem;
+  font-family: serif;
+}
+
+.detail-item .value {
+  color: #73441b;
+  font-size: 1.4rem;
+  font-family: serif;
+}
+
+.detail-item.full .label {
+  display: block;
+}
+
+.detail-item.full .value {
+  display: block;
+}
+
+.action-container {
+  margin-top: 15px;
+}
+
+.btn-excluir {
+  background-color: #556238;
+  color: #f1edd2;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 36px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  z-index: 999;
+  padding-bottom: 25px;
+  z-index: 1000;
 }
 
 .modal-card {
-  background-color: #f1edd2;
-  padding: 24px;
-  border-radius: 16px;
-  width: 320px;
+  background-color: #ECE5CB;
+  border-radius: 18px;
+  padding: 12px 16px;
+  width: 100%;
+  max-width: 290px;
   text-align: center;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-}
-
-.modal-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  margin-bottom: 12px;
-  color: #2b3323;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
 }
 
 .trash-icon {
-  font-size: 1.5rem;
-  margin-bottom: 4px;
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 2px;
 }
 
-.modal-header h3 {
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: bolder;
-}
-
-.btn-fechar-modal {
-  position: absolute;
-  right: 0;
-  top: 0;
-  background: none;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  color: #2b3323;
-}
-
-.modal-instruction {
-  font-size: 0.9rem;
-  color: #333f34;
-  margin-bottom: 14px;
-  text-align: left;
-   font-weight: bolder;
+.modal-header h2 {
+  color: #1a1a1a;
+  font-family: serif;
+  font-size: 1.3rem;
+  font-weight: normal;
+  line-height: 1.1;
+  margin: 0 0 8px 0;
 }
 
 .modal-input {
   width: 100%;
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid #73441b;
-  background-color: #f1edd2;
-  margin-bottom: 16px;
+  height: 48px;
+  border-radius: 14px;
+  border: 1px solid #556238;
+  background-color: transparent;
+  color: #556238;
+  font-family: sans-serif;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 6px 10px;
   box-sizing: border-box;
   outline: none;
+  resize: none;
+  margin-bottom: 10px;
 }
 
-.btn-confirmar-modal {
-  background-color: #333f34;
-  color: #f1edd2;
+.modal-input::placeholder {
+  color: #556238;
   font-weight: bold;
-  border-radius: 8px;
-  padding: 8px 20px;
+  opacity: 0.85;
+  line-height: 1.2;
+}
+
+.modal-botoes {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.btn-modal {
+  flex: 1;
+  background-color: #556238;
+  color: #ECE5CB;
+  border: none;
+  border-radius: 16px;
+  padding: 6px 0;
+  font-size: 0.8rem;
+  font-family: sans-serif;
   cursor: pointer;
 }
 </style>

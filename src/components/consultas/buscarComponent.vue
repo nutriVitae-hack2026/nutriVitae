@@ -13,8 +13,8 @@ const agendamentos = ref([
       nome: 'Gabriel Lima da Costa',
       foto: '/logo.png',
     },
-    data: '12/10/2026',
-    horario: '14h30 /02h30 pm',
+    data: '17/08/2026',
+    horario: '14h30 / 02h30 pm',
     tipo: 'Online (EAD)',
   },
   {
@@ -28,7 +28,7 @@ const agendamentos = ref([
       foto: '/logo.png',
     },
     data: '25/09/2026',
-    horario: '08h00 /08h00 am',
+    horario: '08h00 / 08h00 am',
     tipo: 'Online (EAD)',
   },
   {
@@ -42,7 +42,7 @@ const agendamentos = ref([
       foto: '/logo.png',
     },
     data: '02/11/2026',
-    horario: '16h30 /04h30 pm',
+    horario: '16h30 / 04h30 pm',
     tipo: 'Presencial',
   },
   {
@@ -56,7 +56,7 @@ const agendamentos = ref([
       foto: '/logo.png',
     },
     data: '12/09/2026',
-    horario: '10h00 /10h00 am',
+    horario: '10h00 / 10h00 am',
     tipo: 'Presencial',
   },
 ])
@@ -98,159 +98,206 @@ const agendamentosFiltrados = computed(() => {
 </script>
 
 <template>
-  <div class="container">
-    <h1>Buscar Perfil do Profissional</h1>
-    <div class="search-bar">
-      <input type="text" v-model="buscaTermo" placeholder="Pesquisar paciente..." />
-      <span class="search-icon">🔍</span>
-    </div>
+    <main class="main-content">
+      <h1 class="page-title">Buscar Perfil do Profissional</h1>
 
-    <div class="card-list">
-      <div v-for="card in agendamentosFiltrados" :key="card.id" class="appointment-card">
-        <!-- Bloco Profissional -->
-        <div class="profile-chip">
-          <img :src="card.profissional.foto" :alt="card.profissional.nome" class="avatar" />
-          <span class="name">{{ card.profissional.nome }}</span>
-        </div>
-
-        <!-- Bloco Paciente -->
-        <div class="profile-chip">
-          <img :src="card.paciente.foto" :alt="card.paciente.nome" class="avatar" />
-          <span class="name">{{ card.paciente.nome }}</span>
-        </div>
-
-        <!-- Bloco de Informações -->
-        <div class="info-block">
-          <p>📅<strong>Data:</strong> {{ card.data }}</p>
-          <p>🕒<strong>Horário:</strong> {{ card.horario }}</p>
-          <p>📍<strong>Tipo de agendamento:</strong> {{ card.tipo }}</p>
-        </div>
+      <!-- Barra de Pesquisa -->
+      <div class="search-bar">
+        <input type="text" v-model="buscaTermo" placeholder="" />
+        <span class="search-icon">🔍</span>
       </div>
 
-      <!-- Mensagem quando nenhum paciente for encontrado -->
-      <p v-if="agendamentosFiltrados.length === 0" class="no-results">
-        Nenhum agendamento encontrado para "{{ buscaTermo }}".
-      </p>
-    </div>
-  </div>
+      <!-- Lista de Cards -->
+      <div class="card-list">
+        <div v-for="card in agendamentosFiltrados" :key="card.id" class="appointment-card">
+          <!-- Bloco Profissional -->
+          <div class="profile-chip">
+            <img :src="card.profissional.foto" :alt="card.profissional.nome" class="avatar" />
+            <span class="name">{{ card.profissional.nome }}</span>
+          </div>
+
+          <!-- Bloco Paciente -->
+          <div class="profile-chip">
+            <img :src="card.paciente.foto" :alt="card.paciente.nome" class="avatar" />
+            <span class="name">{{ card.paciente.nome }}</span>
+          </div>
+
+          <!-- Bloco de Informações -->
+          <div class="info-block">
+            <p><span class="icon">📅</span><span class="label">Data:</span> <span class="val">{{ card.data }}</span></p>
+            <p><span class="icon">🕒</span><span class="label">Horario:</span> <span class="val">{{ card.horario }}</span></p>
+            <p class="tipo-row"><span class="label">Tipo de agendamento:</span> <span class="val">{{ card.tipo }}</span></p>
+          </div>
+        </div>
+
+        <!-- Mensagem quando nenhum paciente for encontrado -->
+        <p v-if="agendamentosFiltrados.length === 0" class="no-results">
+          Nenhum agendamento encontrado para "{{ buscaTermo }}".
+        </p>
+      </div>
+    </main>
 </template>
 
 <style scoped>
-
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+.page-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #ECE5CB;
+  font-family: serif;
 }
 
-h1 {
+.menu-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.menu-icon span {
+  width: 28px;
+  height: 2px;
+  background-color: #ECE5CB;
+  display: block;
+}
+
+.logo-text {
+  color: #889660;
+  font-family: serif;
+  font-size: 0.8rem;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.main-content {
+  flex: 1;
+  padding: 30px 40px;
+}
+
+.page-title {
   color: #73441b;
-  text-align: center;
-  font-size: 3.2rem;
-  margin-bottom: 24px;
+  text-align: right;
+  font-size: 3.4rem;
+  font-family: serif;
+  font-weight: normal;
+  margin: 0 0 24px 0;
 }
 
-/* Container da Barra de Busca */
 .search-bar {
   position: relative;
   width: 100%;
-  max-width: 700px;
-  margin: 0 auto 24px auto;
+  max-width: 650px;
+  margin: 0 auto 30px auto;
 }
 
 .search-bar input {
   width: 100%;
-  padding: 12px 45px 12px 20px;
-  border-radius: 16px;
-  border: 1px solid #333f34;
-  background-color: #939a6d; 
+  height: 40px;
+  padding: 8px 40px 8px 16px;
+  border-radius: 20px;
+  border: 1.5px solid #333f34;
   color: #333f34;
-  font-size: 1.05rem;
+  font-size: 1rem;
   outline: none;
   box-sizing: border-box;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
-
-.search-bar input::placeholder {
-  color: #333f34;
-  opacity: 0.8;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .search-icon {
   position: absolute;
-  right: 16px;
+  right: 14px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   pointer-events: none;
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 .card-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  max-width: 700px;
+  gap: 20px;
+  max-width: 650px;
   margin: 0 auto;
-  font-family: sans-serif;
 }
 
-/* Card principal */
 .appointment-card {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  background-color: #f1edd2;
+  background-color: transparent;
   border: 1.5px solid #73441b;
-  border-radius: 16px;
+  border-radius: 18px;
   padding: 16px;
   gap: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
-/* Pills / Chips com foto e nome */
 .profile-chip {
   display: flex;
   align-items: center;
   gap: 10px;
-  background-color: #f1edd2;
+  background-color: transparent;
   border: 1.5px solid #73441b;
-  border-radius: 12px;
-  padding: 8px 14px;
+  border-radius: 20px;
+  padding: 12px;
   flex: 1;
+  min-height: 80px;
+  box-sizing: border-box;
 }
 
 .avatar {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   object-fit: cover;
 }
 
 .name {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #333f34;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #1a1a1a;
+  font-family: sans-serif;
+  line-height: 1.2;
 }
 
-/* Detalhes da consulta */
 .info-block {
   flex: 1;
-  font-size: 0.85rem;
-  color: #9A9E70;
-  font-weight: bolder;
+  font-size: 0.9rem;
   line-height: 1.4;
-  padding-left: 12px;
+  padding-left: 8px;
 }
 
 .info-block p {
-  margin: 2px 0;
+  margin: 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.info-block .icon {
+  font-size: 1.1rem;
+  margin-right: 4px;
+}
+
+.info-block .label {
+  color: #48542c;
+  font-weight: bold;
+  font-family: serif;
+}
+
+.info-block .val {
+  color: #73441b;
+  font-family: serif;
+}
+
+.info-block .tipo-row {
+  display: block;
+  margin-top: 6px;
 }
 
 .no-results {
   color: #333f34;
   text-align: center;
   font-weight: 500;
-  margin-top: 15px;
+  margin-top: 20px;
 }
 </style>
